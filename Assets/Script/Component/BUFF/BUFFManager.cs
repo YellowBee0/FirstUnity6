@@ -13,6 +13,7 @@ namespace YBFramework.Component
         private float m_DeBUFFMagnification = 1f;
 
         #region IComponent Members
+
         public Entity GetOwner()
         {
             return m_Owner;
@@ -32,6 +33,7 @@ namespace YBFramework.Component
         {
             Clear();
         }
+
         #endregion
 
         private void Clear()

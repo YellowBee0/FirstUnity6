@@ -7,7 +7,7 @@ namespace YBFramework.MyEditor
     {
         private static readonly Queue<PortInvokeRecord> s_Pool = new();
 
-        public static PortInvokeRecord Allocate(BasePort fromPort,ConnectedPortData toPortData)
+        public static PortInvokeRecord Allocate(BasePort fromPort, ConnectedPortData toPortData)
         {
             PortInvokeRecord record = s_Pool.Count > 0 ? s_Pool.Dequeue() : new PortInvokeRecord();
             record.FromNodeID = fromPort.Node.GetID();

@@ -8,50 +8,42 @@ namespace YBFramework.MyEditor.Common
 {
     public sealed class DynamicElementView : VisualElement
     {
-        private readonly PopupField<Type> TypeSelectField;
+        private readonly PopupField<Type> m_TypeSelectField;
 
-        private readonly PropertyField ElementField;
+        private readonly PropertyField m_ElementField;
 
-        private SerializedProperty m_ListProperty;
-
-        private int m_Index;
+        private SerializedProperty m_Property;
 
         public DynamicElementView(List<Type> typeOptions)
         {
             style.flexDirection = FlexDirection.Column;
-            TypeSelectField = new PopupField<Type>("选择类型")
+            m_TypeSelectField = new PopupField<Type>("选择类型")
             {
                 choices = typeOptions
             };
-            TypeSelectField.RegisterValueChangedCallback(OnTypeChanged);
-            ElementField = new PropertyField();
-            Add(TypeSelectField);
-            Add(ElementField);
+            m_TypeSelectField.RegisterValueChangedCallback(OnTypeChanged);
+            m_ElementField = new PropertyField();
+            Add(m_TypeSelectField);
+            Add(m_ElementField);
         }
 
-        public void Bind(SerializedProperty listProperty, int index)
+        public void Bind(SerializedProperty property)
         {
-            m_ListProperty = listProperty;
-            m_Index = index;
-            SerializedProperty property = m_ListProperty.GetArrayElementAtIndex(index);
+            m_Property = property;
             Type defaultType = null;
-            if (property.managedReferenceValue != null)
+            if (m_Property.managedReferenceValue != null)
             {
-                defaultType = property.managedReferenceValue.GetType();
+                defaultType = m_Property.managedReferenceValue.GetType();
             }
-            TypeSelectField.value = defaultType;
-            ElementField.Unbind();
-            ElementField.BindProperty(property);
+            m_TypeSelectField.SetValueWithoutNotify(defaultType);
+            m_ElementField.BindProperty(m_Property);
         }
 
         private void OnTypeChanged(ChangeEvent<Type> evt)
         {
-            ElementField.Unbind();
-            m_ListProperty.serializedObject.Update();
-            SerializedProperty serializedProperty = m_ListProperty.GetArrayElementAtIndex(m_Index);
-            serializedProperty.managedReferenceValue = Activator.CreateInstance(evt.newValue);
-            m_ListProperty.serializedObject.ApplyModifiedProperties();
-            ElementField.BindProperty(serializedProperty);
+            m_Property.serializedObject.Update();
+            m_Property.managedReferenceValue = Activator.CreateInstance(evt.newValue);
+            m_Property.serializedObject.ApplyModifiedProperties();
         }
     }
 }

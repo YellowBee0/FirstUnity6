@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
 using YBFramework.Component;
 using YBFramework.MyEditor.Common;
@@ -24,13 +23,11 @@ namespace YBFramework.MyEditor
 
         public override VisualElement CreateInspectorGUI()
         {
-            /*m_ListProperty = serializedObject.FindProperty("m_Behaviours");
-            Debug.LogError($"{m_ListProperty.name} {m_ListProperty.displayName}");*/
             BUFFData data = target as BUFFData;
             if (data != null)
             {
                 drawer = new DynamicListViewDrawer<BUFFBehaviour>();
-                return drawer.Draw(data.m_Behaviours, serializedObject.FindProperty("m_Behaviours"));
+                return drawer.Draw(data.m_Behaviours ??= new List<BUFFBehaviour>(), serializedObject.FindProperty("m_Behaviours"));
             }
             return null;
         }

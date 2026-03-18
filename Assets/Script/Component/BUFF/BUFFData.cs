@@ -15,7 +15,7 @@ namespace YBFramework.Component
 #endif
     public sealed class BUFFData : ScriptableObject
     {
-        [SerializeReference] public List<BUFFBehaviour> m_Behaviours = new();
+        [SerializeReference] public List<BUFFBehaviour> m_Behaviours;
 
         [SerializeField] private string m_BUFFName;
 

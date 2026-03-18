@@ -1,31 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="" />
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/PortInvokeRecord.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/PortInvokeRecord.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/ComponentAsset.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/ComponentAsset.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicElementView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicElementView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicListViewDrawer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicListViewDrawer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.Debugger.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.Debugger.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/GraphDebugHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/GraphDebugHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/PropertyModifyTimedBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/PropertyModifyTimedBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Graph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/BUFFDataEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/BUFFDataEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Port/DynamicValueFuncPortDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Port/DynamicValueFuncPortDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Test/GraphTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Test/GraphTest.cs.meta" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "YellowBee0"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;YellowBee0&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/YellowBee0/FirstUnity6",
-    "accountId": "a387de04-c58f-439c-a19b-d7f4cb4868a6"
+    "url": "https://github.com/YellowBee0/FirstUnity6.git",
+    "accountId": "46820196-e467-47b7-bc61-9aca98f24134"
   }
 }]]></component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/53/c754ab7d/BindingExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/74/d413bf00/ISerializedObjectBindingImplementation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/4e/e4bf9b2b/PopupField`1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/5f/ee9ab3b3/VisualElement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/9c/3f8db1d9/BasePopupField`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Bridge/Graph/GraphDebugHelper.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -33,15 +70,21 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="3B55VQacSpVsaQ9pOGRrxEvX930" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "XThreadsFramesViewSplitterKey": "0.50047845",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,27 +96,19 @@
 }]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="D:\Unity\Unity Editor\6000.3.11f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\unity-a\Unity6000.3.11f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath D:\Unity\Projects\FirstUnity6 -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Unity\Projects\FirstUnity6" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="ENV_FILE_PATHS" value="" />
-      <option name="REDIRECT_INPUT_PATH" value="" />
-      <option name="PTY_MODE" value="Auto" />
-      <option name="MIXED_MODE_DEBUG" value="0" />
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="D:\Unity\Unity Editor\6000.3.11f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\unity-a\Unity6000.3.11f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\Unity\Projects\FirstUnity6 -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Unity\Projects\FirstUnity6" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="ENV_FILE_PATHS" value="" />
-      <option name="REDIRECT_INPUT_PATH" value="" />
-      <option name="PTY_MODE" value="Auto" />
-      <option name="MIXED_MODE_DEBUG" value="0" />
       <method v="2" />
     </configuration>
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -87,27 +122,28 @@
       <option name="selectedOptions">
         <list />
       </option>
-      <option name="useMixedMode" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="15200">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="15200" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
       </option>
-      <option name="useMixedMode" value="false" />
       <method v="2" />
     </configuration>
     <configuration name="Attach to Device" type="UnityDevicePlayer" factoryName="UnityAttachToDevicePlayer">
       <method v="2" />
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="" />
@@ -119,6 +155,7 @@
       <workItem from="1773766229069" duration="9000" />
       <workItem from="1773766240457" duration="33000" />
       <workItem from="1773766358558" duration="1203000" />
+      <workItem from="1773801651938" duration="18568000" />
     </task>
     <servers />
   </component>
@@ -136,22 +173,12 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
-          <option name="timeStamp" value="2" />
-        </breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
-          <option name="timeStamp" value="3" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

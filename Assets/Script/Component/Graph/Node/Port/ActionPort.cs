@@ -2,6 +2,9 @@
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+#if DEBUG
+using YBFramework.MyEditor;
+#endif
 
 namespace YBFramework.Component
 {
@@ -12,6 +15,9 @@ namespace YBFramework.Component
 
         public void Invoke()
         {
+#if DEBUG
+            GraphDebugHelper.RecordInvoke(Node.Graph, this, m_ConnectedPortData);
+#endif
             m_Delegate?.Invoke();
         }
 

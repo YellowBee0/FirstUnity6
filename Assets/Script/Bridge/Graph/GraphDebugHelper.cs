@@ -5,64 +5,80 @@ namespace YBFramework.MyEditor
 {
     public static class GraphDebugHelper
     {
-        public sealed class PortInvokeRecord
-        {
-            private static readonly Queue<PortInvokeRecord> s_Pool = new();
-
-            public static PortInvokeRecord Allocate(BasePort fromPort, BasePort toPort)
-            {
-                PortInvokeRecord record = s_Pool.Count > 0 ? s_Pool.Dequeue() : new PortInvokeRecord();
-                record.FromNodeID = fromPort.Node.GetID();
-                record.FromPortID = fromPort.GetID();
-                record.ToNodeID = toPort.Node.GetID();
-                record.ToPortID = toPort.GetID();
-                return record;
-            }
-
-            public static void Free(PortInvokeRecord record)
-            {
-                record.PrePortInvokeRecord = null;
-                record.NextPortInvokeRecord = null;
-                s_Pool.Enqueue(record);
-            }
-
-            public PortInvokeRecord PrePortInvokeRecord;
-
-            public PortInvokeRecord NextPortInvokeRecord;
-
-            public int FromNodeID;
-
-            public int FromPortID;
-
-            public int ToNodeID;
-
-            public int ToPortID;
-        }
+        private static readonly HashSet<Graph> s_RunningGraphs = new();
 
         private static readonly Dictionary<Graph, PortInvokeRecord> m_GraphRecords = new();
 
-        public static void RecordInvoke(Graph graph, BasePort fromPort, BasePort toPort)
+        public static IReadOnlyCollection<Graph> GetRunningGraphs()
         {
-            PortInvokeRecord portInvokeRecord = PortInvokeRecord.Allocate(fromPort, toPort);
-            if (m_GraphRecords.TryGetValue(graph, out PortInvokeRecord firstPortInvokeRecord))
-            {
-                PortInvokeRecord lastRecord = firstPortInvokeRecord;
-                while (lastRecord.NextPortInvokeRecord != null)
-                {
-                    lastRecord = lastRecord.NextPortInvokeRecord;
-                }
-                lastRecord.NextPortInvokeRecord = portInvokeRecord;
-                portInvokeRecord.PrePortInvokeRecord = lastRecord;
-                return;
-            }
-            m_GraphRecords.Add(graph, portInvokeRecord);
+            return s_RunningGraphs;
         }
 
-        public static PortInvokeRecord GetPortInvokeRecord(Graph graph)
+        public static void AddRunningGraph(Graph graph)
         {
-            return m_GraphRecords.GetValueOrDefault(graph);
+            s_RunningGraphs.Add(graph);
         }
-        
+
+        public static void RemoveRunningGraph(Graph graph)
+        {
+            s_RunningGraphs.Remove(graph);
+        }
+
+        public static void RecordInvoke(Graph graph, BasePort fromPort, ConnectedPortData toPortData)
+        {
+            if (toPortData != null)
+            {
+                PortInvokeRecord newRecord = PortInvokeRecord.Allocate(fromPort, toPortData);
+                if (m_GraphRecords.TryGetValue(graph, out PortInvokeRecord firstRecord))
+                {
+                    PortInvokeRecord latestRecord = firstRecord;
+                    while (latestRecord.NextRecord != null)
+                    {
+                        latestRecord = latestRecord.NextRecord;
+                    }
+                    latestRecord.NextRecord = newRecord;
+                    newRecord.PreRecord = latestRecord;
+                    return;
+                }
+                m_GraphRecords.Add(graph, newRecord);
+            }
+        }
+
+        public static void RecordInvoke(Graph graph, BasePort fromPort, IEnumerable<ConnectedPortData> toPortData)
+        {
+            PortInvokeRecord headRecord = null;
+            PortInvokeRecord tailRecord = null;
+            foreach (ConnectedPortData connectedPortData in toPortData)
+            {
+                PortInvokeRecord newRecord = PortInvokeRecord.Allocate(fromPort, connectedPortData);
+                if (headRecord == null)
+                {
+                    headRecord = newRecord;
+                }
+                else
+                {
+                    tailRecord.NextRecord = newRecord;
+                    newRecord.PreRecord = tailRecord;
+                }
+                tailRecord = newRecord;
+            }
+            if (headRecord != null)
+            {
+                if (m_GraphRecords.TryGetValue(graph, out PortInvokeRecord firstRecord))
+                {
+                    PortInvokeRecord lastRecord = firstRecord;
+                    while (lastRecord.NextRecord != null)
+                    {
+                        lastRecord = lastRecord.NextRecord;
+                    }
+                    lastRecord.NextRecord = headRecord;
+                    headRecord.PreRecord = lastRecord;
+                    return;
+                }
+                m_GraphRecords.Add(graph, headRecord);
+            }
+        }
+
         public static void Clear()
         {
             foreach (KeyValuePair<Graph, PortInvokeRecord> graphRecord in m_GraphRecords)
@@ -71,7 +87,7 @@ namespace YBFramework.MyEditor
                 while (portInvokeRecord != null)
                 {
                     PortInvokeRecord.Free(portInvokeRecord);
-                    portInvokeRecord = portInvokeRecord.NextPortInvokeRecord;
+                    portInvokeRecord = portInvokeRecord.NextRecord;
                 }
             }
             m_GraphRecords.Clear();

@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using YBFramework.MyEditor;
+#endif
 
 namespace YBFramework.Component
 {
@@ -19,34 +21,6 @@ namespace YBFramework.Component
                 index++;
             }
         }
-
-        [SerializeField] protected int m_ID;
-        
-        public IEnumerable<BasePort> GetPortEnumerable()
-        {
-            return new PortEnumerator(this);
-        }
-
-        public BasePort GetPort(int portID)
-        {
-            foreach (BasePort port in GetPortEnumerable())
-            {
-                if (port.GetID() == portID)
-                {
-                    return port;
-                }
-            }
-            return null;
-        }
-
-        public int GetID()
-        {
-            return m_ID;
-        }
-
-        protected abstract BasePort PortIterator(int index);
-
-        public abstract BaseNode Clone();
 
         private sealed class PortEnumerator : IEnumerable<BasePort>, IEnumerator<BasePort>
         {
@@ -88,6 +62,45 @@ namespace YBFramework.Component
             {
                 m_Index = 0;
             }
+        }
+#if DEBUG
+        public Graph Graph;
+#endif
+
+        [SerializeField] protected int m_ID;
+
+        public IEnumerable<BasePort> GetPortEnumerable()
+        {
+            return new PortEnumerator(this);
+        }
+
+        public int GetID()
+        {
+            return m_ID;
+        }
+
+        public BasePort GetPort(int portID)
+        {
+            foreach (BasePort port in GetPortEnumerable())
+            {
+                if (port.GetID() == portID)
+                {
+                    return port;
+                }
+            }
+            return null;
+        }
+
+        protected abstract BasePort PortIterator(int index);
+
+        public abstract BaseNode Clone();
+
+        public virtual void OnStart()
+        {
+        }
+
+        public virtual void OnStop()
+        {
         }
 #if UNITY_EDITOR
         private sealed class PortContentCreatorEnumerator : IEnumerable<PortDrawTarget>, IEnumerator<PortDrawTarget>

@@ -15,7 +15,7 @@ namespace YBFramework.Component
 #endif
     public sealed class BUFFData : ScriptableObject
     {
-        [SerializeReference] private List<BUFFBehaviour> m_Behaviours;
+        [SerializeReference] public List<BUFFBehaviour> m_Behaviours = new();
 
         [SerializeField] private string m_BUFFName;
 
@@ -107,19 +107,19 @@ namespace YBFramework.Component
             IntegerField maxLayerField = new IntegerField("最大层数")
             {
                 isDelayed = true,
-                bindingPath=nameof(m_MaxLayer)
+                bindingPath = nameof(m_MaxLayer)
             };
             maxLayerField.RegisterValueChangedCallback(OnMaxLayerChanged);
             IntegerField minLayerField = new IntegerField("最小层数")
             {
                 isDelayed = true,
-                bindingPath=nameof(m_MinLayer)
+                bindingPath = nameof(m_MinLayer)
             };
             minLayerField.RegisterValueChangedCallback(OnMinLayerChanged);
             IntegerField initialLayerField = new IntegerField("初始层数")
             {
                 isDelayed = true,
-                bindingPath=nameof(m_InitialLayer)
+                bindingPath = nameof(m_InitialLayer)
             };
             initialLayerField.RegisterValueChangedCallback(OnInitialLayerChanged);
             root.Add(maxLayerField);
@@ -162,7 +162,7 @@ namespace YBFramework.Component
 
         private void OnBUFFNameChanged(ChangeEvent<string> changeEvent)
         {
-            Undo.RecordObject(this,"Change BUFFName");
+            Undo.RecordObject(this, "Change BUFFName");
             m_BUFFName = changeEvent.newValue;
             EditorUtility.SetDirty(this);
         }

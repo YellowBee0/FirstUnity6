@@ -34,8 +34,7 @@ namespace YBFramework.Component
         {
         }
 
-#region Pool
-
+        #region Pool
         private static readonly Dictionary<Type, Queue<BUFFBehaviour>> s_BehaviourPools = new();
 
         private static Queue<BUFFBehaviour> GetPool(Type componentType)
@@ -58,7 +57,6 @@ namespace YBFramework.Component
         {
             GetPool(component.GetType()).Enqueue(component);
         }
-
-#endregion
+        #endregion
     }
 }

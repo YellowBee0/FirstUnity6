@@ -1,12 +1,10 @@
-using System.ComponentModel;
+using System;
 using UnityEngine;
 using YBFramework.Common;
 
 namespace YBFramework.Component
 {
-#if UNITY_EDITOR
-    [DisplayName("间隔一段时间时间修改属性")]
-#endif
+    [Serializable]
     public sealed class PropertyModifyTimedBehaviour : TimedBehaviour
     {
         [SerializeField] private ValueConstraintType m_ConstraintType;

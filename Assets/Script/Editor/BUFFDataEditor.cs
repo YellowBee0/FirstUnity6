@@ -1,34 +1,41 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using YBFramework.Component;
+using YBFramework.MyEditor.Common;
 
 namespace YBFramework.MyEditor
 {
     [CustomEditor(typeof(BUFFData))]
-    public class BUFFDataEditor : UnityEditor.Editor
+    public class BUFFDataEditor : Editor
     {
-        private static readonly List<int> s_RemovedItemIndex = new();
+        //private static readonly List<int> s_RemovedItemIndex = new();
 
-        private static List<BUFFBehaviourData> s_BehaviourData;
+        //private static List<BUFFBehaviourData> s_BehaviourData;
 
-        private readonly List<SerializedProperty> m_ListData = new();
+        //private readonly List<SerializedProperty> m_ListData = new();
 
         private SerializedProperty m_ListProperty;
 
-        private ListView m_ListView;
+        private DynamicListViewDrawer<BUFFBehaviour> drawer;
+
+        //private ListView m_ListView;
 
         public override VisualElement CreateInspectorGUI()
         {
-            m_ListProperty = serializedObject.FindProperty("m_BUFFName");
-            Debug.LogError($"{m_ListProperty.name} {m_ListProperty.displayName}");
-            return (target as BUFFData).CreateBUFFDataView();
+            /*m_ListProperty = serializedObject.FindProperty("m_Behaviours");
+            Debug.LogError($"{m_ListProperty.name} {m_ListProperty.displayName}");*/
+            BUFFData data = target as BUFFData;
+            if (data != null)
+            {
+                drawer = new DynamicListViewDrawer<BUFFBehaviour>();
+                return drawer.Draw(data.m_Behaviours, serializedObject.FindProperty("m_Behaviours"));
+            }
+            return null;
         }
 
-        private VisualElement MakeListItem()
+        /*private VisualElement MakeListItem()
         {
             PropertyField propertyField = new();
             return propertyField;
@@ -96,6 +103,6 @@ namespace YBFramework.MyEditor
                 DisplayName = displayName;
                 BehaviourType = behaviourType;
             }
-        }
+        }*/
     }
 }

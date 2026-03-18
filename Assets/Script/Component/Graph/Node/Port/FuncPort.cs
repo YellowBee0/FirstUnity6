@@ -1,6 +1,9 @@
 using System;
 using System.Reflection;
 using UnityEngine;
+#if DEBUG
+using YBFramework.MyEditor;
+#endif
 
 namespace YBFramework.Component
 {
@@ -13,6 +16,9 @@ namespace YBFramework.Component
 
         public TValue Invoke()
         {
+#if DEBUG
+            GraphDebugHelper.RecordInvoke(Node.Graph, this, m_ConnectedPortData);
+#endif
             return m_Delegate != null ? m_Delegate.Invoke() : m_Value;
         }
 
@@ -44,7 +50,7 @@ namespace YBFramework.Component
 
         public void SetValue(TValue value)
         {
-            m_Value = (TValue)value;
+            m_Value = value;
         }
 
         public override string GetConnectTip()

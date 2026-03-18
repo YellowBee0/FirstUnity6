@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+#if DEBUG
+using YBFramework.MyEditor;
+#endif
 
 namespace YBFramework.Component
 {
     public sealed class Graph : IComponent
     {
-        private readonly List<BaseNode> m_Nodes = new();
-
         private Entity m_Owner;
+
+        private readonly List<BaseNode> m_Nodes = new();
 
         public Entity GetOwner()
         {
@@ -17,29 +20,18 @@ namespace YBFramework.Component
         {
         }
 
-        public void ResetComponent()
-        {
-        }
-
         public void OnAddComponent(Entity entity)
         {
             m_Owner = entity;
         }
 
-        public void Invoke()
+        public void ResetComponent()
         {
-            foreach (var node in m_Nodes)
-            {
-                if (node is DebugNode debugNode)
-                {
-                    debugNode.Log();
-                    break;
-                }
-            }
         }
 
         public void Revert(GraphAsset graphAsset)
         {
+            //TODO:这一步提出到更早的初始化
             PortConnectHelper.RegisterWrapMethod();
             IReadOnlyList<NodeAsset> nodeAssets = graphAsset.GetNodeAssets();
             for (int i = 0; i < nodeAssets.Count; i++)
@@ -60,6 +52,28 @@ namespace YBFramework.Component
                         portConnectionSource.Connect(m_Nodes);
                     }
                 }
+            }
+        }
+
+        public void Start()
+        {
+#if DEBUG
+            GraphDebugHelper.AddRunningGraph(this);
+#endif
+            for (int i = 0; i < m_Nodes.Count; i++)
+            {
+                m_Nodes[i].OnStart();
+            }
+        }
+
+        public void Stop()
+        {
+#if DEBUG
+            GraphDebugHelper.RemoveRunningGraph(this);
+#endif
+            for (int i = 0; i < m_Nodes.Count; i++)
+            {
+                m_Nodes[i].OnStop();
             }
         }
     }

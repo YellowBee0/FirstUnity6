@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="170c2fe7-758c-4594-ba02-5082a1ee2e06" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/PortInvokeRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/PortInvokeRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BUFFManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/BUFFDataEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/BUFFDataEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicElementView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicElementView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicListViewDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DynamicListViewDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Test.meta" beforeDir="false" />
-    </list>
+    <list default="true" id="170c2fe7-758c-4594-ba02-5082a1ee2e06" name="Changes" comment="修改低级错误" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +20,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/86/2faa9494/InspectorElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/f1/e573fa15/PropertyField.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/41d29b352f6a475ab1bf7c6628b8279046ae00/ac/3f176129/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Unity/Projects/FirstUnity6/Assets/Script/Component/BUFF/BUFFBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Data/BUFFData.asset" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo"><![CDATA[{
@@ -120,8 +112,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1773850872108</updated>
-      <workItem from="1773850874635" duration="6049000" />
+      <workItem from="1773850874635" duration="6382000" />
     </task>
+    <task id="LOCAL-00001" summary="修改低级错误">
+      <option name="closed" value="true" />
+      <created>1773857252297</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1773857252297</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,4 +136,8 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="修改低级错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改低级错误" />
+  </component>
 </project>

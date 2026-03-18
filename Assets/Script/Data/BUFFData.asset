@@ -15,6 +15,9 @@ MonoBehaviour:
   m_Behaviours:
   - rid: 849132363655675908
   - rid: 849132363655675953
+  - rid: 849132363655675955
+  - rid: 849132363655675956
+  - rid: -2
   m_BUFFName: Test
   m_BUFFType: 1
   m_StackOption: 1
@@ -27,6 +30,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 849132363655675908
       type: {class: PropertyModifyTimedBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
@@ -40,4 +45,18 @@ MonoBehaviour:
         m_Interval: 1.42
         m_ConstraintType: 2
         m_ModifiedValue: 0.99
+        m_PropertyName: 
+    - rid: 849132363655675955
+      type: {class: PropertyModifyTimedBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Interval: 1.55
+        m_ConstraintType: 0
+        m_ModifiedValue: 2.15
+        m_PropertyName: 
+    - rid: 849132363655675956
+      type: {class: PropertyModifyTimedBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Interval: 1.25
+        m_ConstraintType: 1
+        m_ModifiedValue: 1.88
         m_PropertyName: 

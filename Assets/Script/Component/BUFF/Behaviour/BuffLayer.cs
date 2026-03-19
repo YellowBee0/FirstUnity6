@@ -7,7 +7,7 @@ namespace YBFramework.Component
     [DisplayName("buff层数")]
 #endif
     [Serializable]
-    public sealed class BuffLayer : BaseValue<int>, IBuffBehaviour
+    public sealed class BuffLayer : BaseValue<int>, IBuffComponent
     {
         private Buff m_Buff;
 
@@ -92,7 +92,7 @@ namespace YBFramework.Component
         {
             OnFree();
             m_OnLayerChanged = null;
-            IBuffBehaviour.Free(this);
+            IBuffComponent.Free(this);
         }
 
         public void OnMagnificationChanged()
@@ -100,9 +100,9 @@ namespace YBFramework.Component
             ModifyCurValue("buff magnification changed", (int)(m_CurValue * (m_Buff.GetMagnification() - 1)));
         }
 
-        public IBuffBehaviour Clone()
+        public IBuffComponent Clone()
         {
-            BuffLayer layer = IBuffBehaviour.Allocate<BuffLayer>();
+            BuffLayer layer = IBuffComponent.Allocate<BuffLayer>();
             layer.m_MaxValue = m_MaxValue;
             layer.m_MinValue = m_MinValue;
             layer.m_CurValue = m_CurValue;

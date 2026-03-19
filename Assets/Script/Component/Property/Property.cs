@@ -57,7 +57,7 @@ namespace YBFramework.Component
             }
             m_MinValue = newValue;
             m_OnMinValueChanged?.Invoke();
-            var actualModifiedValue = newValue - oldValue;
+            float actualModifiedValue = newValue - oldValue;
             Record(ValueConstraintType.Min, modifier, delta, actualModifiedValue);
             //TODO 字符串本地化
             ModifyCurValue(modifier + "(self min value)", percent * actualModifiedValue);

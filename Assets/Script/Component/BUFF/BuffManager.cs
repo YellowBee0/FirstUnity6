@@ -1,17 +1,138 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace YBFramework.Component
 {
     public sealed class BuffManager : IComponent
     {
-        private readonly List<Buff> m_BUFFs = new();
+        private readonly List<Buff> m_Buffs = new();
 
         private Entity m_Owner;
 
-        private float m_BUFFMagnification = 1f;
+        private float m_BuffMagnification = 1f;
 
-        private float m_DeBUFFMagnification = 1f;
+        private float m_DeBuffMagnification = 1f;
+        
+        public void SetBuffMagnification(BuffType buffType, float magnification)
+        {
+            switch (buffType)
+            {
+                case BuffType.BUFF:
+                    if (Mathf.Approximately(m_BuffMagnification, magnification))
+                    {
+                        return;
+                    }
+                    m_BuffMagnification = magnification;
+                    break;
+                case BuffType.DeBUFF:
+                    if (Mathf.Approximately(m_DeBuffMagnification, magnification))
+                    {
+                        return;
+                    }
+                    m_DeBuffMagnification = magnification;
+                    break;
+                default:
+                    return;
+            }
+            for (int i = 0; i < m_Buffs.Count; i++)
+            {
+                if (m_Buffs[i].GetBuffAsset().GetBuffType() == buffType)
+                {
+                    m_Buffs[i].SetMagnification(magnification);
+                }
+            }
+        }
 
+        public Buff GetBuff(string name)
+        {
+            for (int i = 0; i < m_Buffs.Count; i++)
+            {
+                if (m_Buffs[i].GetBuffAsset().GetName() == name)
+                {
+                    return m_Buffs[i];
+                }
+            }
+            return null;
+        }
+        
+        public IReadOnlyList<Buff> GetBuffs()
+        {
+            return m_Buffs;
+        }
+
+        public void AddBuff(Entity castor, BuffAsset buffAsset)
+        {
+            RepeatAddProcess repeatAddProcess = buffAsset.GetRepeatAddProcess();
+            Buff existBuff = repeatAddProcess?.CheckIsRepeatAdd(this, castor);
+            if (existBuff != null)
+            {
+                if (!repeatAddProcess.DoRepeatAdd(existBuff))
+                {
+                    return;
+                }
+            }
+            Buff buff = Buff.Allocate(castor, buffAsset, this);
+            switch (buffAsset.GetBuffType())
+            {
+                case BuffType.BUFF:
+                    buff.SetMagnification(m_BuffMagnification);
+                    break;
+                case BuffType.DeBUFF:
+                    buff.SetMagnification(m_DeBuffMagnification);
+                    break;
+                case BuffType.Neutral:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            m_Buffs.Add(buff);
+        }
+
+        private void RemoveBuff(int index)
+        {
+            Buff.Free(m_Buffs[index]);
+            (m_Buffs[index], m_Buffs[^1]) = (m_Buffs[^1], m_Buffs[index]);
+            m_Buffs.RemoveAt(index);
+        }
+
+        public void RemoveBuff(Buff buff)
+        {
+            for (int i = 0; i < m_Buffs.Count; i++)
+            {
+                if (m_Buffs[i] == buff)
+                {
+                    RemoveBuff(i);
+                    return;
+                }
+            }
+        }
+
+        public void RemoveBuff(BuffType buffType)
+        {
+            int i = 0;
+            while (i < m_Buffs.Count)
+            {
+                if (m_Buffs[i].GetBuffAsset().GetBuffType() == buffType)
+                {
+                    RemoveBuff(i);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+        
+        private void Clear()
+        {
+            for (int i = 0; i < m_Buffs.Count; i++)
+            {
+                Buff.Free(m_Buffs[i]);
+            }
+            m_Buffs.Clear();
+        }
+        
         public Entity GetOwner()
         {
             return m_Owner;
@@ -30,193 +151,6 @@ namespace YBFramework.Component
         public void ResetComponent()
         {
             Clear();
-        }
-
-        private void Clear()
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                Buff.Free(m_BUFFs[i]);
-            }
-            m_BUFFs.Clear();
-        }
-
-        public IReadOnlyList<Buff> GetBuffs()
-        {
-            return m_BUFFs;
-        }
-        
-        public Buff GetBUFF(string name)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetName() == name)
-                {
-                    return m_BUFFs[i];
-                }
-            }
-            return null;
-        }
-
-        public void AddBUFF(BuffData buffData)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetName() == buffData.GetName())
-                {
-                    if (m_BUFFs[i].Stack(buffData))
-                    {
-                        return;
-                    }
-                    break;
-                }
-            }
-            Buff buff = Buff.Allocate<Buff>();
-            buff.Init(buffData, this);
-            switch (buffData.GetBuffType())
-            {
-                case BuffType.BUFF:
-                    buff.SetMagnification(m_BUFFMagnification);
-                    break;
-                case BuffType.DeBUFF:
-                    buff.SetMagnification(m_DeBUFFMagnification);
-                    break;
-            }
-            m_BUFFs.Add(buff);
-        }
-
-        private void RemoveBUFF(int index)
-        {
-            Buff.Free(m_BUFFs[index]);
-            (m_BUFFs[index], m_BUFFs[^1]) = (m_BUFFs[^1], m_BUFFs[index]);
-            m_BUFFs.RemoveAt(index);
-        }
-
-        public void RemoveBUFF(BuffData buffData)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetName() == buffData.GetName())
-                {
-                    RemoveBUFF(i);
-                    return;
-                }
-            }
-        }
-
-        public void RemoveBUFF(Buff buff)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i] == buff)
-                {
-                    RemoveBUFF(i);
-                    return;
-                }
-            }
-        }
-
-        public void RemoveBUFF(BuffType buffType)
-        {
-            int i = 0;
-            while (i < m_BUFFs.Count)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
-                {
-                    RemoveBUFF(i);
-                }
-                else
-                {
-                    i++;
-                }
-            }
-        }
-
-        public void Start()
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                m_BUFFs[i].Start();
-            }
-        }
-
-        public void Start(BuffType buffType)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
-                {
-                    m_BUFFs[i].Start();
-                }
-            }
-        }
-
-        public void Stop()
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                m_BUFFs[i].Stop();
-            }
-        }
-
-        public void Stop(BuffType buffType)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
-                {
-                    m_BUFFs[i].Stop();
-                }
-            }
-        }
-
-        public void Reset()
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                m_BUFFs[i].Reset();
-            }
-        }
-
-        public void Reset(BuffType buffType)
-        {
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
-                {
-                    m_BUFFs[i].Reset();
-                }
-            }
-        }
-
-        public void SetBUFFMagnification(BuffType buffType, float magnification)
-        {
-            switch (buffType)
-            {
-                case BuffType.BUFF:
-                    if (m_BUFFMagnification == magnification)
-                    {
-                        return;
-                    }
-                    m_BUFFMagnification = magnification;
-                    break;
-                case BuffType.DeBUFF:
-                    if (m_DeBUFFMagnification == magnification)
-                    {
-                        return;
-                    }
-                    m_DeBUFFMagnification = magnification;
-                    break;
-                default:
-                    return;
-            }
-            for (int i = 0; i < m_BUFFs.Count; i++)
-            {
-                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
-                {
-                    m_BUFFs[i].SetMagnification(magnification);
-                }
-            }
         }
     }
 }

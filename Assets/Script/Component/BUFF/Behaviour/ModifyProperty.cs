@@ -8,7 +8,7 @@ namespace YBFramework.Component
     [DisplayName("修改属性")]
 #endif
     [Serializable]
-    public sealed class ModifyProperty : IBuffBehaviour
+    public sealed class ModifyProperty : IBuffComponent
     {
         private Property m_Property;
 
@@ -24,7 +24,7 @@ namespace YBFramework.Component
 
         private void DoModifyValue()
         {
-            m_Property?.ModifyValue(m_ConstraintType, m_Buff.GetBUFFData().GetName(), m_ModifyValue);
+            m_Property?.ModifyValue(m_ConstraintType, m_Buff.GetBuffAsset().GetName(), m_ModifyValue);
         }
 
         public void OnAdd(Buff buff)
@@ -49,9 +49,9 @@ namespace YBFramework.Component
             m_ModifyValue *= m_Buff.GetMagnification();
         }
 
-        public IBuffBehaviour Clone()
+        public IBuffComponent Clone()
         {
-            ModifyProperty modifyProperty = IBuffBehaviour.Allocate<ModifyProperty>();
+            ModifyProperty modifyProperty = IBuffComponent.Allocate<ModifyProperty>();
             modifyProperty.m_PropertyName = m_PropertyName;
             modifyProperty.m_ConstraintType = m_ConstraintType;
             modifyProperty.m_ModifyValue = m_ModifyValue;

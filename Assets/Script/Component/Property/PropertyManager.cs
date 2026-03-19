@@ -8,7 +8,6 @@ namespace YBFramework.Component
 
         private Entity m_Owner;
 
-        #region IComponent Members
         public Entity GetOwner()
         {
             return m_Owner;
@@ -27,9 +26,7 @@ namespace YBFramework.Component
 
         public void ResetComponent()
         {
-            //��ȡ���ã���ȡ�����б����Ƚ��������ԣ���ɾ��
         }
-        #endregion
 
         public Property GetProperty(string name)
         {
@@ -38,12 +35,18 @@ namespace YBFramework.Component
 
         public void AddProperty(string name, Property property)
         {
-            if (m_Properties.ContainsKey(name)) m_Properties.Add(name, property);
+            if (m_Properties.ContainsKey(name))
+            {
+                m_Properties.Add(name, property);
+            }
         }
 
         public void RemoveProperty(string name)
         {
-            if (m_Properties.Remove(name, out var property)) Property.Free(property);
+            if (m_Properties.Remove(name, out Property property))
+            {
+                Property.Free(property);
+            }
         }
     }
 }

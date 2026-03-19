@@ -7,54 +7,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="进一步绘制Buff，设计Buff的重复添加规则">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Attribute/DisplayNameAttribute.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Attribute/DisplayNameAttribute.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/BuffLayer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/BuffLayer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/IExecutor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/IExecutor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/TimeExecutor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/TimeExecutor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/ModifyProperty.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/ModifyProperty.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IExecutorDrawer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IExecutorDrawer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/RepeatAddProcessDrawer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/RepeatAddProcessDrawer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/TypeCache.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/TypeCache/TypeCache.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/TypeCache/TypeCache.cs.meta" afterDir="false" />
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="设计Buff下的部分行为">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/New BuffData.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/New BuffData.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Attribute/DrawTargetAttribute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Attribute/DrawTargetAttribute.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Timer/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Timer/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Value/BaseValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Value/BaseValue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/BuffLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/BuffLayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffBehaviour.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffComponent.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/ModifyProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/ModifyProperty.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Buff.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Buff.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffBehaviour.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffBehaviour.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffAsset.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/IBuffBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/IBuffBehaviour.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffBehaviour.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/PropertyModifyTimedBehaviour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/PropertyModifyTimedBehaviour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/AddLayerProcess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/AddLayerProcess.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/RepeatAddProcess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/RepeatAddProcess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/StackOption.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/StackOption.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/TimedBehaviour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/TimedBehaviour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/BuffDataEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/BuffDataEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DrawerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DrawerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferenceListView.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferenceListView.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferencePropertyView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferencePropertyView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/Property.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyFormula.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyFormula.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773907224700</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="设计Buff下的部分行为">
+      <option name="closed" value="true" />
+      <created>1773923434945</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1773923434945</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +181,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改低级错误" />
     <MESSAGE value="进一步绘制Buff，设计Buff的重复添加规则" />
-    <option name="LAST_COMMIT_MESSAGE" value="进一步绘制Buff，设计Buff的重复添加规则" />
+    <MESSAGE value="设计Buff下的部分行为" />
+    <option name="LAST_COMMIT_MESSAGE" value="设计Buff下的部分行为" />
   </component>
 </project>

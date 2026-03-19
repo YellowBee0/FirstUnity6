@@ -1,9 +1,11 @@
-﻿namespace YBFramework.Component
+﻿using UnityEngine;
+
+namespace YBFramework.Component
 {
     public enum BuffType
     {
-        BUFF,
-        Neutral,
-        DeBUFF
+        [InspectorName("增益")] BUFF,
+        [InspectorName("中性")] Neutral,
+        [InspectorName("减益")] DeBUFF
     }
 }

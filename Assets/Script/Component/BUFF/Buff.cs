@@ -1,27 +1,83 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using YBFramework.Common;
+using UnityEngine;
 
 namespace YBFramework.Component
 {
-    public sealed class Buff : BaseValue<int>
+    public sealed class Buff
     {
-        private readonly List<IBuffBehaviour> m_Behaviours = new();
+        private static readonly Queue<Buff> s_Pool = new();
 
-        private BuffData m_BUFFData;
+        public static Buff Allocate(Entity caster, BuffAsset buffAsset, BuffManager manager)
+        {
+            Buff buff = s_Pool.Count > 0 ? s_Pool.Dequeue() : new Buff();
+            buff.OnAllocate(caster, buffAsset, manager);
+            return buff;
+        }
 
-        public Entity Caster;
+        public static void Free(Buff buff)
+        {
+            buff.OnFree();
+            s_Pool.Enqueue(buff);
+        }
 
-        private bool m_IsRunning;
+        private readonly List<IBuffComponent> m_Components = new();
 
-        private float m_Magnification;
+        private Entity m_Caster;
+
+        private BuffAsset m_BuffAsset;
 
         private BuffManager m_Manager;
 
-        private Action m_OnLayerChanged;
+        private float m_Magnification;
 
-        public BuffBehaviour GetBehaviour(Type type)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Entity GetCaster()
+        {
+            return m_Caster;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public BuffAsset GetBuffAsset()
+        {
+            return m_BuffAsset;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public BuffManager GetManager()
+        {
+            return m_Manager;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float GetMagnification()
+        {
+            return m_Magnification;
+        }
+
+        private void OnAllocate(Entity caster, BuffAsset buffAsset, BuffManager manager)
+        {
+            m_Caster = caster;
+            m_BuffAsset = buffAsset;
+            m_Manager = manager;
+            IReadOnlyList<IBuffComponent> components = buffAsset.GetComponents();
+            for (int i = 0; i < components.Count; i++)
+            {
+                AddComponent(components[i].Clone());
+            }
+        }
+
+        private void OnFree()
+        {
+            for (int i = 0; i < m_Components.Count; i++)
+            {
+                m_Components[i].OnRemove();
+            }
+            m_Components.Clear();
+        }
+
+        public IBuffComponent GetComponent(Type type)
         {
             /*for (int i = 0; i < m_Behaviours.Count; i++)
             {
@@ -33,211 +89,38 @@ namespace YBFramework.Component
             return null;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BuffManager GetManager()
+        public void AddComponent(IBuffComponent component)
         {
-            return m_Manager;
+            m_Components.Add(component);
+            component.OnAdd(this);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BuffData GetBUFFData()
+        public void RemoveComponent(IBuffComponent component)
         {
-            return m_BUFFData;
-        }
-
-        public override void ModifyMaxValue(string modifier, int delta)
-        {
-            if (delta == 0) return;
-            int oldValue = m_MaxValue;
-            int newValue = m_MaxValue + delta;
-            if (newValue < m_MinValue) newValue = m_MinValue;
-            m_MaxValue = newValue;
-            Record(ValueConstraintType.Max, modifier, delta, newValue - oldValue);
-            //TODO 字符串本地化
-            if (m_CurValue > m_MaxValue)
+            if (m_Components.Remove(component))
             {
-                ModifyCurValue(modifier + "(self max value)", m_MaxValue - m_CurValue);
+                component.OnRemove();
             }
-        }
-
-        public override void ModifyMinValue(string modifier, int delta)
-        {
-            if (delta == 0) return;
-            int oldValue = m_MaxValue;
-            int newValue = m_MaxValue + delta;
-            if (newValue > m_MaxValue) newValue = m_MaxValue;
-            m_MinValue = newValue;
-            Record(ValueConstraintType.Min, modifier, delta, newValue - oldValue);
-            //TODO 字符串本地化
-            if (m_CurValue < m_MinValue)
-            {
-                ModifyCurValue(modifier + "(self min value)", m_MinValue - m_CurValue);
-            }
-        }
-
-        public override void ModifyCurValue(string modifier, int delta)
-        {
-            if (delta == 0) return;
-            int oldValue = m_CurValue;
-            int newValue = m_CurValue + delta;
-            if (newValue > m_MaxValue)
-            {
-                /*if (m_BUFFData.GetIsRemoveOnMaxLayer())
-                {
-                    m_Manager.RemoveBUFF(this);
-                    return;
-                }*/
-                newValue = m_MaxValue;
-            }
-            else if (newValue < m_MinValue)
-            {
-                /*if (m_BUFFData.GetIsRemoveOnMinLayer())
-                {
-                    m_Manager.RemoveBUFF(this);
-                    return;
-                }*/
-                newValue = m_MinValue;
-            }
-            m_CurValue = newValue;
-            m_OnLayerChanged?.Invoke();
-            Record(ValueConstraintType.Current, modifier, delta, oldValue - newValue);
-        }
-
-        protected override void OnFree()
-        {
-            base.OnFree();
-            Stop();
-            for (int i = 0; i < m_Behaviours.Count; i++)
-            {
-                m_Behaviours[i].OnRemove();
-            }
-            m_Behaviours.Clear();
-            m_OnLayerChanged = null;
-            m_Magnification = 1;
-        }
-
-        public void RegisterLayerChangeCallBack(Action callBack)
-        {
-            m_OnLayerChanged += callBack;
-        }
-
-        public void UnregisterLayerChangeCallBack(Action callBack)
-        {
-            m_OnLayerChanged -= callBack;
-        }
-
-        public void Init(BuffData buffData, BuffManager manager)
-        {
-            m_Manager = manager;
-            m_BUFFData = buffData;
-            /*if (buffData.GetStackOption() != StackOption.NotAllow)
-            {
-                Init(buffData.GetMaxLayer(), buffData.GetMinLayer(), buffData.GetInitialLayer(), false, false, buffData.GetIsRecordLayer());
-            }
-            else
-            {
-                Init(0, 0, 0, false, false, false);
-            }*/
-            IReadOnlyList<IBuffBehaviour> behaviours = buffData.GetBehaviours();
-            for (int i = 0; i < behaviours.Count; i++)
-            {
-                IBuffBehaviour behaviour = behaviours[i].Clone();
-                //AddBehaviour(behaviour);
-            }
-        }
-
-        public bool Stack(BuffData other)
-        {
-            /*switch (m_BUFFData.GetStackOption())
-            {
-                case StackOption.AddLayer:
-                    ModifyCurValue("Stack", other.GetInitialLayer());
-                    return true;
-                case StackOption.Replace:
-                    bool isRunning = m_IsRunning;
-                    OnFree();
-                    Init(other, m_Manager);
-                    if (isRunning) Start();
-                    return true;
-                case StackOption.Reset:
-                    Reset();
-                    return true;
-                default:
-                    return false;
-            }*/
-            return false;
-        }
-
-        public void AddBehaviour(BuffBehaviour behaviour)
-        {
-            //m_Behaviours.Add(behaviour);
-            behaviour.OnAdd(this);
-            if (m_IsRunning)
-            {
-                behaviour.OnStart();
-            }
-        }
-
-        public void RemoveBehaviour(BuffBehaviour behaviour)
-        {
-            /*if (m_Behaviours.Remove(behaviour))
-            {
-                if (m_IsRunning)
-                {
-                    behaviour.OnStop();
-                }
-                behaviour.OnRemove();
-            }*/
-        }
-
-        public void Start()
-        {/*
-            for (int i = 0; i < m_Behaviours.Count; i++)
-            {
-                m_Behaviours[i].OnStart();
-            }
-            m_IsRunning = true;*/
-        }
-
-        public void Stop()
-        {
-            /*for (int i = 0; i < m_Behaviours.Count; i++)
-            {
-                m_Behaviours[i].OnStop();
-            }
-            m_IsRunning = false;*/
         }
 
         public void Reset()
         {
-            for (int i = 0; i < m_Behaviours.Count; i++)
+            for (int i = 0; i < m_Components.Count; i++)
             {
-                m_Behaviours[i].OnReset();
+                m_Components[i].OnReset();
             }
-            ModifyCurValue("Reset", m_MinValue - m_MaxValue);
-        }
-
-        public bool IsRunning()
-        {
-            return m_IsRunning;
         }
 
         public void SetMagnification(float magnification)
         {
-            if (m_Magnification != magnification)
+            if (!Mathf.Approximately(m_Magnification, magnification))
             {
                 m_Magnification = magnification;
-                for (int i = 0; i < m_Behaviours.Count; i++)
+                for (int i = 0; i < m_Components.Count; i++)
                 {
-                    m_Behaviours[i].OnMagnificationChanged();
+                    m_Components[i].OnMagnificationChanged();
                 }
             }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float GetMagnification()
-        {
-            return m_Magnification;
         }
     }
 }

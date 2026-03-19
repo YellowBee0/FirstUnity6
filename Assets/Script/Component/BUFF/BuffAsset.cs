@@ -7,20 +7,15 @@ namespace YBFramework.Component
 #if UNITY_EDITOR
     [CreateAssetMenu(fileName = "New BuffData", menuName = "BuffData")]
 #endif
-    public sealed class BuffData : ScriptableObject
+    public sealed class BuffAsset : ScriptableObject
     {
-        [SerializeReference] public List<IBuffBehaviour> m_Behaviours;
-        
-        [SerializeReference] private RepeatAddProcess m_RepeatAddProcess;
-
         [SerializeField] private string m_BuffName;
 
         [SerializeField] private BuffType m_BuffType;
 
-        public IReadOnlyList<IBuffBehaviour> GetBehaviours()
-        {
-            return m_Behaviours;
-        }
+        [SerializeReference] private RepeatAddProcess m_RepeatAddProcess;
+
+        [SerializeReference] public List<IBuffComponent> m_Components;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string GetName()
@@ -32,6 +27,17 @@ namespace YBFramework.Component
         public BuffType GetBuffType()
         {
             return m_BuffType;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RepeatAddProcess GetRepeatAddProcess()
+        {
+            return m_RepeatAddProcess;
+        }
+
+        public IReadOnlyList<IBuffComponent> GetComponents()
+        {
+            return m_Components;
         }
     }
 }

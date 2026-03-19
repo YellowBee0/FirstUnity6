@@ -7,22 +7,19 @@ namespace YBFramework.Component
     [Serializable]
     public abstract class RepeatAddProcess
     {
-        protected BuffData m_BuffData;
+        protected BuffAsset BuffAsset;
 
-        [SerializeField]
-        private RepeatAddCondition m_RepeatAddCondition;
+        [SerializeField] private RepeatAddCondition m_RepeatAddCondition;
 
-        [SerializeField]
-        private bool m_IsJudgingByCaster;
+        [SerializeField] private bool m_IsJudgingByCaster;
 
-        public void Init(BuffData buffData)
+        public void Init(BuffAsset buffAsset)
         {
-            m_BuffData = buffData;
+            BuffAsset = buffAsset;
         }
 
-        public bool CheckIsRepeatAdd(BuffManager manager, Entity caster, out Buff existBuff)
+        public Buff CheckIsRepeatAdd(BuffManager manager, Entity caster)
         {
-            existBuff = null;
             IReadOnlyList<Buff> buffs = manager.GetBuffs();
             switch (m_RepeatAddCondition)
             {
@@ -30,14 +27,13 @@ namespace YBFramework.Component
                     for (int i = 0; i < buffs.Count; i++)
                     {
                         Buff buff = buffs[i];
-                        if (buff.GetBUFFData() == m_BuffData)
+                        if (buff.GetBuffAsset() == BuffAsset)
                         {
                             if (m_IsJudgingByCaster)
                             {
-                                if (buff.Caster == caster)
+                                if (buff.GetCaster() == caster)
                                 {
-                                    existBuff = buff;
-                                    return true;
+                                    return buff;
                                 }
                             }
                         }
@@ -47,14 +43,13 @@ namespace YBFramework.Component
                     for (int i = 0; i < buffs.Count; i++)
                     {
                         Buff buff = buffs[i];
-                        if (buff.GetBUFFData().GetName() == m_BuffData.GetName())
+                        if (buff.GetBuffAsset().GetName() == BuffAsset.GetName())
                         {
                             if (m_IsJudgingByCaster)
                             {
-                                if (buff.Caster == caster)
+                                if (buff.GetCaster() == caster)
                                 {
-                                    existBuff = buff;
-                                    return true;
+                                    return buff;
                                 }
                             }
                         }
@@ -63,11 +58,11 @@ namespace YBFramework.Component
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return false;
+            return null;
         }
 
         /// <summary>
-        /// 执行重复添加操作
+        ///     执行重复添加操作
         /// </summary>
         /// <param name="existBuff">已存在的buff</param>
         /// <returns>重复添加操作后是否可以继续添加这个buff</returns>

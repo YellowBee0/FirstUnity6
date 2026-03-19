@@ -17,15 +17,15 @@ namespace YBFramework.Component
 
         private void ModifyValue()
         {
-            m_Property.ModifyValue(m_ConstraintType, m_BUFF.GetBUFFData().GetBUFFName(), m_ModifiedValue);
+            m_Property.ModifyValue(m_ConstraintType, m_BUFF.GetBUFFData().GetBuffName(), m_ModifiedValue);
         }
 
-        public override BUFFBehaviour Clone()
+        public override BuffBehaviour Clone()
         {
             return Allocate<PropertyModifyTimedBehaviour>();
         }
 
-        public override void OnInit(BUFFBehaviour source)
+        public override void OnInit(BuffBehaviour source)
         {
             if (source is PropertyModifyTimedBehaviour behaviour)
             {
@@ -48,10 +48,26 @@ namespace YBFramework.Component
             m_ModifiedValue *= m_BUFF.GetMagnification();
         }
 
-        public override void OnAdd(BUFF buff)
+        public override void OnAdd(Buff buff)
         {
             base.OnAdd(buff);
             m_Property = buff.GetManager().GetOwner().GetCustomComponent<PropertyManager>()?.GetProperty(m_PropertyName);
+        }
+    }
+
+    [Serializable]
+    public sealed class TestBehaviour : TimedBehaviour
+    {
+        public int ID;
+        
+        public override BuffBehaviour Clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void OnInit(BuffBehaviour source)
+        {
+            throw new NotImplementedException();
         }
     }
 }

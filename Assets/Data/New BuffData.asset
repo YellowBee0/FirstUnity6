@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3e837046b079a40b7c339dbf04f9ac, type: 3}
+  m_Name: New BuffData
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.BuffData
+  m_Behaviours:
+  - rid: 8360641753158254848
+  - rid: 8360641753158254851
+  - rid: -2
+  m_RepeatAddProcess:
+    rid: 8360641753158254845
+  m_BuffName: 
+  m_BuffType: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8360641753158254845
+      type: {class: AddLayerProcess, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_RepeatAddCondition: 0
+        m_IsJudgingByCaster: 0
+        m_ModifyLayerCount: 0
+    - rid: 8360641753158254848
+      type: {class: TestBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Interval: 0
+        ID: 0
+    - rid: 8360641753158254851
+      type: {class: PropertyModifyTimedBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Interval: 0
+        m_ConstraintType: 0
+        m_ModifiedValue: 0
+        m_PropertyName: 

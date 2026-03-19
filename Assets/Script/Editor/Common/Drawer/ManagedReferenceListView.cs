@@ -5,19 +5,15 @@ using UnityEngine.UIElements;
 
 namespace YBFramework.MyEditor.Common
 {
-    public sealed class DynamicListViewDrawer<T>
+    public class ManagedReferenceListView<T> : VisualElement
     {
-        private static readonly List<int> s_RemovedItemIndex = new();
-
         private readonly List<Type> m_SubTypes = new();
 
-        private SerializedProperty m_ListProperty;
+        private readonly SerializedProperty m_ListProperty;
 
-        private List<T> m_List;
+        private readonly ListView m_ListView;
 
-        private ListView m_ListView;
-
-        public ListView Draw(List<T> list, SerializedProperty listProperty)
+        public ManagedReferenceListView(string title, List<T> list, SerializedProperty listProperty)
         {
             if (listProperty.isArray)
             {
@@ -32,27 +28,32 @@ namespace YBFramework.MyEditor.Common
                 }
                 m_ListView = new ListView(list, -1, MakeItem, BindElement)
                 {
+                    headerTitle = title,
+                    reorderable = true,
                     showBorder = true,
+                    showFoldoutHeader = true,
+                    showBoundCollectionSize = true,
                     showAddRemoveFooter = true,
+                    showAlternatingRowBackgrounds = AlternatingRowBackground.ContentOnly,
                     selectionType = SelectionType.Multiple,
                     virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight
                 };
                 m_ListView.onAdd += OnAddClick;
                 m_ListView.onRemove += OnRemoveClick;
+                Add(m_ListView);
             }
-            return m_ListView;
         }
 
         private VisualElement MakeItem()
         {
-            return new DynamicElementView(m_SubTypes);
+            return new ManagedReferencePropertyView(m_SubTypes);
         }
 
         private void BindElement(VisualElement element, int index)
         {
-            if (element is DynamicElementView dynamicElement)
+            if (element is ManagedReferencePropertyView managedReferencePropertyView)
             {
-                dynamicElement.Bind(m_ListProperty.GetArrayElementAtIndex(index));
+                managedReferencePropertyView.Bind(m_ListProperty.GetArrayElementAtIndex(index));
             }
         }
 
@@ -73,31 +74,34 @@ namespace YBFramework.MyEditor.Common
             }
             else
             {
-                s_RemovedItemIndex.Clear();
+                Span<int> indexes = stackalloc int[m_ListProperty.arraySize];
+                int count = 0;
                 foreach (int index in m_ListView.selectedIndices)
                 {
-                    int insertIndex = 0;
-                    for (int i = 0; i < s_RemovedItemIndex.Count; i++)
+                    int insertIndex = count;
+                    for (int i = 0; i < count; i++)
                     {
-                        if (index > s_RemovedItemIndex[i])
+                        if (index > indexes[i])
                         {
                             insertIndex = i;
                             break;
                         }
                     }
-                    s_RemovedItemIndex.Insert(insertIndex, index);
-                }
-                for (int i = 0; i < s_RemovedItemIndex.Count; i++)
-                {
-                    int index = s_RemovedItemIndex[i];
-                    m_ListProperty.DeleteArrayElementAtIndex(index);
-                    if (selectedIndex != index)
+                    for (int i = count - 1; i >= insertIndex; i--)
                     {
-                        m_List.RemoveAt(index);
+                        indexes[i + 1] = indexes[i];
                     }
+                    indexes[insertIndex] = index;
+                    count++;
                 }
+                for (int i = 0; i < count; i++)
+                {
+                    m_ListProperty.DeleteArrayElementAtIndex(indexes[i]);
+                }
+                m_ListView.ClearSelection();
             }
             m_ListProperty.serializedObject.ApplyModifiedProperties();
+            listView.RefreshItems();
         }
     }
 }

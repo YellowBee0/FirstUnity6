@@ -5,9 +5,7 @@ namespace YBFramework.Component
 {
     public sealed class Property : BaseValue<float>
     {
-        #region Delegates
         public delegate void Preprocess(string modifier, ref float value);
-        #endregion
 
         private bool m_IsPreprocessIncrease;
 
@@ -25,14 +23,20 @@ namespace YBFramework.Component
 
         public override void ModifyMaxValue(string modifier, float delta)
         {
-            if (delta == 0) return;
-            var percent = (m_MaxValue - m_CurValue) / (m_MaxValue - m_MinValue);
-            var oldValue = m_MaxValue;
-            var newValue = m_MaxValue + delta;
-            if (newValue < m_MinValue) newValue = m_MinValue;
+            if (delta == 0)
+            {
+                return;
+            }
+            float percent = (m_MaxValue - m_CurValue) / (m_MaxValue - m_MinValue);
+            float oldValue = m_MaxValue;
+            float newValue = m_MaxValue + delta;
+            if (newValue < m_MinValue)
+            {
+                newValue = m_MinValue;
+            }
             m_MaxValue = newValue;
             m_OnMaxValueChanged?.Invoke();
-            var actualModifiedValue = newValue - oldValue;
+            float actualModifiedValue = newValue - oldValue;
             Record(ValueConstraintType.Max, modifier, delta, actualModifiedValue);
             //TODO 字符串本地化
             ModifyCurValue(modifier + "(self max value)", percent * actualModifiedValue);
@@ -40,11 +44,17 @@ namespace YBFramework.Component
 
         public override void ModifyMinValue(string modifier, float delta)
         {
-            if (delta == 0) return;
-            var percent = (m_MaxValue - m_CurValue) / (m_MaxValue - m_MinValue);
-            var oldValue = m_MinValue;
-            var newValue = m_MinValue + delta;
-            if (newValue > m_MaxValue) newValue = m_MaxValue;
+            if (delta == 0)
+            {
+                return;
+            }
+            float percent = (m_MaxValue - m_CurValue) / (m_MaxValue - m_MinValue);
+            float oldValue = m_MinValue;
+            float newValue = m_MinValue + delta;
+            if (newValue > m_MaxValue)
+            {
+                newValue = m_MaxValue;
+            }
             m_MinValue = newValue;
             m_OnMinValueChanged?.Invoke();
             var actualModifiedValue = newValue - oldValue;
@@ -55,20 +65,34 @@ namespace YBFramework.Component
 
         public override void ModifyCurValue(string modifier, float delta)
         {
-            if (delta == 0) return;
-            var oldValue = m_CurValue;
-            var newValue = m_CurValue + delta;
+            if (delta == 0)
+            {
+                return;
+            }
+            float oldValue = m_CurValue;
+            float newValue = m_CurValue + delta;
             if (delta > 0)
             {
-                if (m_IsPreprocessIncrease) m_PreprocessIncrease.Invoke(modifier, ref newValue);
+                if (m_IsPreprocessIncrease)
+                {
+                    m_PreprocessIncrease.Invoke(modifier, ref newValue);
+                }
             }
             else
             {
-                if (m_IsPreprocessReduce) m_PreprocessReduce.Invoke(modifier, ref newValue);
+                if (m_IsPreprocessReduce)
+                {
+                    m_PreprocessReduce.Invoke(modifier, ref newValue);
+                }
             }
             if (newValue > m_MaxValue)
+            {
                 newValue = m_MaxValue;
-            else if (newValue < m_MinValue) newValue = m_MinValue;
+            }
+            else if (newValue < m_MinValue)
+            {
+                newValue = m_MinValue;
+            }
             m_CurValue = newValue;
             m_OnCurValueChanged?.Invoke();
             Record(ValueConstraintType.Current, modifier, delta, oldValue - newValue);
@@ -110,14 +134,18 @@ namespace YBFramework.Component
         {
             if (isIncrease)
             {
-                if (!m_IsPreprocessIncrease) m_IsPreprocessIncrease = true;
-
+                if (!m_IsPreprocessIncrease)
+                {
+                    m_IsPreprocessIncrease = true;
+                }
                 m_PreprocessIncrease += preprocess;
             }
             else
             {
-                if (!m_IsPreprocessReduce) m_IsPreprocessReduce = true;
-
+                if (!m_IsPreprocessReduce)
+                {
+                    m_IsPreprocessReduce = true;
+                }
                 m_PreprocessReduce += preprocess;
             }
         }
@@ -127,12 +155,18 @@ namespace YBFramework.Component
             if (isIncrease)
             {
                 m_PreprocessIncrease -= preprocess;
-                if (m_PreprocessIncrease == null) m_IsPreprocessIncrease = false;
+                if (m_PreprocessIncrease == null)
+                {
+                    m_IsPreprocessIncrease = false;
+                }
             }
             else
             {
                 m_PreprocessReduce -= preprocess;
-                if (m_PreprocessReduce == null) m_IsPreprocessReduce = false;
+                if (m_PreprocessReduce == null)
+                {
+                    m_IsPreprocessReduce = false;
+                }
             }
         }
 

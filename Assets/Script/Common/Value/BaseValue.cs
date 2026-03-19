@@ -7,6 +7,46 @@ namespace YBFramework.Common
 {
     public abstract class BaseValue<T> where T : struct
     {
+        private static readonly Dictionary<Type, Queue<BaseValue<T>>> s_Pools = new();
+
+        public static TBaseValue Allocate<TBaseValue>() where TBaseValue : BaseValue<T>, new()
+        {
+            Type type = typeof(TBaseValue);
+            if (!s_Pools.TryGetValue(type, out Queue<BaseValue<T>> pool))
+            {
+                pool = new Queue<BaseValue<T>>();
+                s_Pools.Add(type, pool);
+            }
+            return s_Pools.Count > 0 ? (TBaseValue)pool.Dequeue() : new TBaseValue();
+        }
+
+        public static void Free(BaseValue<T> valueInstance)
+        {
+            Type type = valueInstance.GetType();
+            if (!s_Pools.TryGetValue(type, out Queue<BaseValue<T>> pool))
+            {
+                pool = new Queue<BaseValue<T>>();
+                s_Pools.Add(type, pool);
+            }
+            valueInstance.OnFree();
+            pool.Enqueue(valueInstance);
+        }
+
+        public static void Free<TBaseValue>(ICollection<TBaseValue> valueInstances) where TBaseValue : BaseValue<T>
+        {
+            Type valueInstanceType = typeof(TBaseValue);
+            if (!s_Pools.TryGetValue(valueInstanceType, out Queue<BaseValue<T>> pool))
+            {
+                pool = new Queue<BaseValue<T>>();
+                s_Pools.Add(valueInstanceType, pool);
+            }
+            foreach (TBaseValue valueInstance in valueInstances)
+            {
+                valueInstance.OnFree();
+                pool.Enqueue(valueInstance);
+            }
+        }
+        
         protected T m_CurValue;
 
         private bool m_IsRecordedCurValue;
@@ -19,8 +59,7 @@ namespace YBFramework.Common
 
         protected T m_MinValue;
 
-        public void Init(T maxValue, T minValue, T curValue, bool isRecordMaxValue, bool isRecordMinValue,
-            bool isRecordCurValue)
+        public void Init(T maxValue, T minValue, T curValue, bool isRecordMaxValue, bool isRecordMinValue, bool isRecordCurValue)
         {
             m_MaxValue = maxValue;
             m_MinValue = minValue;
@@ -45,21 +84,23 @@ namespace YBFramework.Common
             }
         }
 
-        protected void Record(ValueConstraintType valueConstraintType, string modifier, T expectedModifiedValue,
-            T actualModifiedValue)
+        protected void Record(ValueConstraintType valueConstraintType, string modifier, T expectedModifiedValue, T actualModifiedValue)
         {
             if (GetIsEnableRecord(valueConstraintType) && !string.IsNullOrEmpty(modifier))
-                ValueRecord.AddRecord(this,
-                    ValueRecord.Allocate(modifier, ValueConstraintType.Max, expectedModifiedValue,
-                        actualModifiedValue));
+            {
+                ValueRecord.AddRecord(this, ValueRecord.Allocate(modifier, ValueConstraintType.Max, expectedModifiedValue, actualModifiedValue));
+            }
         }
 
         public void EnableRecord(ValueConstraintType valueConstraintType, bool enable)
         {
-            ref var isRecorded = ref GetIsEnableRecord(valueConstraintType);
+            ref bool isRecorded = ref GetIsEnableRecord(valueConstraintType);
             if (isRecorded != enable)
             {
-                if (isRecorded) ValueRecord.RemoveRecordByValueConstraintType(this, valueConstraintType);
+                if (isRecorded)
+                {
+                    ValueRecord.RemoveRecordByValueConstraintType(this, valueConstraintType);
+                }
                 isRecorded = enable;
             }
         }
@@ -130,30 +171,17 @@ namespace YBFramework.Common
             ValueRecord.RemoveRecords(this);
         }
 
-#region Nested type: ValueRecord
-
         private sealed class ValueRecord
         {
-            private T ActualModifiedValue;
-
-            private T ExpectedModifiedValue;
-
-            private string Modifier;
-
-            private ValueConstraintType ValueConstraintType;
-
-#region ValueRecord Pool,Records
-
             private static readonly Queue<ValueRecord> s_Pool = new();
 
             private static readonly Dictionary<BaseValue<T>, List<ValueRecord>> s_ValueRecords = new();
 
             private static readonly StringBuilder s_StringBuilder = new();
 
-            public static ValueRecord Allocate(string modifier, ValueConstraintType valueConstraintType,
-                T expectedModifiedValue, T actualModifiedValue)
+            public static ValueRecord Allocate(string modifier, ValueConstraintType valueConstraintType, T expectedModifiedValue, T actualModifiedValue)
             {
-                var valueRecord = s_Pool.Count > 0 ? s_Pool.Dequeue() : new ValueRecord();
+                ValueRecord valueRecord = s_Pool.Count > 0 ? s_Pool.Dequeue() : new ValueRecord();
                 valueRecord.Modifier = modifier;
                 valueRecord.ValueConstraintType = valueConstraintType;
                 valueRecord.ExpectedModifiedValue = expectedModifiedValue;
@@ -168,7 +196,7 @@ namespace YBFramework.Common
 
             public static void AddRecord(BaseValue<T> valueInstance, ValueRecord record)
             {
-                if (!s_ValueRecords.TryGetValue(valueInstance, out var valueRecords))
+                if (!s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
                 {
                     //TODO 创建集合存在GC
                     valueRecords = new List<ValueRecord>();
@@ -178,31 +206,41 @@ namespace YBFramework.Common
                 valueRecords.Add(record);
             }
 
-            public static void RemoveRecordByValueConstraintType(BaseValue<T> valueInstance,
-                ValueConstraintType valueConstraintType)
+            public static void RemoveRecordByValueConstraintType(BaseValue<T> valueInstance, ValueConstraintType valueConstraintType)
             {
-                if (s_ValueRecords.TryGetValue(valueInstance, out var valueRecords))
-                    for (var i = 0; i < valueRecords.Count; i++)
+                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
                         if (valueRecords[i].ValueConstraintType == valueConstraintType)
                         {
                             Free(valueRecords[i]);
                             valueRecords.RemoveAt(i);
                         }
+                    }
+                }
             }
 
             public static void RemoveRecords(BaseValue<T> valueInstance)
             {
-                if (s_ValueRecords.Remove(valueInstance, out var valueRecords))
-                    for (var i = 0; i < valueRecords.Count; i++)
+                if (s_ValueRecords.Remove(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
                         Free(valueRecords[i]);
+                    }
+                }
             }
 
             public static string LogValueRecords(BaseValue<T> valueInstance)
             {
-                if (s_ValueRecords.TryGetValue(valueInstance, out var valueRecords))
+                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
                 {
                     s_StringBuilder.Clear();
-                    for (var i = 0; i < valueRecords.Count; i++) AppendValueRecord(valueRecords[i]);
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
+                        AppendValueRecord(valueRecords[i]);
+                    }
                     return s_StringBuilder.ToString();
                 }
                 return null;
@@ -210,12 +248,16 @@ namespace YBFramework.Common
 
             public static string LogValueRecords(BaseValue<T> valueInstance, ValueConstraintType valueConstraintType)
             {
-                if (s_ValueRecords.TryGetValue(valueInstance, out var valueRecords))
+                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
                 {
                     s_StringBuilder.Clear();
-                    for (var i = 0; i < valueRecords.Count; i++)
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
                         if (valueRecords[i].ValueConstraintType == valueConstraintType)
+                        {
                             AppendValueRecord(valueRecords[i]);
+                        }
+                    }
                     return s_StringBuilder.ToString();
                 }
                 return null;
@@ -234,54 +276,14 @@ namespace YBFramework.Common
                 s_StringBuilder.Append(valueRecord.ActualModifiedValue);
                 s_StringBuilder.Append("\n");
             }
+            
+            private T ActualModifiedValue;
 
-#endregion
+            private T ExpectedModifiedValue;
+
+            private string Modifier;
+
+            private ValueConstraintType ValueConstraintType;
         }
-
-#endregion
-
-#region BaseValue Pool
-
-        private static readonly Dictionary<Type, Queue<BaseValue<T>>> s_Pools = new();
-
-        public static TBaseValue Allocate<TBaseValue>() where TBaseValue : BaseValue<T>, new()
-        {
-            var type = typeof(TBaseValue);
-            if (!s_Pools.TryGetValue(type, out var pool))
-            {
-                pool = new Queue<BaseValue<T>>();
-                s_Pools.Add(type, pool);
-            }
-            return s_Pools.Count > 0 ? (TBaseValue)pool.Dequeue() : new TBaseValue();
-        }
-
-        public static void Free(BaseValue<T> valueInstance)
-        {
-            var type = valueInstance.GetType();
-            if (!s_Pools.TryGetValue(type, out var pool))
-            {
-                pool = new Queue<BaseValue<T>>();
-                s_Pools.Add(type, pool);
-            }
-            valueInstance.OnFree();
-            pool.Enqueue(valueInstance);
-        }
-
-        public static void Free<TBaseValue>(ICollection<TBaseValue> valueInstances) where TBaseValue : BaseValue<T>
-        {
-            var valueInstanceType = typeof(TBaseValue);
-            if (!s_Pools.TryGetValue(valueInstanceType, out var pool))
-            {
-                pool = new Queue<BaseValue<T>>();
-                s_Pools.Add(valueInstanceType, pool);
-            }
-            foreach (var valueInstance in valueInstances)
-            {
-                valueInstance.OnFree();
-                pool.Enqueue(valueInstance);
-            }
-        }
-
-#endregion
     }
 }

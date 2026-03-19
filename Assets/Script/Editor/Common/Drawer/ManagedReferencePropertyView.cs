@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace YBFramework.MyEditor.Common
 {
-    public sealed class DynamicElementView : VisualElement
+    public class ManagedReferencePropertyView : VisualElement
     {
         private readonly PopupField<Type> m_TypeSelectField;
 
@@ -14,9 +14,10 @@ namespace YBFramework.MyEditor.Common
 
         private SerializedProperty m_Property;
 
-        public DynamicElementView(List<Type> typeOptions)
+        public ManagedReferencePropertyView(List<Type> typeOptions)
         {
-            style.flexDirection = FlexDirection.Column;
+            style.paddingLeft = 10;
+            style.paddingRight = 6;
             m_TypeSelectField = new PopupField<Type>("选择类型")
             {
                 choices = typeOptions
@@ -44,6 +45,7 @@ namespace YBFramework.MyEditor.Common
             m_Property.serializedObject.Update();
             m_Property.managedReferenceValue = Activator.CreateInstance(evt.newValue);
             m_Property.serializedObject.ApplyModifiedProperties();
+            m_ElementField.BindProperty(m_Property);
         }
     }
 }

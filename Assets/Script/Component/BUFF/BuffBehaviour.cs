@@ -4,19 +4,19 @@ using System.Collections.Generic;
 namespace YBFramework.Component
 {
     [Serializable]
-    public abstract class BUFFBehaviour
+    public abstract class BuffBehaviour
     {
-        protected BUFF m_BUFF;
+        protected Buff m_BUFF;
 
         public abstract void OnMagnificationChanged();
 
-        public abstract BUFFBehaviour Clone();
+        public abstract BuffBehaviour Clone();
 
-        public abstract void OnInit(BUFFBehaviour source);
+        public abstract void OnInit(BuffBehaviour source);
 
         public abstract void OnReset();
 
-        public virtual void OnAdd(BUFF buff)
+        public virtual void OnAdd(Buff buff)
         {
             m_BUFF = buff;
         }
@@ -36,25 +36,25 @@ namespace YBFramework.Component
 
         #region Pool
 
-        private static readonly Dictionary<Type, Queue<BUFFBehaviour>> s_BehaviourPools = new();
+        private static readonly Dictionary<Type, Queue<BuffBehaviour>> s_BehaviourPools = new();
 
-        private static Queue<BUFFBehaviour> GetPool(Type componentType)
+        private static Queue<BuffBehaviour> GetPool(Type componentType)
         {
             if (!s_BehaviourPools.TryGetValue(componentType, out var pool))
             {
-                pool = new Queue<BUFFBehaviour>();
+                pool = new Queue<BuffBehaviour>();
                 s_BehaviourPools.Add(componentType, pool);
             }
             return pool;
         }
 
-        protected static BUFFBehaviour Allocate<T>() where T : BUFFBehaviour, new()
+        protected static BuffBehaviour Allocate<T>() where T : BuffBehaviour, new()
         {
-            Queue<BUFFBehaviour> pool = GetPool(typeof(T));
+            Queue<BuffBehaviour> pool = GetPool(typeof(T));
             return pool.Count > 0 ? pool.Dequeue() : new T();
         }
 
-        private static void Free(BUFFBehaviour component)
+        private static void Free(BuffBehaviour component)
         {
             GetPool(component.GetType()).Enqueue(component);
         }

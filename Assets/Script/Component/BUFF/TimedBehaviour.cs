@@ -3,7 +3,7 @@ using YBFramework.Common;
 
 namespace YBFramework.Component
 {
-    public abstract class TimedBehaviour : BUFFBehaviour
+    public abstract class TimedBehaviour : BuffBehaviour
     {
         [SerializeField] protected float m_Interval;
 

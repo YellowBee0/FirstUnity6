@@ -5,28 +5,42 @@ using YBFramework.Common;
 
 namespace YBFramework.Component
 {
-    public sealed class BUFF : BaseValue<int>
+    public sealed class Buff : BaseValue<int>
     {
-        private readonly List<BUFFBehaviour> m_Behaviours = new();
+        private readonly List<BuffBehaviour> m_Behaviours = new();
 
-        private BUFFData m_BUFFData;
+        private BuffData m_BUFFData;
+
+        public Entity Caster;
 
         private bool m_IsRunning;
 
         private float m_Magnification;
 
-        private BUFFManager m_Manager;
+        private BuffManager m_Manager;
 
         private Action m_OnLayerChanged;
 
+        public BuffBehaviour GetBehaviour(Type type)
+        {
+            for (int i = 0; i < m_Behaviours.Count; i++)
+            {
+                if (m_Behaviours[i].GetType() == type)
+                {
+                    return m_Behaviours[i];
+                }
+            }
+            return null;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BUFFManager GetManager()
+        public BuffManager GetManager()
         {
             return m_Manager;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BUFFData GetBUFFData()
+        public BuffData GetBUFFData()
         {
             return m_BUFFData;
         }
@@ -68,20 +82,20 @@ namespace YBFramework.Component
             int newValue = m_CurValue + delta;
             if (newValue > m_MaxValue)
             {
-                if (m_BUFFData.GetIsRemoveOnMaxLayer())
+                /*if (m_BUFFData.GetIsRemoveOnMaxLayer())
                 {
                     m_Manager.RemoveBUFF(this);
                     return;
-                }
+                }*/
                 newValue = m_MaxValue;
             }
             else if (newValue < m_MinValue)
             {
-                if (m_BUFFData.GetIsRemoveOnMinLayer())
+                /*if (m_BUFFData.GetIsRemoveOnMinLayer())
                 {
                     m_Manager.RemoveBUFF(this);
                     return;
-                }
+                }*/
                 newValue = m_MinValue;
             }
             m_CurValue = newValue;
@@ -112,30 +126,30 @@ namespace YBFramework.Component
             m_OnLayerChanged -= callBack;
         }
 
-        public void Init(BUFFData buffData, BUFFManager manager)
+        public void Init(BuffData buffData, BuffManager manager)
         {
             m_Manager = manager;
             m_BUFFData = buffData;
-            if (buffData.GetStackOption() != StackOption.NotAllow)
+            /*if (buffData.GetStackOption() != StackOption.NotAllow)
             {
                 Init(buffData.GetMaxLayer(), buffData.GetMinLayer(), buffData.GetInitialLayer(), false, false, buffData.GetIsRecordLayer());
             }
             else
             {
                 Init(0, 0, 0, false, false, false);
-            }
-            IReadOnlyList<BUFFBehaviour> behaviours = buffData.GetBehaviours();
+            }*/
+            IReadOnlyList<BuffBehaviour> behaviours = buffData.GetBehaviours();
             for (int i = 0; i < behaviours.Count; i++)
             {
-                BUFFBehaviour behaviour = behaviours[i].Clone();
+                BuffBehaviour behaviour = behaviours[i].Clone();
                 behaviour.OnInit(behaviours[i]);
                 AddBehaviour(behaviour);
             }
         }
 
-        public bool Stack(BUFFData other)
+        public bool Stack(BuffData other)
         {
-            switch (m_BUFFData.GetStackOption())
+            /*switch (m_BUFFData.GetStackOption())
             {
                 case StackOption.AddLayer:
                     ModifyCurValue("Stack", other.GetInitialLayer());
@@ -151,10 +165,11 @@ namespace YBFramework.Component
                     return true;
                 default:
                     return false;
-            }
+            }*/
+            return false;
         }
 
-        public void AddBehaviour(BUFFBehaviour behaviour)
+        public void AddBehaviour(BuffBehaviour behaviour)
         {
             m_Behaviours.Add(behaviour);
             behaviour.OnAdd(this);
@@ -164,7 +179,7 @@ namespace YBFramework.Component
             }
         }
 
-        public void RemoveBehaviour(BUFFBehaviour behaviour)
+        public void RemoveBehaviour(BuffBehaviour behaviour)
         {
             if (m_Behaviours.Remove(behaviour))
             {

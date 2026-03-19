@@ -1,6 +1,6 @@
 ﻿namespace YBFramework.Component
 {
-    public enum BUFFType
+    public enum BuffType
     {
         BUFF,
         Neutral,

@@ -2,17 +2,15 @@
 
 namespace YBFramework.Component
 {
-    public sealed class BUFFManager : IComponent
+    public sealed class BuffManager : IComponent
     {
-        private readonly List<BUFF> m_BUFFs = new();
+        private readonly List<Buff> m_BUFFs = new();
 
         private Entity m_Owner;
 
         private float m_BUFFMagnification = 1f;
 
         private float m_DeBUFFMagnification = 1f;
-
-        #region IComponent Members
 
         public Entity GetOwner()
         {
@@ -34,19 +32,25 @@ namespace YBFramework.Component
             Clear();
         }
 
-        #endregion
-
         private void Clear()
         {
-            for (var i = 0; i < m_BUFFs.Count; i++) BUFF.Free(m_BUFFs[i]);
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
+                Buff.Free(m_BUFFs[i]);
+            }
             m_BUFFs.Clear();
         }
 
-        public BUFF GetBUFF(string name)
+        public IReadOnlyList<Buff> GetBuffs()
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
+            return m_BUFFs;
+        }
+        
+        public Buff GetBUFF(string name)
+        {
+            for (int i = 0; i < m_BUFFs.Count; i++)
             {
-                if (m_BUFFs[i].GetBUFFData().GetBUFFName() == name)
+                if (m_BUFFs[i].GetBUFFData().GetBuffName() == name)
                 {
                     return m_BUFFs[i];
                 }
@@ -54,22 +58,27 @@ namespace YBFramework.Component
             return null;
         }
 
-        public void AddBUFF(BUFFData buffData)
+        public void AddBUFF(BuffData buffData)
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
-                if (m_BUFFs[i].GetBUFFData().GetBUFFName() == buffData.GetBUFFName())
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
+                if (m_BUFFs[i].GetBUFFData().GetBuffName() == buffData.GetBuffName())
                 {
-                    if (m_BUFFs[i].Stack(buffData)) return;
+                    if (m_BUFFs[i].Stack(buffData))
+                    {
+                        return;
+                    }
                     break;
                 }
-            var buff = BUFF.Allocate<BUFF>();
+            }
+            Buff buff = Buff.Allocate<Buff>();
             buff.Init(buffData, this);
-            switch (buffData.GetBUFFType())
+            switch (buffData.GetBuffType())
             {
-                case BUFFType.BUFF:
+                case BuffType.BUFF:
                     buff.SetMagnification(m_BUFFMagnification);
                     break;
-                case BUFFType.DeBUFF:
+                case BuffType.DeBUFF:
                     buff.SetMagnification(m_DeBUFFMagnification);
                     break;
             }
@@ -78,66 +87,83 @@ namespace YBFramework.Component
 
         private void RemoveBUFF(int index)
         {
-            BUFF.Free(m_BUFFs[index]);
+            Buff.Free(m_BUFFs[index]);
             (m_BUFFs[index], m_BUFFs[^1]) = (m_BUFFs[^1], m_BUFFs[index]);
             m_BUFFs.RemoveAt(index);
         }
 
-        public void RemoveBUFF(BUFFData buffData)
+        public void RemoveBUFF(BuffData buffData)
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
-                if (m_BUFFs[i].GetBUFFData().GetBUFFName() == buffData.GetBUFFName())
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
+                if (m_BUFFs[i].GetBUFFData().GetBuffName() == buffData.GetBuffName())
                 {
                     RemoveBUFF(i);
                     return;
                 }
+            }
         }
 
-        public void RemoveBUFF(BUFF buff)
+        public void RemoveBUFF(Buff buff)
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
                 if (m_BUFFs[i] == buff)
                 {
                     RemoveBUFF(i);
                     return;
                 }
+            }
         }
 
-        public void RemoveBUFF(BUFFType buffType)
+        public void RemoveBUFF(BuffType buffType)
         {
-            var i = 0;
+            int i = 0;
             while (i < m_BUFFs.Count)
-                if (m_BUFFs[i].GetBUFFData().GetBUFFType() == buffType)
+            {
+                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
+                {
                     RemoveBUFF(i);
+                }
                 else
+                {
                     i++;
+                }
+            }
         }
 
         public void Start()
         {
-            for (var i = 0; i < m_BUFFs.Count; i++) m_BUFFs[i].Start();
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
+                m_BUFFs[i].Start();
+            }
         }
 
-        public void Start(BUFFType buffType)
+        public void Start(BuffType buffType)
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
-                if (m_BUFFs[i].GetBUFFData().GetBUFFType() == buffType)
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
+                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
+                {
                     m_BUFFs[i].Start();
+                }
+            }
         }
 
         public void Stop()
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
+            for (int i = 0; i < m_BUFFs.Count; i++)
             {
                 m_BUFFs[i].Stop();
             }
         }
 
-        public void Stop(BUFFType buffType)
+        public void Stop(BuffType buffType)
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
+            for (int i = 0; i < m_BUFFs.Count; i++)
             {
-                if (m_BUFFs[i].GetBUFFData().GetBUFFType() == buffType)
+                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
                 {
                     m_BUFFs[i].Stop();
                 }
@@ -146,35 +172,35 @@ namespace YBFramework.Component
 
         public void Reset()
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
+            for (int i = 0; i < m_BUFFs.Count; i++)
             {
                 m_BUFFs[i].Reset();
             }
         }
 
-        public void Reset(BUFFType buffType)
+        public void Reset(BuffType buffType)
         {
-            for (var i = 0; i < m_BUFFs.Count; i++)
+            for (int i = 0; i < m_BUFFs.Count; i++)
             {
-                if (m_BUFFs[i].GetBUFFData().GetBUFFType() == buffType)
+                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
                 {
                     m_BUFFs[i].Reset();
                 }
             }
         }
 
-        public void SetBUFFMagnification(BUFFType buffType, float magnification)
+        public void SetBUFFMagnification(BuffType buffType, float magnification)
         {
             switch (buffType)
             {
-                case BUFFType.BUFF:
+                case BuffType.BUFF:
                     if (m_BUFFMagnification == magnification)
                     {
                         return;
                     }
                     m_BUFFMagnification = magnification;
                     break;
-                case BUFFType.DeBUFF:
+                case BuffType.DeBUFF:
                     if (m_DeBUFFMagnification == magnification)
                     {
                         return;
@@ -184,11 +210,13 @@ namespace YBFramework.Component
                 default:
                     return;
             }
-            for (var i = 0; i < m_BUFFs.Count; i++)
-                if (m_BUFFs[i].GetBUFFData().GetBUFFType() == buffType)
+            for (int i = 0; i < m_BUFFs.Count; i++)
+            {
+                if (m_BUFFs[i].GetBUFFData().GetBuffType() == buffType)
                 {
                     m_BUFFs[i].SetMagnification(magnification);
                 }
+            }
         }
     }
 }

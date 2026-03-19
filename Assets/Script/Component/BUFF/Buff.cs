@@ -7,7 +7,7 @@ namespace YBFramework.Component
 {
     public sealed class Buff : BaseValue<int>
     {
-        private readonly List<BuffBehaviour> m_Behaviours = new();
+        private readonly List<IBuffBehaviour> m_Behaviours = new();
 
         private BuffData m_BUFFData;
 
@@ -23,13 +23,13 @@ namespace YBFramework.Component
 
         public BuffBehaviour GetBehaviour(Type type)
         {
-            for (int i = 0; i < m_Behaviours.Count; i++)
+            /*for (int i = 0; i < m_Behaviours.Count; i++)
             {
                 if (m_Behaviours[i].GetType() == type)
                 {
                     return m_Behaviours[i];
                 }
-            }
+            }*/
             return null;
         }
 
@@ -138,12 +138,11 @@ namespace YBFramework.Component
             {
                 Init(0, 0, 0, false, false, false);
             }*/
-            IReadOnlyList<BuffBehaviour> behaviours = buffData.GetBehaviours();
+            IReadOnlyList<IBuffBehaviour> behaviours = buffData.GetBehaviours();
             for (int i = 0; i < behaviours.Count; i++)
             {
-                BuffBehaviour behaviour = behaviours[i].Clone();
-                behaviour.OnInit(behaviours[i]);
-                AddBehaviour(behaviour);
+                IBuffBehaviour behaviour = behaviours[i].Clone();
+                //AddBehaviour(behaviour);
             }
         }
 
@@ -171,7 +170,7 @@ namespace YBFramework.Component
 
         public void AddBehaviour(BuffBehaviour behaviour)
         {
-            m_Behaviours.Add(behaviour);
+            //m_Behaviours.Add(behaviour);
             behaviour.OnAdd(this);
             if (m_IsRunning)
             {
@@ -181,32 +180,32 @@ namespace YBFramework.Component
 
         public void RemoveBehaviour(BuffBehaviour behaviour)
         {
-            if (m_Behaviours.Remove(behaviour))
+            /*if (m_Behaviours.Remove(behaviour))
             {
                 if (m_IsRunning)
                 {
                     behaviour.OnStop();
                 }
                 behaviour.OnRemove();
-            }
+            }*/
         }
 
         public void Start()
-        {
+        {/*
             for (int i = 0; i < m_Behaviours.Count; i++)
             {
                 m_Behaviours[i].OnStart();
             }
-            m_IsRunning = true;
+            m_IsRunning = true;*/
         }
 
         public void Stop()
         {
-            for (int i = 0; i < m_Behaviours.Count; i++)
+            /*for (int i = 0; i < m_Behaviours.Count; i++)
             {
                 m_Behaviours[i].OnStop();
             }
-            m_IsRunning = false;
+            m_IsRunning = false;*/
         }
 
         public void Reset()

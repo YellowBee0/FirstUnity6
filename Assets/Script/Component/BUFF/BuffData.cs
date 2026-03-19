@@ -9,7 +9,7 @@ namespace YBFramework.Component
 #endif
     public sealed class BuffData : ScriptableObject
     {
-        [SerializeReference] public List<BuffBehaviour> m_Behaviours;
+        [SerializeReference] public List<IBuffBehaviour> m_Behaviours;
         
         [SerializeReference] private RepeatAddProcess m_RepeatAddProcess;
 
@@ -17,13 +17,13 @@ namespace YBFramework.Component
 
         [SerializeField] private BuffType m_BuffType;
 
-        public IReadOnlyList<BuffBehaviour> GetBehaviours()
+        public IReadOnlyList<IBuffBehaviour> GetBehaviours()
         {
             return m_Behaviours;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public string GetBuffName()
+        public string GetName()
         {
             return m_BuffName;
         }

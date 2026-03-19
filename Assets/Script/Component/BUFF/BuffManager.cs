@@ -50,7 +50,7 @@ namespace YBFramework.Component
         {
             for (int i = 0; i < m_BUFFs.Count; i++)
             {
-                if (m_BUFFs[i].GetBUFFData().GetBuffName() == name)
+                if (m_BUFFs[i].GetBUFFData().GetName() == name)
                 {
                     return m_BUFFs[i];
                 }
@@ -62,7 +62,7 @@ namespace YBFramework.Component
         {
             for (int i = 0; i < m_BUFFs.Count; i++)
             {
-                if (m_BUFFs[i].GetBUFFData().GetBuffName() == buffData.GetBuffName())
+                if (m_BUFFs[i].GetBUFFData().GetName() == buffData.GetName())
                 {
                     if (m_BUFFs[i].Stack(buffData))
                     {
@@ -96,7 +96,7 @@ namespace YBFramework.Component
         {
             for (int i = 0; i < m_BUFFs.Count; i++)
             {
-                if (m_BUFFs[i].GetBUFFData().GetBuffName() == buffData.GetBuffName())
+                if (m_BUFFs[i].GetBUFFData().GetName() == buffData.GetName())
                 {
                     RemoveBUFF(i);
                     return;

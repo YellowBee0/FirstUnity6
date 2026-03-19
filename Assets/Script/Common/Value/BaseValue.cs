@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using UnityEngine;
 
 namespace YBFramework.Common
 {
+    [Serializable]
     public abstract class BaseValue<T> where T : struct
     {
         private static readonly Dictionary<Type, Queue<BaseValue<T>>> s_Pools = new();
@@ -46,18 +48,18 @@ namespace YBFramework.Common
                 pool.Enqueue(valueInstance);
             }
         }
-        
-        protected T m_CurValue;
 
-        private bool m_IsRecordedCurValue;
+        [SerializeField] protected T m_CurValue;
 
-        private bool m_IsRecordedMaxValue;
+        [SerializeField] protected T m_MaxValue;
 
-        private bool m_IsRecordedMinValue;
+        [SerializeField] protected T m_MinValue;
 
-        protected T m_MaxValue;
+        [SerializeField] private bool m_IsRecordedCurValue;
 
-        protected T m_MinValue;
+        [SerializeField] private bool m_IsRecordedMaxValue;
+
+        [SerializeField] private bool m_IsRecordedMinValue;
 
         public void Init(T maxValue, T minValue, T curValue, bool isRecordMaxValue, bool isRecordMinValue, bool isRecordCurValue)
         {
@@ -69,7 +71,7 @@ namespace YBFramework.Common
             m_IsRecordedCurValue = isRecordCurValue;
         }
 
-        private ref bool GetIsEnableRecord(ValueConstraintType valueConstraintType)
+        protected ref bool GetIsEnableRecord(ValueConstraintType valueConstraintType)
         {
             switch (valueConstraintType)
             {
@@ -84,14 +86,6 @@ namespace YBFramework.Common
             }
         }
 
-        protected void Record(ValueConstraintType valueConstraintType, string modifier, T expectedModifiedValue, T actualModifiedValue)
-        {
-            if (GetIsEnableRecord(valueConstraintType) && !string.IsNullOrEmpty(modifier))
-            {
-                ValueRecord.AddRecord(this, ValueRecord.Allocate(modifier, ValueConstraintType.Max, expectedModifiedValue, actualModifiedValue));
-            }
-        }
-
         public void EnableRecord(ValueConstraintType valueConstraintType, bool enable)
         {
             ref bool isRecorded = ref GetIsEnableRecord(valueConstraintType);
@@ -102,6 +96,14 @@ namespace YBFramework.Common
                     ValueRecord.RemoveRecordByValueConstraintType(this, valueConstraintType);
                 }
                 isRecorded = enable;
+            }
+        }
+        
+        protected void Record(ValueConstraintType valueConstraintType, string modifier, T expectedModifiedValue, T actualModifiedValue)
+        {
+            if (GetIsEnableRecord(valueConstraintType) && !string.IsNullOrEmpty(modifier))
+            {
+                ValueRecord.AddRecord(this, ValueRecord.Allocate(modifier, ValueConstraintType.Max, expectedModifiedValue, actualModifiedValue));
             }
         }
 
@@ -276,7 +278,7 @@ namespace YBFramework.Common
                 s_StringBuilder.Append(valueRecord.ActualModifiedValue);
                 s_StringBuilder.Append("\n");
             }
-            
+
             private T ActualModifiedValue;
 
             private T ExpectedModifiedValue;

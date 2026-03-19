@@ -47,7 +47,7 @@ namespace YBFramework.Component
                     for (int i = 0; i < buffs.Count; i++)
                     {
                         Buff buff = buffs[i];
-                        if (buff.GetBUFFData().GetBuffName() == m_BuffData.GetBuffName())
+                        if (buff.GetBUFFData().GetName() == m_BuffData.GetName())
                         {
                             if (m_IsJudgingByCaster)
                             {

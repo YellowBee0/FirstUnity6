@@ -17,26 +17,22 @@ namespace YBFramework.Component
             return pool;
         }
 
-        protected static IBuffBehaviour Allocate<T>() where T : IBuffBehaviour, new()
+        protected static T Allocate<T>() where T : IBuffBehaviour, new()
         {
             Queue<IBuffBehaviour> pool = GetPool(typeof(T));
-            return pool.Count > 0 ? pool.Dequeue() : new T();
+            return pool.Count > 0 ? (T)pool.Dequeue() : new T();
         }
 
-        private static void Free(IBuffBehaviour behaviour)
+        protected static void Free(IBuffBehaviour behaviour)
         {
             GetPool(behaviour.GetType()).Enqueue(behaviour);
         }
-
-        void OnReset();
 
         void OnAdd(Buff buff);
 
         void OnRemove();
 
-        void OnStart();
-
-        void OnStop();
+        void OnReset();
 
         void OnMagnificationChanged();
 

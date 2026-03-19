@@ -8,6 +8,16 @@ namespace YBFramework.Common
     public sealed class Timer
     {
         private static readonly Queue<Timer> s_Pool = new();
+        
+        public static Timer Allocate()
+        {
+            return s_Pool.Count > 0 ? s_Pool.Dequeue() : new Timer();
+        }
+
+        public static void Free(Timer timer)
+        {
+            s_Pool.Enqueue(timer);
+        }
 
         private Action m_Callback;
 
@@ -23,16 +33,10 @@ namespace YBFramework.Common
 
         private float m_TotalTime;
 
-        public static Timer Allocate()
+        private Timer()
         {
-            return s_Pool.Count > 0 ? s_Pool.Dequeue() : new Timer();
         }
-
-        public static void Free(Timer timer)
-        {
-            s_Pool.Enqueue(timer);
-        }
-
+        
         private void Update(float deltaTime)
         {
             if (m_Timer >= m_TotalTime)
@@ -89,8 +93,6 @@ namespace YBFramework.Common
             m_Timer = 0;
         }
 
-#region Nested type: TimerMonitor
-
         private static class TimerMonitor
         {
             private static Timer s_RootTimer;
@@ -126,7 +128,7 @@ namespace YBFramework.Common
             {
                 while (s_RootTimer != null)
                 {
-                    var timer = s_RootTimer;
+                    Timer timer = s_RootTimer;
                     while (timer != null)
                     {
                         timer.Update(Time.deltaTime);
@@ -136,7 +138,5 @@ namespace YBFramework.Common
                 }
             }
         }
-
-#endregion
     }
 }

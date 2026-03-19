@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: New BuffData
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.BuffData
   m_Behaviours:
-  - rid: 8360641753158254848
-  - rid: 8360641753158254851
-  - rid: -2
+  - rid: 8360641753158254896
+  - rid: 8360641753158254897
   m_RepeatAddProcess:
     rid: 8360641753158254845
   m_BuffName: 
@@ -23,23 +22,31 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8360641753158254845
       type: {class: AddLayerProcess, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
         m_RepeatAddCondition: 0
         m_IsJudgingByCaster: 0
         m_ModifyLayerCount: 0
-    - rid: 8360641753158254848
-      type: {class: TestBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
+    - rid: 8360641753158254896
+      type: {class: BuffLayer, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
-        m_Interval: 0
-        ID: 0
-    - rid: 8360641753158254851
-      type: {class: PropertyModifyTimedBehaviour, ns: YBFramework.Component, asm: Assembly-CSharp}
+        m_CurValue: 0
+        m_MaxValue: 0
+        m_MinValue: 0
+        m_IsRecordedCurValue: 0
+        m_IsRecordedMaxValue: 0
+        m_IsRecordedMinValue: 0
+    - rid: 8360641753158254897
+      type: {class: ModifyProperty, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
-        m_Interval: 0
-        m_ConstraintType: 0
-        m_ModifiedValue: 0
+        m_Executor:
+          rid: 8360641753158254898
         m_PropertyName: 
+        m_ConstraintType: 0
+        m_ModifyValue: 0
+    - rid: 8360641753158254898
+      type: {class: TimeExecutor, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_TotalTime: 0
+        m_IsLoop: 0

@@ -6,8 +6,8 @@ using UnityEditor;
 namespace YBFramework.MyEditor.Common
 {
     /// <summary>
-    /// 在自定义编辑器中绘制类的可视化窗口。支持泛型类型绘制，但是绘制的泛型类型和绘制类的泛型类型必须一一对应，
-    /// 如果不能对应上，比如泛型重载：Generic`T1,Generic`T1,T2，那么只能使用接口统一需要绘制的类型，然后实现对应接口的绘制类
+    ///     在自定义编辑器中绘制类的可视化窗口。支持泛型类型绘制，但是绘制的泛型类型和绘制类的泛型类型必须一一对应，
+    ///     如果不能对应上，比如泛型重载：Generic`T1,Generic`T1,T2，那么只能使用接口统一需要绘制的类型，然后实现对应接口的绘制类
     /// </summary>
     public static class DrawerManager
     {
@@ -22,7 +22,7 @@ namespace YBFramework.MyEditor.Common
         [InitializeOnLoadMethod]
         private static void Init()
         {
-            TypeCache.TypeCollection types = TypeCache.GetTypesWithAttribute<DrawerAttribute>();
+            UnityEditor.TypeCache.TypeCollection types = UnityEditor.TypeCache.GetTypesWithAttribute<DrawerAttribute>();
             for (int i = 0; i < types.Count; i++)
             {
                 DrawerAttribute attribute = types[i].GetCustomAttribute<DrawerAttribute>();

@@ -35,9 +35,14 @@ namespace YBFramework.Component
             m_Timer.Reset();
         }
 
-        public void SetExecuteAction(Action action)
+        public void RegisterExecuteCallback(Action callback)
         {
-            m_Timer.SetCallback(action);
+            m_Timer.RegisterCallback(callback);
+        }
+
+        public void UnregisterExecuteCallback(Action callback)
+        {
+            m_Timer.RegisterCallback(callback);
         }
 
         public IExecutor Clone()

@@ -7,24 +7,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="设计Buff下的部分行为">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="整理">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/IPooledObject.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/IPooledObject.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/ObjectPool.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/ObjectPool.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/BuffLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/BuffLayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffBehaviour.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/IBuffComponent.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Timer/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Timer/Timer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/IExecutor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/IExecutor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/TimeExecutor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/Executor/TimeExecutor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/ModifyProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Behaviour/ModifyProperty.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Buff.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/Buff.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffBehaviour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffBehaviour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffAsset.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffAsset.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/BuffType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/RepeatAddProcess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/RepeatAddProcess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/Property.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyFormula.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyFormula.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/AddLayerProcess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/ModifyLayerProcess.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/AddLayerProcess.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/BUFF/RepeatAddProcess/ModifyLayerProcess.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +38,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/74/d413bf00/ISerializedObjectBindingImplementation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/bb/983a4880/InspectorElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/41d29b352f6a475ab1bf7c6628b8279046ae00/02/a4f652f5/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/3e/47e2ad47/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/96/6cbdcb46/DisplayNameAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/4e/e4bf9b2b/PopupField`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/5f/ee9ab3b3/VisualElement.cs" root0="FORCE_HIGHLIGHTING" />
@@ -164,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773923434945</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="整理">
+      <option name="closed" value="true" />
+      <created>1773926134914</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1773926134914</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,6 +186,7 @@
     <MESSAGE value="修改低级错误" />
     <MESSAGE value="进一步绘制Buff，设计Buff的重复添加规则" />
     <MESSAGE value="设计Buff下的部分行为" />
-    <option name="LAST_COMMIT_MESSAGE" value="设计Buff下的部分行为" />
+    <MESSAGE value="整理" />
+    <option name="LAST_COMMIT_MESSAGE" value="整理" />
   </component>
 </project>

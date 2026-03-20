@@ -24,19 +24,30 @@ namespace YBFramework.Component
 
         private void DoModifyValue()
         {
-            m_Property?.ModifyValue(m_ConstraintType, m_Buff.GetBuffAsset().GetName(), m_ModifyValue);
+            m_Property.ModifyValue(m_ConstraintType, m_Buff.GetBuffAsset().GetName(), m_ModifyValue);
         }
 
         public void OnAdd(Buff buff)
         {
             m_Buff = buff;
-            m_Property = buff.GetManager().GetOwner().GetCustomComponent<PropertyManager>()?.GetProperty(m_PropertyName);
-            m_Executor.Start();
+            Entity owner = buff.GetManager().GetOwner();
+            PropertyManager propertyManager = owner.GetComponent<PropertyManager>();
+            if (propertyManager != null)
+            {
+                m_Property = propertyManager.GetProperty(m_PropertyName);
+                if (m_Property != null)
+                {
+                    m_Executor.Initialize(owner);
+                    m_Executor.RegisterExecuteCallback(DoModifyValue);
+                    m_Executor.Start();
+                }
+            }
         }
 
         public void OnRemove()
         {
             m_Executor.Stop();
+            m_Executor.UnregisterExecuteCallback(DoModifyValue);
         }
 
         public void OnReset()
@@ -55,8 +66,7 @@ namespace YBFramework.Component
             modifyProperty.m_PropertyName = m_PropertyName;
             modifyProperty.m_ConstraintType = m_ConstraintType;
             modifyProperty.m_ModifyValue = m_ModifyValue;
-            modifyProperty.m_Executor = m_Executor.Clone();
-            modifyProperty.m_Executor.SetExecuteAction(DoModifyValue);
+            modifyProperty.m_Executor ??= m_Executor.Clone();
             return modifyProperty;
         }
     }

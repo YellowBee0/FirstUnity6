@@ -8,7 +8,7 @@ namespace YBFramework.Common
     public sealed class Timer
     {
         private static readonly Queue<Timer> s_Pool = new();
-        
+
         public static Timer Allocate()
         {
             return s_Pool.Count > 0 ? s_Pool.Dequeue() : new Timer();
@@ -16,6 +16,8 @@ namespace YBFramework.Common
 
         public static void Free(Timer timer)
         {
+            timer.m_IsLoop = false;
+            timer.m_Callback = null;
             s_Pool.Enqueue(timer);
         }
 
@@ -36,7 +38,7 @@ namespace YBFramework.Common
         private Timer()
         {
         }
-        
+
         private void Update(float deltaTime)
         {
             if (m_Timer >= m_TotalTime)
@@ -57,13 +59,21 @@ namespace YBFramework.Common
 
         public void SetTotalTime(float totalTime)
         {
-            if (totalTime <= 0) throw new ArgumentException("Invalid total time");
+            if (totalTime <= 0)
+            {
+                throw new ArgumentException("Invalid total time");
+            }
             m_TotalTime = totalTime;
         }
 
-        public void SetCallback(Action callback)
+        public void RegisterCallback(Action callback)
         {
-            m_Callback = callback ?? throw new ArgumentException("Invalid callback");
+            m_Callback += callback ?? throw new ArgumentException("Invalid callback");
+        }
+
+        public void UnregisterCallback(Action callback)
+        {
+            m_Callback -= callback;
         }
 
         public void SetIsLoop(bool isLoop)
@@ -73,8 +83,14 @@ namespace YBFramework.Common
 
         public void Start()
         {
-            if (m_IsRunning) return;
-            if (m_TotalTime <= 0 || m_Callback == null) throw new InvalidOperationException("Timer is not properly initialized");
+            if (m_IsRunning)
+            {
+                return;
+            }
+            if (m_TotalTime <= 0 || m_Callback == null)
+            {
+                throw new InvalidOperationException("Timer is not properly initialized");
+            }
             TimerMonitor.StartTimer(this);
             m_IsRunning = true;
         }
@@ -99,7 +115,10 @@ namespace YBFramework.Common
 
             public static void StartTimer(Timer timer)
             {
-                if (timer == null) return;
+                if (timer == null)
+                {
+                    return;
+                }
                 timer.m_Next = null;
                 if (s_RootTimer == null)
                 {
@@ -116,12 +135,22 @@ namespace YBFramework.Common
 
             public static void StopTimer(Timer timer)
             {
-                if (timer == null) return;
+                if (timer == null)
+                {
+                    return;
+                }
                 if (timer.m_Prev != null)
+                {
                     timer.m_Prev.m_Next = timer.m_Next;
+                }
                 else
+                {
                     s_RootTimer = s_RootTimer.m_Next;
-                if (timer.m_Next != null) timer.m_Next.m_Prev = timer.m_Prev;
+                }
+                if (timer.m_Next != null)
+                {
+                    timer.m_Next.m_Prev = timer.m_Prev;
+                }
             }
 
             private static async UniTaskVoid Update()

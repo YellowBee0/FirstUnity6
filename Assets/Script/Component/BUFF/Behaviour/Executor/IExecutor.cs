@@ -12,7 +12,9 @@ namespace YBFramework.Component
 
         void Reset();
 
-        void SetExecuteAction(Action action);
+        void RegisterExecuteCallback(Action callback);
+        
+        void UnregisterExecuteCallback(Action callback);
 
         IExecutor Clone();
     }

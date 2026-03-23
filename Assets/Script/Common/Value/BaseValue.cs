@@ -7,48 +7,8 @@ using UnityEngine;
 namespace YBFramework.Common
 {
     [Serializable]
-    public abstract class BaseValue<T> where T : struct
+    public abstract class BaseValue<T> : IPooledObject where T : struct
     {
-        private static readonly Dictionary<Type, Queue<BaseValue<T>>> s_Pools = new();
-
-        public static TBaseValue Allocate<TBaseValue>() where TBaseValue : BaseValue<T>, new()
-        {
-            Type type = typeof(TBaseValue);
-            if (!s_Pools.TryGetValue(type, out Queue<BaseValue<T>> pool))
-            {
-                pool = new Queue<BaseValue<T>>();
-                s_Pools.Add(type, pool);
-            }
-            return s_Pools.Count > 0 ? (TBaseValue)pool.Dequeue() : new TBaseValue();
-        }
-
-        public static void Free(BaseValue<T> valueInstance)
-        {
-            Type type = valueInstance.GetType();
-            if (!s_Pools.TryGetValue(type, out Queue<BaseValue<T>> pool))
-            {
-                pool = new Queue<BaseValue<T>>();
-                s_Pools.Add(type, pool);
-            }
-            valueInstance.OnFree();
-            pool.Enqueue(valueInstance);
-        }
-
-        public static void Free<TBaseValue>(ICollection<TBaseValue> valueInstances) where TBaseValue : BaseValue<T>
-        {
-            Type valueInstanceType = typeof(TBaseValue);
-            if (!s_Pools.TryGetValue(valueInstanceType, out Queue<BaseValue<T>> pool))
-            {
-                pool = new Queue<BaseValue<T>>();
-                s_Pools.Add(valueInstanceType, pool);
-            }
-            foreach (TBaseValue valueInstance in valueInstances)
-            {
-                valueInstance.OnFree();
-                pool.Enqueue(valueInstance);
-            }
-        }
-
         [SerializeField] protected T m_CurValue;
 
         [SerializeField] protected T m_MaxValue;
@@ -98,7 +58,7 @@ namespace YBFramework.Common
                 isRecorded = enable;
             }
         }
-        
+
         protected void Record(ValueConstraintType valueConstraintType, string modifier, T expectedModifiedValue, T actualModifiedValue)
         {
             if (GetIsEnableRecord(valueConstraintType) && !string.IsNullOrEmpty(modifier))
@@ -162,7 +122,7 @@ namespace YBFramework.Common
 
         public abstract void ModifyCurValue(string modifier, T delta);
 
-        protected virtual void OnFree()
+        public virtual void OnFree()
         {
             m_MaxValue = default;
             m_MinValue = default;

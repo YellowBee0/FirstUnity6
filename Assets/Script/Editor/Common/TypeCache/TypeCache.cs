@@ -67,7 +67,7 @@ namespace YBFramework.MyEditor.Common
             {
                 return derivedDisplayNames[index];
             }
-            return null;
+            return "空";
         }
     }
 }

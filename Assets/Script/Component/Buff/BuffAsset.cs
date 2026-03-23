@@ -5,7 +5,7 @@ using UnityEngine;
 namespace YBFramework.Component
 {
 #if UNITY_EDITOR
-    [CreateAssetMenu(fileName = "New BuffData", menuName = "BuffData")]
+    [CreateAssetMenu(fileName = "NewBuffAsset", menuName = "CreateBuffAsset")]
 #endif
     public sealed class BuffAsset : ScriptableObject
     {

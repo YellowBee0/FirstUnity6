@@ -40,12 +40,7 @@ namespace YBFramework.MyEditor.Common
         public void Bind(SerializedProperty property)
         {
             m_Property = property;
-            string displayName = null;
-            if (m_Property.managedReferenceValue != null)
-            {
-                displayName = TypeCache.GetDerivedClassDisplayName(m_BaseType, m_Property.managedReferenceValue.GetType());
-            }
-            m_TypeSelectField.SetValueWithoutNotify(displayName);
+            m_TypeSelectField.SetValueWithoutNotify(TypeCache.GetDerivedClassDisplayName(m_BaseType, m_Property.managedReferenceValue?.GetType()));
             m_ElementField.BindProperty(m_Property);
         }
 

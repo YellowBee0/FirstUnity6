@@ -8,7 +8,7 @@ namespace YBFramework.Component
     [DisplayName("修改属性")]
 #endif
     [Serializable]
-    public sealed class ModifyProperty : IBuffComponent
+    public sealed class ModifyProperty : IBuffComponent, IPooledObject
     {
         private Property m_Property;
 
@@ -62,12 +62,17 @@ namespace YBFramework.Component
 
         public IBuffComponent Clone()
         {
-            ModifyProperty modifyProperty = IBuffComponent.Allocate<ModifyProperty>();
+            ModifyProperty modifyProperty = ObjectPool.Allocate<ModifyProperty>();
             modifyProperty.m_PropertyName = m_PropertyName;
             modifyProperty.m_ConstraintType = m_ConstraintType;
             modifyProperty.m_ModifyValue = m_ModifyValue;
             modifyProperty.m_Executor ??= m_Executor.Clone();
             return modifyProperty;
+        }
+
+        public void OnFree()
+        {
+            ObjectPool.Free(m_Executor);
         }
     }
 }

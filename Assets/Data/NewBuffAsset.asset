@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9beaaa8181542018323e1177150207d, type: 3}
-  m_Name: New Component Asset
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.ComponentAsset
-  m_Components:
-  - rid: -2
-  - rid: -2
-  - rid: -2
+  m_Script: {fileID: 11500000, guid: fa3e837046b079a40b7c339dbf04f9ac, type: 3}
+  m_Name: NewBuffAsset
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.BuffAsset
+  m_BuffName: 
+  m_BuffType: 0
+  m_RepeatAddProcess:
+    rid: -2
+  m_Components: []
   references:
     version: 2
     RefIds:

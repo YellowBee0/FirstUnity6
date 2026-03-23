@@ -16,6 +16,12 @@ namespace YBFramework.Component
 
         [SerializeField] private bool m_IsLoop;
 
+        public void OnFree()
+        {
+            Timer.Free(m_Timer);
+            m_Timer = null;
+        }
+
         public void Initialize(Entity entity)
         {
         }
@@ -47,12 +53,10 @@ namespace YBFramework.Component
 
         public IExecutor Clone()
         {
-            TimeExecutor executor = new()
-            {
-                m_Timer = Timer.Allocate(),
-                m_TotalTime = m_TotalTime,
-                m_IsLoop = m_IsLoop
-            };
+            TimeExecutor executor = ObjectPool.Allocate<TimeExecutor>();
+            executor.m_Timer = Timer.Allocate();
+            executor.m_TotalTime = m_TotalTime;
+            executor.m_IsLoop = m_IsLoop;
             executor.m_Timer.SetTotalTime(m_TotalTime);
             executor.m_Timer.SetIsLoop(m_IsLoop);
             return executor;

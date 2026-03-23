@@ -45,33 +45,5 @@ namespace YBFramework.Common
         {
             Free(typeof(T), objs);
         }
-
-        public static void Clear(Type type)
-        {
-            if (s_Pools.Remove(type, out Queue<IPooledObject> pool))
-            {
-                foreach (IPooledObject obj in pool)
-                {
-                    obj.OnClear();
-                }
-            }
-        }
-
-        public static void Clear<T>() where T : class, IPooledObject
-        {
-            Clear(typeof(T));
-        }
-
-        public static void ClearAll()
-        {
-            foreach (KeyValuePair<Type, Queue<IPooledObject>> kvp in s_Pools)
-            {
-                foreach (IPooledObject obj in kvp.Value)
-                {
-                    obj.OnClear();
-                }
-            }
-            s_Pools.Clear();
-        }
     }
 }

@@ -78,6 +78,12 @@ namespace YBFramework.Component
             m_OnLayerChanged -= callBack;
         }
 
+        public override void OnFree()
+        {
+            base.OnFree();
+            m_OnLayerChanged = null;
+        }
+
         public void OnReset()
         {
             ModifyCurValue("Reset", m_MinValue - m_MaxValue);
@@ -92,7 +98,7 @@ namespace YBFramework.Component
         {
             OnFree();
             m_OnLayerChanged = null;
-            IBuffComponent.Free(this);
+            ObjectPool.Free(this);
         }
 
         public void OnMagnificationChanged()
@@ -102,7 +108,7 @@ namespace YBFramework.Component
 
         public IBuffComponent Clone()
         {
-            BuffLayer layer = IBuffComponent.Allocate<BuffLayer>();
+            BuffLayer layer = ObjectPool.Allocate<BuffLayer>();
             layer.m_MaxValue = m_MaxValue;
             layer.m_MinValue = m_MinValue;
             layer.m_CurValue = m_CurValue;

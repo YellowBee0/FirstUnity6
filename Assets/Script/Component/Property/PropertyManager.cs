@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using YBFramework.Common;
 
 namespace YBFramework.Component
 {
@@ -20,7 +21,7 @@ namespace YBFramework.Component
 
         public void OnRemoveComponent()
         {
-            Property.Free(m_Properties.Values);
+            ObjectPool.Free(m_Properties.Values);
             m_Properties.Clear();
         }
 
@@ -45,7 +46,7 @@ namespace YBFramework.Component
         {
             if (m_Properties.Remove(name, out Property property))
             {
-                Property.Free(property);
+                ObjectPool.Free(property);
             }
         }
     }

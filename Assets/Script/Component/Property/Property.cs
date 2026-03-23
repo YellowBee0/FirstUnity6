@@ -170,7 +170,7 @@ namespace YBFramework.Component
             }
         }
 
-        protected override void OnFree()
+        public override void OnFree()
         {
             base.OnFree();
             m_OnMaxValueChanged = null;

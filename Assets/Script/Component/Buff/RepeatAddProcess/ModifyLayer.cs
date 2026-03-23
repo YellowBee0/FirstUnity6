@@ -8,7 +8,7 @@ namespace YBFramework.Component
     [DisplayName("修改层数")]
 #endif
     [Serializable]
-    public sealed class ModifyLayerProcess : RepeatAddProcess
+    public sealed class ModifyLayer : RepeatAddProcess
     {
         [SerializeField] private int m_ModifyLayerCount;
 

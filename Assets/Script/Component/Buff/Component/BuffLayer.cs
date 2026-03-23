@@ -96,14 +96,12 @@ namespace YBFramework.Component
 
         public void OnRemove()
         {
-            OnFree();
-            m_OnLayerChanged = null;
             ObjectPool.Free(this);
         }
 
         public void OnMagnificationChanged()
         {
-            ModifyCurValue("buff magnification changed", (int)(m_CurValue * (m_Buff.GetMagnification() - 1)));
+            ModifyCurValue("Buff magnification changed", (int)(m_CurValue * (m_Buff.GetMagnification() - 1)));
         }
 
         public IBuffComponent Clone()

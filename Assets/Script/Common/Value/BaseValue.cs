@@ -172,6 +172,7 @@ namespace YBFramework.Common
             {
                 if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
                 {
+                    //TODO:这里可能会导致部分内容不能移除
                     for (int i = 0; i < valueRecords.Count; i++)
                     {
                         if (valueRecords[i].ValueConstraintType == valueConstraintType)

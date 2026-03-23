@@ -13,7 +13,7 @@ namespace YBFramework.Component
         private float m_BuffMagnification = 1f;
 
         private float m_DeBuffMagnification = 1f;
-        
+
         public void SetBuffMagnification(BuffType buffType, float magnification)
         {
             switch (buffType)
@@ -55,7 +55,7 @@ namespace YBFramework.Component
             }
             return null;
         }
-        
+
         public IReadOnlyList<Buff> GetBuffs()
         {
             return m_Buffs;
@@ -92,8 +92,9 @@ namespace YBFramework.Component
         private void RemoveBuff(int index)
         {
             Buff.Free(m_Buffs[index]);
-            (m_Buffs[index], m_Buffs[^1]) = (m_Buffs[^1], m_Buffs[index]);
-            m_Buffs.RemoveAt(index);
+            int lastIndex = m_Buffs.Count - 1;
+            (m_Buffs[index], m_Buffs[lastIndex]) = (m_Buffs[lastIndex], m_Buffs[index]);
+            m_Buffs.RemoveAt(lastIndex);
         }
 
         public void RemoveBuff(Buff buff)
@@ -123,7 +124,7 @@ namespace YBFramework.Component
                 }
             }
         }
-        
+
         private void Clear()
         {
             for (int i = 0; i < m_Buffs.Count; i++)
@@ -132,7 +133,7 @@ namespace YBFramework.Component
             }
             m_Buffs.Clear();
         }
-        
+
         public Entity GetOwner()
         {
             return m_Owner;

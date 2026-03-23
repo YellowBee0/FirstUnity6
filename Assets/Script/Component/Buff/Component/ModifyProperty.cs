@@ -24,14 +24,17 @@ namespace YBFramework.Component
 
         private void DoModifyValue()
         {
+            Debug.Log($"start modify {m_PropertyName},wants modify {m_ModifyValue}");
+            float value = m_Property.GetCurValue();
             m_Property.ModifyValue(m_ConstraintType, m_Buff.GetBuffAsset().GetName(), m_ModifyValue);
+            Debug.Log($"end modify {m_PropertyName},actral modify {m_Property.GetCurValue() - value}");
         }
 
         public void OnAdd(Buff buff)
         {
             m_Buff = buff;
             Entity owner = buff.GetManager().GetOwner();
-            PropertyManager propertyManager = owner.GetComponent<PropertyManager>();
+            PropertyManager propertyManager = owner.GetCustomComponent<PropertyManager>();
             if (propertyManager != null)
             {
                 m_Property = propertyManager.GetProperty(m_PropertyName);
@@ -48,6 +51,7 @@ namespace YBFramework.Component
         {
             m_Executor.Stop();
             m_Executor.UnregisterExecuteCallback(DoModifyValue);
+            ObjectPool.Free(this);
         }
 
         public void OnReset()
@@ -66,7 +70,7 @@ namespace YBFramework.Component
             modifyProperty.m_PropertyName = m_PropertyName;
             modifyProperty.m_ConstraintType = m_ConstraintType;
             modifyProperty.m_ModifyValue = m_ModifyValue;
-            modifyProperty.m_Executor ??= m_Executor.Clone();
+            modifyProperty.m_Executor = m_Executor.Clone();
             return modifyProperty;
         }
 

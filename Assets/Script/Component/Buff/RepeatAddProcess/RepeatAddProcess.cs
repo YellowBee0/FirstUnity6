@@ -7,7 +7,7 @@ namespace YBFramework.Component
     [Serializable]
     public abstract class RepeatAddProcess
     {
-        protected BuffAsset BuffAsset;
+        protected BuffAsset m_BuffAsset;
 
         [SerializeField] private RepeatAddCondition m_RepeatAddCondition;
 
@@ -15,7 +15,7 @@ namespace YBFramework.Component
 
         public void Init(BuffAsset buffAsset)
         {
-            BuffAsset = buffAsset;
+            m_BuffAsset = buffAsset;
         }
 
         public Buff CheckIsRepeatAdd(BuffManager manager, Entity caster)
@@ -27,14 +27,11 @@ namespace YBFramework.Component
                     for (int i = 0; i < buffs.Count; i++)
                     {
                         Buff buff = buffs[i];
-                        if (buff.GetBuffAsset() == BuffAsset)
+                        if (buff.GetBuffAsset() == m_BuffAsset)
                         {
-                            if (m_IsJudgingByCaster)
+                            if (!m_IsJudgingByCaster || buff.GetCaster() == caster)
                             {
-                                if (buff.GetCaster() == caster)
-                                {
-                                    return buff;
-                                }
+                                return buff;
                             }
                         }
                     }
@@ -43,14 +40,11 @@ namespace YBFramework.Component
                     for (int i = 0; i < buffs.Count; i++)
                     {
                         Buff buff = buffs[i];
-                        if (buff.GetBuffAsset().GetName() == BuffAsset.GetName())
+                        if (buff.GetBuffAsset().GetName() == m_BuffAsset.GetName())
                         {
-                            if (m_IsJudgingByCaster)
+                            if (!m_IsJudgingByCaster || buff.GetCaster() == caster)
                             {
-                                if (buff.GetCaster() == caster)
-                                {
-                                    return buff;
-                                }
+                                return buff;
                             }
                         }
                     }

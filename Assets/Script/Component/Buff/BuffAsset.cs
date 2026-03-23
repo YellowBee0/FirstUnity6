@@ -39,5 +39,10 @@ namespace YBFramework.Component
         {
             return m_Components;
         }
+
+        private void OnEnable()
+        {
+            m_RepeatAddProcess?.Init(this);
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace YBFramework.Common
 
         public static void Free(Timer timer)
         {
+            timer.Stop();
             timer.m_IsLoop = false;
             timer.m_Callback = null;
             s_Pool.Enqueue(timer);
@@ -50,7 +51,7 @@ namespace YBFramework.Common
                 }
                 else
                 {
-                    TimerMonitor.StopTimer(this);
+                    Stop();
                     return;
                 }
             }
@@ -74,6 +75,10 @@ namespace YBFramework.Common
         public void UnregisterCallback(Action callback)
         {
             m_Callback -= callback;
+            if (m_Callback == null)
+            {
+                Stop();
+            }
         }
 
         public void SetIsLoop(bool isLoop)
@@ -111,7 +116,7 @@ namespace YBFramework.Common
 
         private static class TimerMonitor
         {
-            private static Timer s_RootTimer;
+            private static Timer s_CurTimer;
 
             public static void StartTimer(Timer timer)
             {
@@ -119,17 +124,18 @@ namespace YBFramework.Common
                 {
                     return;
                 }
-                timer.m_Next = null;
-                if (s_RootTimer == null)
+                Timer curTimer = s_CurTimer;
+                s_CurTimer = timer;
+                timer.m_Prev = null;
+                if (curTimer == null)
                 {
-                    timer.m_Prev = null;
-                    s_RootTimer = timer;
+                    timer.m_Next = null;
                     Update().Forget();
                 }
                 else
                 {
-                    timer.m_Prev = s_RootTimer;
-                    s_RootTimer.m_Next = timer;
+                    timer.m_Next = curTimer;
+                    curTimer.m_Prev = timer;
                 }
             }
 
@@ -145,7 +151,7 @@ namespace YBFramework.Common
                 }
                 else
                 {
-                    s_RootTimer = s_RootTimer.m_Next;
+                    s_CurTimer = s_CurTimer.m_Next;
                 }
                 if (timer.m_Next != null)
                 {
@@ -155,15 +161,15 @@ namespace YBFramework.Common
 
             private static async UniTaskVoid Update()
             {
-                while (s_RootTimer != null)
+                while (s_CurTimer != null)
                 {
-                    Timer timer = s_RootTimer;
+                    Timer timer = s_CurTimer;
                     while (timer != null)
                     {
                         timer.Update(Time.deltaTime);
                         timer = timer.m_Next;
                     }
-                    await UniTask.Yield();
+                    await UniTask.NextFrame();
                 }
             }
         }

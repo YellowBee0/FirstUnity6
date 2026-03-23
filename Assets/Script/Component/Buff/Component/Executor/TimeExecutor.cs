@@ -19,7 +19,6 @@ namespace YBFramework.Component
         public void OnFree()
         {
             Timer.Free(m_Timer);
-            m_Timer = null;
         }
 
         public void Initialize(Entity entity)
@@ -48,17 +47,18 @@ namespace YBFramework.Component
 
         public void UnregisterExecuteCallback(Action callback)
         {
-            m_Timer.RegisterCallback(callback);
+            m_Timer.UnregisterCallback(callback);
         }
 
         public IExecutor Clone()
         {
             TimeExecutor executor = ObjectPool.Allocate<TimeExecutor>();
-            executor.m_Timer = Timer.Allocate();
             executor.m_TotalTime = m_TotalTime;
             executor.m_IsLoop = m_IsLoop;
-            executor.m_Timer.SetTotalTime(m_TotalTime);
-            executor.m_Timer.SetIsLoop(m_IsLoop);
+            Timer timer = Timer.Allocate();
+            timer.SetTotalTime(m_TotalTime);
+            timer.SetIsLoop(m_IsLoop);
+            executor.m_Timer = timer;
             return executor;
         }
     }

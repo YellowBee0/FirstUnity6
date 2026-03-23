@@ -14,8 +14,7 @@ namespace YBFramework.Component
 
         public override bool DoRepeatAdd(Buff existBuff)
         {
-            //在这获取添加层数的行为
-            //把m_ModifyLayerCount修改进去
+            existBuff.GetComponent<BuffLayer>()?.ModifyCurValue("Modify layer process", m_ModifyLayerCount);
             return false;
         }
     }

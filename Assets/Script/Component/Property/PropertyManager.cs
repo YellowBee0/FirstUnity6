@@ -36,10 +36,7 @@ namespace YBFramework.Component
 
         public void AddProperty(string name, Property property)
         {
-            if (m_Properties.ContainsKey(name))
-            {
-                m_Properties.Add(name, property);
-            }
+            m_Properties.TryAdd(name, property);
         }
 
         public void RemoveProperty(string name)

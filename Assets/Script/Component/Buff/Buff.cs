@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -62,9 +63,14 @@ namespace YBFramework.Component
             m_BuffAsset = buffAsset;
             m_Manager = manager;
             IReadOnlyList<IBuffComponent> components = buffAsset.GetComponents();
+            //拆分为两个for循环是为了保证组件在OnAdd时能够获取其他组件
             for (int i = 0; i < components.Count; i++)
             {
-                AddComponent(components[i].Clone());
+                m_Components.Add(components[i].Clone());
+            }
+            for (int i = 0; i < m_Components.Count; i++)
+            {
+                m_Components[i].OnAdd(this);
             }
         }
 
@@ -77,16 +83,37 @@ namespace YBFramework.Component
             m_Components.Clear();
         }
 
-        public IBuffComponent GetComponent(Type type)
+        public T GetComponent<T>() where T : IBuffComponent
         {
-            /*for (int i = 0; i < m_Behaviours.Count; i++)
+            Type type = typeof(T);
+            for (int i = 0; i < m_Components.Count; i++)
             {
-                if (m_Behaviours[i].GetType() == type)
+                if (m_Components[i].GetType() == type)
                 {
-                    return m_Behaviours[i];
+                    return (T)m_Components[i];
                 }
-            }*/
-            return null;
+            }
+            return default;
+        }
+
+        /// <summary>
+        /// 查找Buff中所有同类型的组件，数组通过ArrayPool创建，外部不再使用时需要使用ArrayPool.Shared.Return归还
+        /// </summary>
+        /// <typeparam name="T">组件类型</typeparam>
+        /// <returns>数组集合</returns>
+        public T[] GetComponents<T>() where T : IBuffComponent
+        {
+            Type type = typeof(T);
+            T[] components = ArrayPool<T>.Shared.Rent(m_Components.Count);
+            int index = 0;
+            for (int i = 0; i < m_Components.Count; i++)
+            {
+                if (m_Components[i].GetType() == type)
+                {
+                    components[index++] = (T)m_Components[i];
+                }
+            }
+            return components;
         }
 
         public void AddComponent(IBuffComponent component)

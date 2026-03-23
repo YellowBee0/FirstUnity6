@@ -6,13 +6,13 @@ namespace YBFramework.MyEditor
 {
     public struct PortViewInfo
     {
-        public string Name;
+        public readonly string Name;
 
-        public Direction Direction;
+        public readonly Direction Direction;
 
-        public Port.Capacity Capacity;
+        public readonly Port.Capacity Capacity;
 
-        public Color Color;
+        public readonly Color Color;
 
         public PortViewInfo(string name, Direction direction, Port.Capacity capacity, Color color)
         {

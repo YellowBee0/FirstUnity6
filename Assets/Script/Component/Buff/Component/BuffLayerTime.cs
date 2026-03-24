@@ -65,8 +65,7 @@ namespace YBFramework.Component
         public IBuffComponent Clone()
         {
             BuffLayerTime buffLayerTime = ObjectPool.Allocate<BuffLayerTime>();
-            Timer timer = Timer.Allocate();
-            timer.SetTotalTime(m_TotalTime);
+            Timer timer = Timer.Allocate(m_TotalTime);
             timer.SetIsLoop(true);
             buffLayerTime.m_Timer = timer;
             buffLayerTime.m_TotalTime = m_TotalTime;

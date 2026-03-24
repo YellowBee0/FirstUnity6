@@ -9,14 +9,17 @@ namespace YBFramework.Common
     {
         private static readonly Queue<Timer> s_Pool = new();
 
-        public static Timer Allocate()
+        public static Timer Allocate(float totalTime)
         {
-            return s_Pool.Count > 0 ? s_Pool.Dequeue() : new Timer();
+            Timer timer = s_Pool.Count > 0 ? s_Pool.Dequeue() : new Timer();
+            timer.SetTotalTime(totalTime);
+            return timer;
         }
 
         public static void Free(Timer timer)
         {
             timer.Stop();
+            timer.m_Timer = 0;
             timer.m_IsLoop = false;
             timer.m_Callback = null;
             s_Pool.Enqueue(timer);
@@ -24,17 +27,15 @@ namespace YBFramework.Common
 
         private Action m_Callback;
 
-        private bool m_IsLoop;
-
-        private bool m_IsRunning;
-
-        private Timer m_Next;
-
-        private Timer m_Prev;
+        private float m_TotalTime;
 
         private float m_Timer;
 
-        private float m_TotalTime;
+        private int m_Index;
+
+        private bool m_IsRunning;
+
+        private bool m_IsLoop;
 
         private Timer()
         {
@@ -116,7 +117,11 @@ namespace YBFramework.Common
 
         private static class TimerMonitor
         {
-            private static Timer s_CurTimer;
+            private static readonly List<Timer> s_RunningTimers = new(128);
+
+            private static readonly List<Timer> s_StoppedTimers = new(32);
+
+            private static bool s_IsTaskStarted;
 
             public static void StartTimer(Timer timer)
             {
@@ -124,18 +129,13 @@ namespace YBFramework.Common
                 {
                     return;
                 }
-                Timer curTimer = s_CurTimer;
-                s_CurTimer = timer;
-                timer.m_Prev = null;
-                if (curTimer == null)
+                int index = s_RunningTimers.Count;
+                timer.m_Index = index;
+                s_RunningTimers.Add(timer);
+                if (index == 0 && !s_IsTaskStarted)
                 {
-                    timer.m_Next = null;
                     Update().Forget();
-                }
-                else
-                {
-                    timer.m_Next = curTimer;
-                    curTimer.m_Prev = timer;
+                    s_IsTaskStarted = true;
                 }
             }
 
@@ -145,32 +145,35 @@ namespace YBFramework.Common
                 {
                     return;
                 }
-                if (timer.m_Prev != null)
-                {
-                    timer.m_Prev.m_Next = timer.m_Next;
-                }
-                else
-                {
-                    s_CurTimer = s_CurTimer.m_Next;
-                }
-                if (timer.m_Next != null)
-                {
-                    timer.m_Next.m_Prev = timer.m_Prev;
-                }
+                s_StoppedTimers.Add(timer);
             }
 
             private static async UniTaskVoid Update()
             {
-                while (s_CurTimer != null)
+                while (s_RunningTimers.Count > 0)
                 {
-                    Timer timer = s_CurTimer;
-                    while (timer != null)
-                    {
-                        timer.Update(Time.deltaTime);
-                        timer = timer.m_Next;
-                    }
+                    //进来先停一帧，避免第一个添加的计时器跑一帧，同帧添加的计时器少跑一帧
                     await UniTask.NextFrame();
+                    for (int i = 0; i < s_RunningTimers.Count; i++)
+                    {
+                        s_RunningTimers[i].Update(Time.deltaTime);
+                    }
+                    int stoppedTimerCount = s_StoppedTimers.Count;
+                    if (stoppedTimerCount > 0)
+                    {
+                        for (int i = 0; i < stoppedTimerCount; i++)
+                        {
+                            Timer timer = s_StoppedTimers[i];
+                            int removeIndex = timer.m_Index;
+                            int lastIndex = s_RunningTimers.Count - 1;
+                            s_RunningTimers[lastIndex].m_Index = removeIndex;
+                            (s_RunningTimers[removeIndex], s_RunningTimers[lastIndex]) = (s_RunningTimers[lastIndex], s_RunningTimers[removeIndex]);
+                            s_RunningTimers.RemoveAt(lastIndex);
+                        }
+                        s_StoppedTimers.Clear();
+                    }
                 }
+                s_IsTaskStarted = false;
             }
         }
     }

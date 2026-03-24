@@ -47,9 +47,7 @@ namespace YBFramework.Component
         public IBuffComponent Clone()
         {
             BuffTime buffTime = ObjectPool.Allocate<BuffTime>();
-            Timer timer = Timer.Allocate();
-            timer.SetTotalTime(m_TotalTime);
-            buffTime.m_Timer = timer;
+            buffTime.m_Timer = Timer.Allocate(m_TotalTime);
             return buffTime;
         }
 

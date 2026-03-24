@@ -55,8 +55,7 @@ namespace YBFramework.Component
             TimeExecutor executor = ObjectPool.Allocate<TimeExecutor>();
             executor.m_TotalTime = m_TotalTime;
             executor.m_IsLoop = m_IsLoop;
-            Timer timer = Timer.Allocate();
-            timer.SetTotalTime(m_TotalTime);
+            Timer timer = Timer.Allocate(m_TotalTime);
             timer.SetIsLoop(m_IsLoop);
             executor.m_Timer = timer;
             return executor;

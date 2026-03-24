@@ -12,6 +12,11 @@ namespace YBFramework.Component
     {
         [SerializeField] private CommonPort m_Port = new();
 
+        public CommonPort GetCommonPort()
+        {
+            return m_Port;
+        }
+        
         protected override BasePort PortIterator(int index)
         {
             return index == 0 ? m_Port : null;

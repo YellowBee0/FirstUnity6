@@ -36,9 +36,9 @@ namespace YBFramework.Component
             foreach (ConnectedPortData connectedPortData in ((IPortConnectionSource)this).GetConnectedPortDataEnumerator())
             {
                 ConnectedDelegatePortData connectedDelegatePortData = (ConnectedDelegatePortData)connectedPortData;
-                for (int j = 0; j < nodes.Count; j++)
+                for (int i = 0; i < nodes.Count; i++)
                 {
-                    BaseNode node = nodes[j];
+                    BaseNode node = nodes[i];
                     if (node.GetID() == connectedDelegatePortData.NodeID)
                     {
                         if (node.GetPort(connectedDelegatePortData.PortID) is MethodPort connectedPort)

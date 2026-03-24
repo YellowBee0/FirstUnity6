@@ -43,7 +43,6 @@ namespace YBFramework.Component
             m_OnMaxValueChanged?.Invoke();
             float actualModifiedValue = newValue - oldValue;
             Record(ValueConstraintType.Max, modifier, delta, actualModifiedValue);
-            //TODO 字符串本地化
             ModifyCurValue(modifier + "(self max value)", percent * actualModifiedValue);
         }
 
@@ -64,7 +63,6 @@ namespace YBFramework.Component
             m_OnMinValueChanged?.Invoke();
             float actualModifiedValue = newValue - oldValue;
             Record(ValueConstraintType.Min, modifier, delta, actualModifiedValue);
-            //TODO 字符串本地化
             ModifyCurValue(modifier + "(self min value)", percent * actualModifiedValue);
         }
 

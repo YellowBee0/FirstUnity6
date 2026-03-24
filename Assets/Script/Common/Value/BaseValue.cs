@@ -9,6 +9,125 @@ namespace YBFramework.Common
     [Serializable]
     public abstract class BaseValue<T> : IPooledObject where T : struct
     {
+        private sealed class ValueRecord
+        {
+            private static readonly Queue<ValueRecord> s_Pool = new();
+
+            private static readonly Dictionary<BaseValue<T>, List<ValueRecord>> s_ValueRecords = new();
+
+            private static readonly StringBuilder s_StringBuilder = new();
+
+            public static ValueRecord Allocate(string modifier, ValueConstraintType valueConstraintType, T expectedModifiedValue, T actualModifiedValue)
+            {
+                ValueRecord valueRecord = s_Pool.Count > 0 ? s_Pool.Dequeue() : new ValueRecord();
+                valueRecord.Modifier = modifier;
+                valueRecord.ValueConstraintType = valueConstraintType;
+                valueRecord.ExpectedModifiedValue = expectedModifiedValue;
+                valueRecord.ActualModifiedValue = actualModifiedValue;
+                return valueRecord;
+            }
+
+            private static void Free(ValueRecord valueRecord)
+            {
+                s_Pool.Enqueue(valueRecord);
+            }
+
+            public static void AddRecord(BaseValue<T> valueInstance, ValueRecord record)
+            {
+                if (!s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    valueRecords = new List<ValueRecord>();
+                    s_ValueRecords.Add(valueInstance, valueRecords);
+                }
+                valueRecords.Add(record);
+            }
+
+            public static void RemoveRecordByValueConstraintType(BaseValue<T> valueInstance, ValueConstraintType valueConstraintType)
+            {
+                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    int index = 0;
+                    while (index < valueRecords.Count)
+                    {
+                        if (valueRecords[index].ValueConstraintType == valueConstraintType)
+                        {
+                            int lastIndex = valueRecords.Count - 1;
+                            Free(valueRecords[index]);
+                            (valueRecords[index], valueRecords[lastIndex]) = (valueRecords[lastIndex], valueRecords[index]);
+                            valueRecords.RemoveAt(lastIndex);
+                        }
+                        else
+                        {
+                            index++;
+                        }
+                    }
+                }
+            }
+
+            public static void RemoveRecords(BaseValue<T> valueInstance)
+            {
+                if (s_ValueRecords.Remove(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
+                        Free(valueRecords[i]);
+                    }
+                }
+            }
+
+            public static string LogValueRecords(BaseValue<T> valueInstance)
+            {
+                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    s_StringBuilder.Clear();
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
+                        AppendValueRecord(valueRecords[i]);
+                    }
+                    return s_StringBuilder.ToString();
+                }
+                return null;
+            }
+
+            public static string LogValueRecords(BaseValue<T> valueInstance, ValueConstraintType valueConstraintType)
+            {
+                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
+                {
+                    s_StringBuilder.Clear();
+                    for (int i = 0; i < valueRecords.Count; i++)
+                    {
+                        if (valueRecords[i].ValueConstraintType == valueConstraintType)
+                        {
+                            AppendValueRecord(valueRecords[i]);
+                        }
+                    }
+                    return s_StringBuilder.ToString();
+                }
+                return null;
+            }
+
+            private static void AppendValueRecord(ValueRecord valueRecord)
+            {
+                s_StringBuilder.Append("Value constraint type:");
+                s_StringBuilder.Append(valueRecord.ValueConstraintType);
+                s_StringBuilder.Append("Modifier:");
+                s_StringBuilder.Append(valueRecord.Modifier);
+                s_StringBuilder.Append("Expected modified value:");
+                s_StringBuilder.Append(valueRecord.ExpectedModifiedValue);
+                s_StringBuilder.Append("Actual modified value");
+                s_StringBuilder.Append(valueRecord.ActualModifiedValue);
+                s_StringBuilder.Append("\n");
+            }
+
+            private T ActualModifiedValue;
+
+            private T ExpectedModifiedValue;
+
+            private string Modifier;
+
+            private ValueConstraintType ValueConstraintType;
+        }
+
         [SerializeField] protected T m_CurValue;
 
         [SerializeField] protected T m_MaxValue;
@@ -20,7 +139,7 @@ namespace YBFramework.Common
         [SerializeField] protected bool m_IsRecordedMaxValue;
 
         [SerializeField] protected bool m_IsRecordedMinValue;
-        
+
         public virtual void CopyFrom(BaseValue<T> other)
         {
             m_MaxValue = other.m_MaxValue;
@@ -131,123 +250,6 @@ namespace YBFramework.Common
             m_IsRecordedMinValue = false;
             m_IsRecordedCurValue = false;
             ValueRecord.RemoveRecords(this);
-        }
-
-        private sealed class ValueRecord
-        {
-            private static readonly Queue<ValueRecord> s_Pool = new();
-
-            private static readonly Dictionary<BaseValue<T>, List<ValueRecord>> s_ValueRecords = new();
-
-            //TODO:泛型类对象提出
-            private static readonly StringBuilder s_StringBuilder = new();
-
-            public static ValueRecord Allocate(string modifier, ValueConstraintType valueConstraintType, T expectedModifiedValue, T actualModifiedValue)
-            {
-                ValueRecord valueRecord = s_Pool.Count > 0 ? s_Pool.Dequeue() : new ValueRecord();
-                valueRecord.Modifier = modifier;
-                valueRecord.ValueConstraintType = valueConstraintType;
-                valueRecord.ExpectedModifiedValue = expectedModifiedValue;
-                valueRecord.ActualModifiedValue = actualModifiedValue;
-                return valueRecord;
-            }
-
-            private static void Free(ValueRecord valueRecord)
-            {
-                s_Pool.Enqueue(valueRecord);
-            }
-
-            public static void AddRecord(BaseValue<T> valueInstance, ValueRecord record)
-            {
-                if (!s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
-                {
-                    //TODO 创建集合存在GC
-                    valueRecords = new List<ValueRecord>();
-                    s_ValueRecords.Add(valueInstance, valueRecords);
-                }
-
-                valueRecords.Add(record);
-            }
-
-            public static void RemoveRecordByValueConstraintType(BaseValue<T> valueInstance, ValueConstraintType valueConstraintType)
-            {
-                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
-                {
-                    //TODO:这里可能会导致部分内容不能移除
-                    for (int i = 0; i < valueRecords.Count; i++)
-                    {
-                        if (valueRecords[i].ValueConstraintType == valueConstraintType)
-                        {
-                            Free(valueRecords[i]);
-                            valueRecords.RemoveAt(i);
-                        }
-                    }
-                }
-            }
-
-            public static void RemoveRecords(BaseValue<T> valueInstance)
-            {
-                if (s_ValueRecords.Remove(valueInstance, out List<ValueRecord> valueRecords))
-                {
-                    for (int i = 0; i < valueRecords.Count; i++)
-                    {
-                        Free(valueRecords[i]);
-                    }
-                }
-            }
-
-            public static string LogValueRecords(BaseValue<T> valueInstance)
-            {
-                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
-                {
-                    s_StringBuilder.Clear();
-                    for (int i = 0; i < valueRecords.Count; i++)
-                    {
-                        AppendValueRecord(valueRecords[i]);
-                    }
-                    return s_StringBuilder.ToString();
-                }
-                return null;
-            }
-
-            public static string LogValueRecords(BaseValue<T> valueInstance, ValueConstraintType valueConstraintType)
-            {
-                if (s_ValueRecords.TryGetValue(valueInstance, out List<ValueRecord> valueRecords))
-                {
-                    s_StringBuilder.Clear();
-                    for (int i = 0; i < valueRecords.Count; i++)
-                    {
-                        if (valueRecords[i].ValueConstraintType == valueConstraintType)
-                        {
-                            AppendValueRecord(valueRecords[i]);
-                        }
-                    }
-                    return s_StringBuilder.ToString();
-                }
-                return null;
-            }
-
-            //TODO 字符串本地化
-            private static void AppendValueRecord(ValueRecord valueRecord)
-            {
-                s_StringBuilder.Append("Value constraint type:");
-                s_StringBuilder.Append(valueRecord.ValueConstraintType);
-                s_StringBuilder.Append("Modifier:");
-                s_StringBuilder.Append(valueRecord.Modifier);
-                s_StringBuilder.Append("Expected modified value:");
-                s_StringBuilder.Append(valueRecord.ExpectedModifiedValue);
-                s_StringBuilder.Append("Actual modified value");
-                s_StringBuilder.Append(valueRecord.ActualModifiedValue);
-                s_StringBuilder.Append("\n");
-            }
-
-            private T ActualModifiedValue;
-
-            private T ExpectedModifiedValue;
-
-            private string Modifier;
-
-            private ValueConstraintType ValueConstraintType;
         }
     }
 }

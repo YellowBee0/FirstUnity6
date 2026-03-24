@@ -49,8 +49,6 @@ namespace YBFramework.Component
 
         public void Revert()
         {
-            //TODO:这一步提出到更早的初始化
-            PortConnectHelper.RegisterWrapMethod();
             IReadOnlyList<NodeAsset> nodeAssets = m_GraphAsset.GetNodeAssets();
             for (int i = 0; i < nodeAssets.Count; i++)
             {
@@ -67,6 +65,17 @@ namespace YBFramework.Component
                 {
                     if (basePort is IPortConnectionSource portConnectionSource)
                     {
+                        /*foreach (ConnectedPortData connectedPortData in portConnectionSource.GetConnectedPortDataEnumerator())
+                        {
+                            for (int j = 0; j < m_Nodes.Count; j++)
+                            {
+                                if (m_Nodes[j].GetID() == connectedPortData.PortID)
+                                {
+                                    BasePort port = m_Nodes[j].GetPort(connectedPortData.PortID);
+                                    //在这里直接传入port，那么IPortConnectionSource只需要实现Connect BasePort逻辑
+                                }
+                            }
+                        }*/
                         portConnectionSource.Connect(m_Nodes);
                     }
                 }

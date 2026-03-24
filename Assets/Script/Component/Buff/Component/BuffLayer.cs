@@ -107,10 +107,7 @@ namespace YBFramework.Component
         public IBuffComponent Clone()
         {
             BuffLayer layer = ObjectPool.Allocate<BuffLayer>();
-            layer.m_MaxValue = m_MaxValue;
-            layer.m_MinValue = m_MinValue;
-            layer.m_CurValue = m_CurValue;
-            layer.EnableRecord(ValueConstraintType.Current, GetIsEnableRecord(ValueConstraintType.Current));
+            layer.CopyFrom(this);
             return layer;
         }
     }

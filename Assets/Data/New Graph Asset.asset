@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8814350507047938662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: Example(Test1)
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 8360641891937026048
+  m_Position: {x: 503.8642, y: 141.50941}
+  m_ID: 4
+  references:
+    version: 2
+    RefIds:
+    - rid: 8360641891937026048
+      type: {class: ExampleNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Graph:
+          m_GraphAsset: {fileID: 0}
+        m_ID: 2
+        m_StringInput:
+          m_ID: 0
+          m_ConnectedPortData:
+            NodeID: 3
+            PortID: 1
+            IsExplicitCast: 0
+          m_Value: 
+        m_LogicInput:
+          m_ID: 1
+        m_ValueOutput:
+          m_ID: 3
+        m_LogicOutput:
+          m_ID: 2
+          m_ConnectedPortData:
+          - NodeID: 0
+            PortID: 0
+            IsExplicitCast: 0
+--- !u!114 &-7568018316597414846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u6253\u5370\u65E5\u5FD7(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 8360641891937026049
+  m_Position: {x: 787.7887, y: 154.6868}
+  m_ID: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 8360641891937026049
+      type: {class: DebugNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Graph:
+          m_GraphAsset: {fileID: 0}
+        m_ID: 0
+        m_LogicInput:
+          m_ID: 0
+        m_SelectedTypes: []
+        m_LogContextInput:
+        - rid: 8360641891937026050
+    - rid: 8360641891937026050
+      type: {class: 'FuncPort`1[[System.Int32, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_ID: 1
+        m_ConnectedPortData:
+          NodeID: 3
+          PortID: 0
+          IsExplicitCast: 0
+        m_Value: 0
+--- !u!114 &-2426807047464634672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u83B7\u53D6\u503C(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 8360641891937026051
+  m_Position: {x: 200.46788, y: 141.32834}
+  m_ID: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 8360641891937026051
+      type: {class: GetValueNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Graph:
+          m_GraphAsset: {fileID: 0}
+        m_ID: 3
+        m_IntOutput:
+          m_ID: 0
+        m_StringOutput:
+          m_ID: 1
+        m_IntValue: 0
+        m_StringValue: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75f96255a0bd3c74caade8e1ae137902, type: 3}
+  m_Name: New Graph Asset
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.GraphAsset
+  m_NodeAssets:
+  - {fileID: -7568018316597414846}
+  - {fileID: 3948513633783061453}
+  - {fileID: -8814350507047938662}
+  - {fileID: -2426807047464634672}
+  m_GraphType: 1
+  m_ID: 4
+--- !u!114 &3948513633783061453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u6A21\u677F\u51FA\u5165\u53E3(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 8360641891937026052
+  m_Position: {x: 787.92456, y: 323.00375}
+  m_ID: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 8360641891937026052
+      type: {class: TemplateHelpNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Graph:
+          m_GraphAsset: {fileID: 0}
+        m_ID: 1
+        m_Port:
+          m_ID: 0
+          m_ConnectedPortData:
+          - NodeID: 2
+            PortID: 2
+          - NodeID: 3
+            PortID: 0
+          - NodeID: 3
+            PortID: 1

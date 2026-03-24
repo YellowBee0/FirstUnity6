@@ -9,6 +9,7 @@ namespace YBFramework.Component
     {
         private static readonly List<WrapMethodInfo> s_WrapMethodInfos = new();
         
+        [RuntimeInitializeOnLoadMethod]
         public static void RegisterWrapMethod()
         {
             MethodInfo[] methodInfos = typeof(MethodWrapper).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);

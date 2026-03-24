@@ -5,12 +5,12 @@ using YBFramework.MyEditor.Common;
 
 namespace YBFramework.MyEditor
 {
-    [CustomPropertyDrawer(typeof(IExecutor))]
-    public class IExecutorDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(IComponent))]
+    public sealed class IComponentDrawer : PropertyDrawer
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            ManagedReferencePropertyView propertyView = new(typeof(IExecutor), typeof(TimeExecutor));
+            ManagedReferencePropertyView propertyView = new(typeof(IComponent), null);
             propertyView.Bind(property);
             return propertyView;
         }

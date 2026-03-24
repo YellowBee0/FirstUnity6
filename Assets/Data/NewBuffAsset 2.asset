@@ -28,7 +28,7 @@ MonoBehaviour:
       data:
         m_Executor:
           rid: 8360641864254882021
-        m_PropertyName: heal
+        m_PropertyType: 1
         m_ConstraintType: 2
         m_ModifyValue: -20
     - rid: 8360641864254882021

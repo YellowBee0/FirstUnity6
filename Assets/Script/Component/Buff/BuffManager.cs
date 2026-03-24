@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using YBFramework.Common;
 
 namespace YBFramework.Component
 {
+#if UNITY_EDITOR
+    [DisplayName("buff管理器")]
+#endif
+    [Serializable]
     public sealed class BuffManager : IComponent
     {
         private readonly List<Buff> m_Buffs = new();
@@ -152,6 +157,11 @@ namespace YBFramework.Component
         public void ResetComponent()
         {
             Clear();
+        }
+
+        public IComponent Clone()
+        {
+            return new BuffManager();
         }
     }
 }

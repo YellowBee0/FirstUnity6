@@ -7,12 +7,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="抽象对象池">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="计时器改为List集合">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/ArrayUtility.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/ArrayUtility.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/IComponentDrawer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/IComponentDrawer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Test/Test.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Test/Test.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Timer/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Timer/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffLayerTime.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffLayerTime.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffTime.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffTime.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/Executor/TimeExecutor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/Executor/TimeExecutor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 2.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Pool/ObjectPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/ObjectPool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Value/BaseValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Value/BaseValue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/ModifyProperty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/ModifyProperty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/ComponentAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/ComponentAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Graph.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/IComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/IComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/Property.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/Property.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyFormula.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyFormula.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IBuffBehaviourDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IExecutorDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/IExecutorDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Buff/RepeatAddProcessDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Buff/RepeatAddProcessDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferencePropertyView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferencePropertyView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/TypeCache.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/TypeCache/TypeCache.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/TypeCache/TypeCache.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Test/BuffTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Test/BuffTest.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,10 +141,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="18868">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="17344">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="18868" />
+      <option name="pid" value="17344" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
         <list>
@@ -147,7 +175,8 @@
       <workItem from="1773801651938" duration="18568000" />
       <workItem from="1774236120820" duration="2658000" />
       <workItem from="1774245322956" duration="16575000" />
-      <workItem from="1774320453144" duration="2444000" />
+      <workItem from="1774320453144" duration="4885000" />
+      <workItem from="1774332155124" duration="10128000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -205,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774246211832</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="计时器改为List集合">
+      <option name="closed" value="true" />
+      <created>1774323000550</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774323000550</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,7 +263,8 @@
     <MESSAGE value="整理" />
     <MESSAGE value="buff设计，框架调整" />
     <MESSAGE value="抽象对象池" />
-    <option name="LAST_COMMIT_MESSAGE" value="抽象对象池" />
+    <MESSAGE value="计时器改为List集合" />
+    <option name="LAST_COMMIT_MESSAGE" value="计时器改为List集合" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

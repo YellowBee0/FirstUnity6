@@ -17,6 +17,11 @@ namespace YBFramework.Component
 
         [SerializeReference] public List<IBuffComponent> m_Components;
 
+        public IReadOnlyList<IBuffComponent> GetComponents()
+        {
+            return m_Components;
+        }
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string GetName()
         {
@@ -33,11 +38,6 @@ namespace YBFramework.Component
         public RepeatAddProcess GetRepeatAddProcess()
         {
             return m_RepeatAddProcess;
-        }
-
-        public IReadOnlyList<IBuffComponent> GetComponents()
-        {
-            return m_Components;
         }
 
         private void OnEnable()

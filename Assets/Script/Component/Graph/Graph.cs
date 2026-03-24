@@ -1,13 +1,22 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine;
+using YBFramework.Common;
 #if DEBUG
 using YBFramework.MyEditor;
 #endif
 
 namespace YBFramework.Component
 {
+#if UNITY_EDITOR
+    [DisplayName("蓝图")]
+#endif
+    [Serializable]
     public sealed class Graph : IComponent
     {
         private Entity m_Owner;
+
+        [SerializeField] private GraphAsset m_GraphAsset;
 
         private readonly List<BaseNode> m_Nodes = new();
 
@@ -29,11 +38,20 @@ namespace YBFramework.Component
         {
         }
 
-        public void Revert(GraphAsset graphAsset)
+        public IComponent Clone()
+        {
+            Graph graph = new()
+            {
+                m_GraphAsset = m_GraphAsset
+            };
+            return graph;
+        }
+
+        public void Revert()
         {
             //TODO:这一步提出到更早的初始化
             PortConnectHelper.RegisterWrapMethod();
-            IReadOnlyList<NodeAsset> nodeAssets = graphAsset.GetNodeAssets();
+            IReadOnlyList<NodeAsset> nodeAssets = m_GraphAsset.GetNodeAssets();
             for (int i = 0; i < nodeAssets.Count; i++)
             {
                 BaseNode node = nodeAssets[i].GetNode().Clone();

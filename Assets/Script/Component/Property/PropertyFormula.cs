@@ -19,7 +19,7 @@ namespace YBFramework.Component
 
         private static void CommonDamage(PropertyManager propertyManager, bool increase, ref float value)
         {
-            Property property = propertyManager.GetProperty("Damage");
+            Property property = propertyManager.GetProperty(PropertyType.Attack);
             if (property != null)
             {
                 value += increase ? property.GetCurValue() : -property.GetCurValue();
@@ -28,7 +28,7 @@ namespace YBFramework.Component
 
         private static void CommonDefense(PropertyManager propertyManager, bool increase, ref float value)
         {
-            Property property = propertyManager.GetProperty("Defense");
+            Property property = propertyManager.GetProperty(PropertyType.Defense);
             if (property != null)
             {
                 value += increase ? property.GetCurValue() : -property.GetCurValue();
@@ -37,7 +37,7 @@ namespace YBFramework.Component
 
         private static void CommonIncreaseDamage(PropertyManager propertyManager, bool increase, ref float value)
         {
-            Property property = propertyManager.GetProperty("IncreaseDamage");
+            Property property = propertyManager.GetProperty(PropertyType.Attack);
             if (property != null)
             {
                 value *= 1 + ((value > 0) ^ increase ? -property.GetCurValue() : property.GetCurValue());

@@ -29,9 +29,9 @@ MonoBehaviour:
       data:
         m_Executor:
           rid: 8360641864254882021
-        m_PropertyName: attack
+        m_PropertyType: 0
         m_ConstraintType: 2
-        m_ModifyValue: 0
+        m_ModifyValue: -10
     - rid: 8360641864254882021
       type: {class: TimeExecutor, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:

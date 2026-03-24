@@ -1,15 +1,15 @@
 using System;
+using UnityEngine;
 using YBFramework.Common;
 
 namespace YBFramework.Component
 {
+    [Serializable]
     public sealed class Property : BaseValue<float>
     {
         public delegate void Preprocess(string modifier, ref float value);
 
-        private bool m_IsPreprocessIncrease;
-
-        private bool m_IsPreprocessReduce;
+        [SerializeField] private PropertyType m_PropertyType;
 
         private Action m_OnCurValueChanged;
 
@@ -17,9 +17,14 @@ namespace YBFramework.Component
 
         private Action m_OnMinValueChanged;
 
-        private Preprocess m_PreprocessIncrease;
+        private Preprocess m_Preprocess;
 
-        private Preprocess m_PreprocessReduce;
+        public override void CopyFrom(BaseValue<float> other)
+        {
+            base.CopyFrom(other);
+            Property otherProperty = (Property)other;
+            m_PropertyType = otherProperty.m_PropertyType;
+        }
 
         public override void ModifyMaxValue(string modifier, float delta)
         {
@@ -71,20 +76,7 @@ namespace YBFramework.Component
             }
             float oldValue = m_CurValue;
             float newValue = m_CurValue + delta;
-            if (delta > 0)
-            {
-                if (m_IsPreprocessIncrease)
-                {
-                    m_PreprocessIncrease.Invoke(modifier, ref newValue);
-                }
-            }
-            else
-            {
-                if (m_IsPreprocessReduce)
-                {
-                    m_PreprocessReduce.Invoke(modifier, ref newValue);
-                }
-            }
+            m_Preprocess?.Invoke(modifier, ref newValue);
             if (newValue > m_MaxValue)
             {
                 newValue = m_MaxValue;
@@ -96,6 +88,11 @@ namespace YBFramework.Component
             m_CurValue = newValue;
             m_OnCurValueChanged?.Invoke();
             Record(ValueConstraintType.Current, modifier, delta, oldValue - newValue);
+        }
+
+        public PropertyType GetPropertyType()
+        {
+            return m_PropertyType;
         }
 
         public void RegisterValueChangeCallBack(ValueConstraintType valueConstraintType, Action callBack)
@@ -130,44 +127,14 @@ namespace YBFramework.Component
             }
         }
 
-        public void RegisterPreprocess(bool isIncrease, Preprocess preprocess)
+        public void RegisterPreprocess(Preprocess preprocess)
         {
-            if (isIncrease)
-            {
-                if (!m_IsPreprocessIncrease)
-                {
-                    m_IsPreprocessIncrease = true;
-                }
-                m_PreprocessIncrease += preprocess;
-            }
-            else
-            {
-                if (!m_IsPreprocessReduce)
-                {
-                    m_IsPreprocessReduce = true;
-                }
-                m_PreprocessReduce += preprocess;
-            }
+            m_Preprocess += preprocess;
         }
 
-        public void UnregisterPreprocess(bool isIncrease, Preprocess preprocess)
+        public void UnregisterPreprocess(Preprocess preprocess)
         {
-            if (isIncrease)
-            {
-                m_PreprocessIncrease -= preprocess;
-                if (m_PreprocessIncrease == null)
-                {
-                    m_IsPreprocessIncrease = false;
-                }
-            }
-            else
-            {
-                m_PreprocessReduce -= preprocess;
-                if (m_PreprocessReduce == null)
-                {
-                    m_IsPreprocessReduce = false;
-                }
-            }
+            m_Preprocess -= preprocess;
         }
 
         public override void OnFree()
@@ -176,10 +143,7 @@ namespace YBFramework.Component
             m_OnMaxValueChanged = null;
             m_OnMinValueChanged = null;
             m_OnCurValueChanged = null;
-            m_PreprocessIncrease = null;
-            m_PreprocessReduce = null;
-            m_IsPreprocessIncrease = false;
-            m_IsPreprocessReduce = false;
+            m_Preprocess = null;
         }
     }
 }

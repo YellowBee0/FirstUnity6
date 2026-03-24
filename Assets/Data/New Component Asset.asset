@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9beaaa8181542018323e1177150207d, type: 3}
+  m_Name: New Component Asset
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.ComponentAsset
+  m_Components:
+  - rid: 8360641886955503677
+  - rid: 8360641886955503676
+  references:
+    version: 2
+    RefIds:
+    - rid: 8360641886955503676
+      type: {class: PropertyManager, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Properties:
+        - m_CurValue: 100
+          m_MaxValue: 100
+          m_MinValue: 0
+          m_IsRecordedCurValue: 0
+          m_IsRecordedMaxValue: 0
+          m_IsRecordedMinValue: 0
+          m_PropertyType: 0
+        - m_CurValue: 0
+          m_MaxValue: 100
+          m_MinValue: -100
+          m_IsRecordedCurValue: 0
+          m_IsRecordedMaxValue: 0
+          m_IsRecordedMinValue: 0
+          m_PropertyType: 1
+    - rid: 8360641886955503677
+      type: {class: BuffManager, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data: 

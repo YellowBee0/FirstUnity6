@@ -15,20 +15,20 @@ namespace YBFramework.Common
 
         [SerializeField] protected T m_MinValue;
 
-        [SerializeField] private bool m_IsRecordedCurValue;
+        [SerializeField] protected bool m_IsRecordedCurValue;
 
-        [SerializeField] private bool m_IsRecordedMaxValue;
+        [SerializeField] protected bool m_IsRecordedMaxValue;
 
-        [SerializeField] private bool m_IsRecordedMinValue;
-
-        public void Init(T maxValue, T minValue, T curValue, bool isRecordMaxValue, bool isRecordMinValue, bool isRecordCurValue)
+        [SerializeField] protected bool m_IsRecordedMinValue;
+        
+        public virtual void CopyFrom(BaseValue<T> other)
         {
-            m_MaxValue = maxValue;
-            m_MinValue = minValue;
-            m_CurValue = curValue;
-            m_IsRecordedMaxValue = isRecordMaxValue;
-            m_IsRecordedMinValue = isRecordMinValue;
-            m_IsRecordedCurValue = isRecordCurValue;
+            m_MaxValue = other.m_MaxValue;
+            m_MinValue = other.m_MinValue;
+            m_CurValue = other.m_CurValue;
+            m_IsRecordedMaxValue = other.m_IsRecordedMaxValue;
+            m_IsRecordedMinValue = other.m_IsRecordedMaxValue;
+            m_IsRecordedCurValue = other.m_IsRecordedMaxValue;
         }
 
         protected ref bool GetIsEnableRecord(ValueConstraintType valueConstraintType)
@@ -139,6 +139,7 @@ namespace YBFramework.Common
 
             private static readonly Dictionary<BaseValue<T>, List<ValueRecord>> s_ValueRecords = new();
 
+            //TODO:泛型类对象提出
             private static readonly StringBuilder s_StringBuilder = new();
 
             public static ValueRecord Allocate(string modifier, ValueConstraintType valueConstraintType, T expectedModifiedValue, T actualModifiedValue)

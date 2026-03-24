@@ -6,7 +6,25 @@ namespace YBFramework.Component
 {
     public class Entity : MonoBehaviour
     {
-        private readonly Dictionary<Type, IComponent> m_Components = new(8);
+        [SerializeField] private ComponentAsset m_ComponentAsset;
+
+        private Dictionary<Type, IComponent> m_Components;
+
+        public void Awake()
+        {
+            IReadOnlyList<IComponent> components = m_ComponentAsset.GetComponents();
+            int count = components.Count;
+            m_Components = new Dictionary<Type, IComponent>(count);
+            for (int i = 0; i < count; i++)
+            {
+                IComponent component = components[i];
+                m_Components.Add(component.GetType(),component.Clone());
+            }
+            foreach (KeyValuePair<Type,IComponent> kvp in m_Components)
+            {
+                kvp.Value.OnAddComponent(this);
+            }
+        }
 
         public void AddComponent(IComponent component)
         {
@@ -26,13 +44,13 @@ namespace YBFramework.Component
 
         public T GetCustomComponent<T>() where T : class, IComponent
         {
-            return m_Components.TryGetValue(typeof(T), out var component) ? (T)component : null;
+            return m_Components.TryGetValue(typeof(T), out IComponent component) ? (T)component : null;
         }
 
         /// <summary>可以在归还对象池的时候调用这个函数</summary>
         public void ResetEntity()
         {
-            foreach (var component in m_Components.Values)
+            foreach (IComponent component in m_Components.Values)
             {
                 component.ResetComponent();
             }
@@ -41,7 +59,7 @@ namespace YBFramework.Component
         /// <summary>销毁Entity容器的时候会释放组件使用的资源，也有可能把组件归还到组件对象池（如果存在）</summary>
         private void OnDestroy()
         {
-            foreach (var kvp in m_Components)
+            foreach (KeyValuePair<Type, IComponent> kvp in m_Components)
             {
                 kvp.Value.OnRemoveComponent();
             }

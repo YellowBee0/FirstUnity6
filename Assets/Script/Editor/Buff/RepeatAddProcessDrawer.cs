@@ -10,7 +10,7 @@ namespace YBFramework.MyEditor
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            ManagedReferencePropertyView propertyView = new(typeof(RepeatAddProcess));
+            ManagedReferencePropertyView propertyView = new(typeof(RepeatAddProcess), null);
             propertyView.Bind(property);
             return propertyView;
         }

@@ -16,7 +16,7 @@ namespace YBFramework.Component
 
         [SerializeReference] private IExecutor m_Executor;
 
-        [SerializeField] private string m_PropertyName;
+        [SerializeField] private PropertyType m_PropertyType;
 
         [SerializeField] private ValueConstraintType m_ConstraintType;
 
@@ -24,10 +24,10 @@ namespace YBFramework.Component
 
         private void DoModifyValue()
         {
-            Debug.Log($"start modify {m_PropertyName},wants modify {m_ModifyValue}");
+            Debug.Log($"start modify {m_PropertyType},wants modify {m_ModifyValue}");
             float value = m_Property.GetCurValue();
             m_Property.ModifyValue(m_ConstraintType, m_Buff.GetBuffAsset().GetName(), m_ModifyValue);
-            Debug.Log($"end modify {m_PropertyName},actral modify {m_Property.GetCurValue() - value}");
+            Debug.Log($"end modify {m_PropertyType},actral modify {m_Property.GetCurValue() - value}");
         }
 
         public void OnAdd(Buff buff)
@@ -37,7 +37,7 @@ namespace YBFramework.Component
             PropertyManager propertyManager = owner.GetCustomComponent<PropertyManager>();
             if (propertyManager != null)
             {
-                m_Property = propertyManager.GetProperty(m_PropertyName);
+                m_Property = propertyManager.GetProperty(m_PropertyType);
                 if (m_Property != null)
                 {
                     m_Executor.Initialize(owner);
@@ -67,7 +67,7 @@ namespace YBFramework.Component
         public IBuffComponent Clone()
         {
             ModifyProperty modifyProperty = ObjectPool.Allocate<ModifyProperty>();
-            modifyProperty.m_PropertyName = m_PropertyName;
+            modifyProperty.m_PropertyType = m_PropertyType;
             modifyProperty.m_ConstraintType = m_ConstraintType;
             modifyProperty.m_ModifyValue = m_ModifyValue;
             modifyProperty.m_Executor = m_Executor.Clone();

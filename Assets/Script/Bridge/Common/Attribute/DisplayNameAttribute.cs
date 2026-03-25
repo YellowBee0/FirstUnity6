@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 
 namespace YBFramework.Common
@@ -13,3 +14,4 @@ namespace YBFramework.Common
         }
     }
 }
+#endif

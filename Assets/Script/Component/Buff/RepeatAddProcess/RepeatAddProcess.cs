@@ -7,6 +7,18 @@ namespace YBFramework.Component
     [Serializable]
     public abstract class RepeatAddProcess
     {
+        private static bool IsSameData(BuffAsset left, BuffAsset right)
+        {
+            return left == right;
+        }
+
+        private static bool IsSameName(BuffAsset left, BuffAsset right)
+        {
+            return left.GetName() == right.GetName();
+        }
+        
+        private unsafe delegate*<BuffAsset, BuffAsset, bool> m_IsMatch;
+
         protected BuffAsset m_BuffAsset;
 
         [SerializeField] private RepeatAddCondition m_RepeatAddCondition;
@@ -18,39 +30,27 @@ namespace YBFramework.Component
             m_BuffAsset = buffAsset;
         }
 
-        public Buff CheckIsRepeatAdd(BuffManager manager, Entity caster)
+        public unsafe Buff CheckIsRepeatAdd(BuffManager manager, Entity caster)
         {
             IReadOnlyList<Buff> buffs = manager.GetBuffs();
             switch (m_RepeatAddCondition)
             {
                 case RepeatAddCondition.SameData:
-                    for (int i = 0; i < buffs.Count; i++)
-                    {
-                        Buff buff = buffs[i];
-                        if (buff.GetBuffAsset() == m_BuffAsset)
-                        {
-                            if (!m_IsJudgingByCaster || buff.GetCaster() == caster)
-                            {
-                                return buff;
-                            }
-                        }
-                    }
+                    m_IsMatch = &IsSameData;
                     break;
                 case RepeatAddCondition.SameName:
-                    for (int i = 0; i < buffs.Count; i++)
-                    {
-                        Buff buff = buffs[i];
-                        if (buff.GetBuffAsset().GetName() == m_BuffAsset.GetName())
-                        {
-                            if (!m_IsJudgingByCaster || buff.GetCaster() == caster)
-                            {
-                                return buff;
-                            }
-                        }
-                    }
+                    m_IsMatch = &IsSameName;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+            for (int i = 0; i < buffs.Count; i++)
+            {
+                Buff buff = buffs[i];
+                if (m_IsMatch(buff.GetBuffAsset(), m_BuffAsset) && !m_IsJudgingByCaster || buff.GetCaster() == caster)
+                {
+                    return buff;
+                }
             }
             return null;
         }

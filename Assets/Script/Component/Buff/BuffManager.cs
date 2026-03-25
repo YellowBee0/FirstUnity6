@@ -17,29 +17,33 @@ namespace YBFramework.Component
 
         private float m_BuffMagnification = 1f;
 
+        private float m_NeutralMagnification = 1f;
+
         private float m_DeBuffMagnification = 1f;
 
-        public void SetBuffMagnification(BuffType buffType, float magnification)
+        private ref float GetMagnification(BuffType buffType)
         {
             switch (buffType)
             {
                 case BuffType.BUFF:
-                    if (Mathf.Approximately(m_BuffMagnification, magnification))
-                    {
-                        return;
-                    }
-                    m_BuffMagnification = magnification;
-                    break;
+                    return ref m_BuffMagnification;
+                case BuffType.Neutral:
+                    return ref m_NeutralMagnification;
                 case BuffType.DeBUFF:
-                    if (Mathf.Approximately(m_DeBuffMagnification, magnification))
-                    {
-                        return;
-                    }
-                    m_DeBuffMagnification = magnification;
-                    break;
+                    return ref m_DeBuffMagnification;
                 default:
-                    return;
+                    throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void SetBuffMagnification(BuffType buffType, float magnification)
+        {
+            ref float curMagnification = ref GetMagnification(buffType);
+            if (Mathf.Approximately(curMagnification, magnification))
+            {
+                return;
+            }
+            curMagnification = magnification;
             for (int i = 0; i < m_Buffs.Count; i++)
             {
                 if (m_Buffs[i].GetBuffAsset().GetBuffType() == buffType)
@@ -83,10 +87,11 @@ namespace YBFramework.Component
                 case BuffType.BUFF:
                     buff.SetMagnification(m_BuffMagnification);
                     break;
+                case BuffType.Neutral:
+                    buff.SetMagnification(m_NeutralMagnification);
+                    break;
                 case BuffType.DeBUFF:
                     buff.SetMagnification(m_DeBuffMagnification);
-                    break;
-                case BuffType.Neutral:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

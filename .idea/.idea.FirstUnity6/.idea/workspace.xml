@@ -7,30 +7,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="准备完结蓝图">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="项目结构整理">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/GraphDebugHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/GraphDebugHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/PortInvokeRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Debug/PortInvokeRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Attribute.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Attribute.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Attribute/NodeMenuAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Attribute/NodeMenuAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Attribute/NodeMenuAttribute.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Attribute/NodeMenuAttribute.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Data/NodeAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Data/NodeAsset.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/DebugNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/DebugNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/CommonPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/CommonPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/DelegatePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/DelegatePort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/PortHelper/ConnectedDelegatePortData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Data/ConnectedDelegatePortData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/PortHelper/ConnectedDelegatePortData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Data/ConnectedDelegatePortData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/PortHelper/ConnectedPortData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Data/ConnectedPortData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/PortHelper/ConnectedPortData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Data/ConnectedPortData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Node/DebugNodeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Node/DebugNodeDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.GraphView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.GraphView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/CustomGraphView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/CustomGraphView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/NodeView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/NodeView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Attribute.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Attribute.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Attribute/DisplayNameAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Attribute/DisplayNameAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Attribute/DisplayNameAttribute.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Attribute/DisplayNameAttribute.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/RepeatAddProcess/RepeatAddProcess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/RepeatAddProcess/RepeatAddProcess.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +40,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/04/14902d2c/Mathf.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/31/01483459/RuntimeInitializeLoadType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/a5/6c768b6d/RuntimeInitializeOnLoadMethodAttribute.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/e3/25ecc618/Object.cs" root0="FORCE_HIGHLIGHTING" />
@@ -69,8 +54,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/5f/ee9ab3b3/VisualElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/9c/3f8db1d9/BasePopupField`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/dc/362ecc1d/ListView.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/Common/Attribute/DisplayNameAttribute.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Temp/FirstUnity6/Assets/Script/Common/Value/BaseValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -85,22 +68,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "XThreadsFramesViewSplitterKey": "0.50047845",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.general",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.50047845&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.build.unityPlugin&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity-a\Unity6000.3.11f1\Editor\Unity.exe" />
@@ -167,7 +150,8 @@
       <workItem from="1774332155124" duration="12401000" />
       <workItem from="1774351332977" duration="6309000" />
       <workItem from="1774406858266" duration="73000" />
-      <workItem from="1774406937869" duration="2326000" />
+      <workItem from="1774406937869" duration="3738000" />
+      <workItem from="1774423329571" duration="1547000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -249,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774357675442</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="项目结构整理">
+      <option name="closed" value="true" />
+      <created>1774410119970</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1774410119970</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +265,8 @@
     <MESSAGE value="计时器改为List集合" />
     <MESSAGE value="添加组件加载方式" />
     <MESSAGE value="准备完结蓝图" />
-    <option name="LAST_COMMIT_MESSAGE" value="准备完结蓝图" />
+    <MESSAGE value="项目结构整理" />
+    <option name="LAST_COMMIT_MESSAGE" value="项目结构整理" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

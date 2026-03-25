@@ -39,7 +39,7 @@ namespace YBFramework.Component
                 for (int i = 0; i < nodes.Count; i++)
                 {
                     BaseNode node = nodes[i];
-                    if (node.GetID() == connectedDelegatePortData.NodeID)
+                    if (node.ID == connectedDelegatePortData.NodeID)
                     {
                         if (node.GetPort(connectedDelegatePortData.PortID) is MethodPort connectedPort)
                         {

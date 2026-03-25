@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 #if UNITY_EDITOR
 using System.Text;
 using YBFramework.MyEditor;
@@ -16,24 +15,16 @@ namespace YBFramework.Component
 #if DEBUG
         [NonSerialized] public BaseNode Node;
 #endif
-        [SerializeField] private int m_ID;
+        public int ID;
 
-        public int GetID()
-        {
-            return m_ID;
-        }
+        public int ConnectedCount;
 
         public virtual void Copy(BasePort from)
         {
-            m_ID = from.m_ID;
+            ID = from.ID;
         }
 #if UNITY_EDITOR
         protected static readonly StringBuilder s_StrBuilder = new();
-
-        public void SetID(int portID)
-        {
-            m_ID = portID;
-        }
 
         public abstract string GetConnectTip();
 #endif

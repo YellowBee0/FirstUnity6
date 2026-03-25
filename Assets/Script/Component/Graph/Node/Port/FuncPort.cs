@@ -84,7 +84,7 @@ namespace YBFramework.Component
             {
                 if (m_ConnectedPortData != null)
                 {
-                    if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.GetID())
+                    if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.ID)
                     {
                         return false;
                     }
@@ -94,8 +94,10 @@ namespace YBFramework.Component
                     m_ConnectedPortData = new ConnectedDelegatePortData();
                 }
                 m_ConnectedPortData.NodeID = nodeID;
-                m_ConnectedPortData.PortID = other.GetID();
+                m_ConnectedPortData.PortID = other.ID;
                 m_ConnectedPortData.IsExplicitCast = isExplicitCast;
+                ConnectedCount++;
+                other.ConnectedCount++;
                 return true;
             }
             return false;
@@ -105,9 +107,11 @@ namespace YBFramework.Component
         {
             if (m_ConnectedPortData != null)
             {
-                if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.GetID())
+                if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.ID)
                 {
                     m_ConnectedPortData = null;
+                    ConnectedCount--;
+                    other.ConnectedCount--;
                     return true;
                 }
             }

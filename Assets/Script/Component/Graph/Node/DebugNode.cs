@@ -67,7 +67,7 @@ namespace YBFramework.Component
         {
             DebugNode node = new DebugNode
             {
-                m_ID = m_ID
+                ID = ID
             };
             //复制所有集合中的元素
             //node.m_LogContextInput.CopySize(m_LogContextInput);

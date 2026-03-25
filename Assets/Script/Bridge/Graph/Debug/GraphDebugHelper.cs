@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if DEBUG
+using System.Collections.Generic;
 using YBFramework.Component;
 
 namespace YBFramework.MyEditor
@@ -94,3 +95,4 @@ namespace YBFramework.MyEditor
         }
     }
 }
+#endif

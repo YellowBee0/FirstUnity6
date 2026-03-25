@@ -51,7 +51,7 @@ namespace YBFramework.Component
         {
             GetValueNode node = new()
             {
-                m_ID = m_ID,
+                ID = ID,
                 m_IntValue = m_IntValue,
                 m_StringValue = m_StringValue
             };

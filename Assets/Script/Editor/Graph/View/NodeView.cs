@@ -56,7 +56,7 @@ namespace YBFramework.MyEditor
         {
             for (int i = 0; i < m_PortViews.Count; i++)
             {
-                if (m_PortViews[i].Port.GetID() == portID)
+                if (m_PortViews[i].Port.ID == portID)
                 {
                     return m_PortViews[i];
                 }

@@ -6,6 +6,7 @@ namespace YBFramework.MyEditor
     public sealed class NodeMenuAttribute : Attribute
     {
         public readonly GraphType GraphType;
+        
         public readonly string NodeName;
 
         public NodeMenuAttribute(string nodeName, GraphType graphType)

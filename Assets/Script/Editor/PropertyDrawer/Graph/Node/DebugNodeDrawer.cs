@@ -63,7 +63,7 @@ namespace YBFramework.MyEditor
         {
             FuncPort<int> port = new();
             m_Node.Add(port);
-            port.SetID(m_NodeView.NodeAsset.AllocateID());
+            port.ID = m_NodeView.NodeAsset.AllocateID();
             CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(typeof(FuncPort<int>));
             VisualElement view = portDrawer.DrawPortView(m_NodeView, port);
             m_PortContainer.Add(view);

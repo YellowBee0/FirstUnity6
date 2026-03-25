@@ -65,7 +65,8 @@ namespace YBFramework.Component
             {
                 ConnectedDelegatePortData connectedPortData;
                 int index;
-                if (m_ConnectedPortData != null)
+                //TODO:这里逻辑需要大改
+                if (ConnectedCount != 0)
                 {
                     if (PortViewInfo.Capacity == Port.Capacity.Single)
                     {
@@ -74,7 +75,7 @@ namespace YBFramework.Component
                     }
                     else
                     {
-                        if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.GetID()) != null)
+                        if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.ID) != null)
                         {
                             return false;
                         }
@@ -90,9 +91,11 @@ namespace YBFramework.Component
                     m_ConnectedPortData = new ConnectedDelegatePortData[1];
                 }
                 connectedPortData.NodeID = nodeID;
-                connectedPortData.PortID = other.GetID();
+                connectedPortData.PortID = other.ID;
                 connectedPortData.IsExplicitCast = isExplicitCast;
                 m_ConnectedPortData[index] = connectedPortData;
+                ConnectedCount++;
+                other.ConnectedCount++;
                 return true;
             }
             return false;
@@ -103,10 +106,12 @@ namespace YBFramework.Component
             for (int i = 0; i < m_ConnectedPortData.Length; i++)
             {
                 ConnectedDelegatePortData connectedPortData = m_ConnectedPortData[i];
-                if (connectedPortData.NodeID == nodeID && connectedPortData.PortID == other.GetID())
+                if (connectedPortData.NodeID == nodeID && connectedPortData.PortID == other.ID)
                 {
                     (m_ConnectedPortData[i], m_ConnectedPortData[^1]) = (m_ConnectedPortData[^1], m_ConnectedPortData[i]);
                     Array.Resize(ref m_ConnectedPortData, m_ConnectedPortData.Length - 1);
+                    ConnectedCount--;
+                    other.ConnectedCount--;
                     return true;
                 }
             }

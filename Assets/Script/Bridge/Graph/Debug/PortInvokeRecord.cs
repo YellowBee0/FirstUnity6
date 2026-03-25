@@ -1,3 +1,4 @@
+#if DEBUG
 using System.Collections.Generic;
 using YBFramework.Component;
 
@@ -10,8 +11,8 @@ namespace YBFramework.MyEditor
         public static PortInvokeRecord Allocate(BasePort fromPort, ConnectedPortData toPortData)
         {
             PortInvokeRecord record = s_Pool.Count > 0 ? s_Pool.Dequeue() : new PortInvokeRecord();
-            record.FromNodeID = fromPort.Node.GetID();
-            record.FromPortID = fromPort.GetID();
+            record.FromNodeID = fromPort.Node.ID;
+            record.FromPortID = fromPort.ID;
             record.ToNodeID = toPortData.NodeID;
             record.ToPortID = toPortData.PortID;
             return record;
@@ -37,3 +38,4 @@ namespace YBFramework.MyEditor
         public int ToPortID;
     }
 }
+#endif

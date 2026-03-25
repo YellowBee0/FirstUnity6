@@ -41,7 +41,7 @@ namespace YBFramework.MyEditor
                 {
                     if (basePort is IPortConnectionSource portConnectionSource)
                     {
-                        PortView fromPortView = fromNodeView.GetPortView(basePort.GetID());
+                        PortView fromPortView = fromNodeView.GetPortView(basePort.ID);
                         foreach (ConnectedPortData connectedPortData in portConnectionSource.GetConnectedPortDataEnumerator())
                         {
                             NodeView toNodeView = GetNodeView(connectedPortData.NodeID);

@@ -31,11 +31,13 @@ namespace YBFramework.Component
                         m_ConnectedPortData[0] = new ConnectedPortData
                         {
                             NodeID = nodeID,
-                            PortID = other.GetID()
+                            PortID = other.ID
                         };
+                        ConnectedCount++;
+                        other.ConnectedCount++;
                         return true;
                     }
-                    if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.GetID()) != null)
+                    if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.ID) != null)
                     {
                         return false;
                     }
@@ -48,8 +50,10 @@ namespace YBFramework.Component
             m_ConnectedPortData.Add(new ConnectedPortData
             {
                 NodeID = nodeID,
-                PortID = other.GetID()
+                PortID = other.ID
             });
+            ConnectedCount++;
+            other.ConnectedCount++;
             return true;
         }
 
@@ -57,9 +61,11 @@ namespace YBFramework.Component
         {
             for (int i = 0; i < m_ConnectedPortData.Count; i++)
             {
-                if (m_ConnectedPortData[i].NodeID == nodeID && m_ConnectedPortData[i].PortID == other.GetID())
+                if (m_ConnectedPortData[i].NodeID == nodeID && m_ConnectedPortData[i].PortID == other.ID)
                 {
                     m_ConnectedPortData.RemoveAt(i);
+                    ConnectedCount--;
+                    other.ConnectedCount--;
                     return true;
                 }
             }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using YBFramework.MyEditor;
 #endif
@@ -67,23 +68,18 @@ namespace YBFramework.Component
         public Graph Graph;
 #endif
 
-        [SerializeField] protected int m_ID;
+        public int ID;
 
         public IEnumerable<BasePort> GetPortEnumerable()
         {
             return new PortEnumerator(this);
         }
 
-        public int GetID()
-        {
-            return m_ID;
-        }
-
         public BasePort GetPort(int portID)
         {
             foreach (BasePort port in GetPortEnumerable())
             {
-                if (port.GetID() == portID)
+                if (port.ID == portID)
                 {
                     return port;
                 }
@@ -153,11 +149,6 @@ namespace YBFramework.Component
         protected abstract PortDrawTarget PortDrawTargetIterator(int index);
 
         public abstract void InitNodeInfo();
-
-        public void SetID(int nodeID)
-        {
-            m_ID = nodeID;
-        }
 #endif
     }
 }

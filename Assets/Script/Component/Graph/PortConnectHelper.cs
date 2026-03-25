@@ -7,33 +7,6 @@ namespace YBFramework.Component
 {
     public static class PortConnectHelper
     {
-        private static readonly List<WrapMethodInfo> s_WrapMethodInfos = new();
-        
-        [RuntimeInitializeOnLoadMethod]
-        public static void RegisterWrapMethod()
-        {
-            MethodInfo[] methodInfos = typeof(MethodWrapper).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            for (int i = 0; i < methodInfos.Length; i++)
-            {
-                s_WrapMethodInfos.Add(new WrapMethodInfo(methodInfos[i]));
-            }
-        }
-
-        public static Delegate WrapMethod(Type delegateType, MethodInfo methodInfo, object target)
-        {
-            for (int i = 0; i < s_WrapMethodInfos.Count; i++)
-            {
-                MethodInfo wrapMethodInfo = s_WrapMethodInfos[i].GetMethodInfo(delegateType);
-                if (wrapMethodInfo != null)
-                {
-                    MethodWrapper methodWrapper = new(methodInfo, target, s_WrapMethodInfos[i].GetParameterCount());
-                    return wrapMethodInfo.CreateDelegate(delegateType, methodWrapper);
-                }
-            }
-            Debug.LogError("Missing wrapper function for the delegate type");
-            return null;
-        }
-
         private sealed class MethodWrapper
         {
             private readonly MethodInfo m_MethodInfo;
@@ -155,6 +128,33 @@ namespace YBFramework.Component
             {
                 return m_Parameters.Length;
             }
+        }
+        
+        private static readonly List<WrapMethodInfo> s_WrapMethodInfos = new();
+        
+        [RuntimeInitializeOnLoadMethod]
+        public static void RegisterWrapMethod()
+        {
+            MethodInfo[] methodInfos = typeof(MethodWrapper).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            for (int i = 0; i < methodInfos.Length; i++)
+            {
+                s_WrapMethodInfos.Add(new WrapMethodInfo(methodInfos[i]));
+            }
+        }
+
+        public static Delegate WrapMethod(Type delegateType, MethodInfo methodInfo, object target)
+        {
+            for (int i = 0; i < s_WrapMethodInfos.Count; i++)
+            {
+                MethodInfo wrapMethodInfo = s_WrapMethodInfos[i].GetMethodInfo(delegateType);
+                if (wrapMethodInfo != null)
+                {
+                    MethodWrapper methodWrapper = new(methodInfo, target, s_WrapMethodInfos[i].GetParameterCount());
+                    return wrapMethodInfo.CreateDelegate(delegateType, methodWrapper);
+                }
+            }
+            Debug.LogError("Missing wrapper function for the delegate type");
+            return null;
         }
     }
 }

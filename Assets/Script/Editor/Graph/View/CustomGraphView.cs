@@ -123,8 +123,8 @@ namespace YBFramework.MyEditor
 
         public void RemoveEdge(Edge edge)
         {
-            edge.input?.Disconnect(edge);
-            edge.output?.Disconnect(edge);
+            edge.input.Disconnect(edge);
+            edge.output.Disconnect(edge);
             RemoveElement(edge);
         }
 

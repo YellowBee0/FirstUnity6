@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 #if DEBUG
 using YBFramework.MyEditor;
@@ -41,67 +39,46 @@ namespace YBFramework.Component
             return "no parameter and return value";
         }
 
-        protected override bool CanConnect(BasePort other, out bool isExplicitCast)
+        public override bool CanConnect(BasePort other)
         {
-            isExplicitCast = false;
             if (other is MethodPort methodPort)
             {
-                ParameterInfo[] methodPortParameterInfos = methodPort.GetParameters();
-                if (methodPortParameterInfos.Length == 0)
+                if (methodPort.GetParameters().Length == 0)
                 {
-                    if (methodPort.GetReturnType() != typeof(void))
-                    {
-                        isExplicitCast = true;
-                    }
                     return true;
                 }
             }
             return false;
         }
 
-        public override bool Connect(int nodeID, BasePort other)
+        public override void Connect(int nodeID, BasePort other)
         {
-            if (CanConnect(other, out bool isExplicitCast))
+            MethodPort methodPort = (MethodPort)other;
+            bool isExplicitCast = methodPort.GetReturnType() != typeof(void);
+            if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.ID) == null)
             {
-                ConnectedDelegatePortData connectedPortData;
-                int index;
-                //TODO:这里逻辑需要大改
-                if (ConnectedCount != 0)
+                int index = 0;
+                if (m_ConnectedPortData != null)
                 {
-                    if (PortViewInfo.Capacity == Port.Capacity.Single)
-                    {
-                        connectedPortData = m_ConnectedPortData[0];
-                        index = 0;
-                    }
-                    else
-                    {
-                        if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.ID) != null)
-                        {
-                            return false;
-                        }
-                        connectedPortData = new ConnectedDelegatePortData();
-                        index = m_ConnectedPortData.Length;
-                        Array.Resize(ref m_ConnectedPortData, m_ConnectedPortData.Length + 1);
-                    }
+                    index = m_ConnectedPortData.Length;
+                    Array.Resize(ref m_ConnectedPortData, index + 1);
                 }
                 else
                 {
-                    connectedPortData = new ConnectedDelegatePortData();
-                    index = 0;
                     m_ConnectedPortData = new ConnectedDelegatePortData[1];
                 }
-                connectedPortData.NodeID = nodeID;
-                connectedPortData.PortID = other.ID;
-                connectedPortData.IsExplicitCast = isExplicitCast;
-                m_ConnectedPortData[index] = connectedPortData;
+                m_ConnectedPortData[index] = new ConnectedDelegatePortData
+                {
+                    NodeID = nodeID,
+                    PortID = other.ID,
+                    IsExplicitCast = isExplicitCast,
+                };
                 ConnectedCount++;
                 other.ConnectedCount++;
-                return true;
             }
-            return false;
         }
 
-        public override bool Disconnect(int nodeID, BasePort other)
+        public override void Disconnect(int nodeID, BasePort other)
         {
             for (int i = 0; i < m_ConnectedPortData.Length; i++)
             {
@@ -112,10 +89,9 @@ namespace YBFramework.Component
                     Array.Resize(ref m_ConnectedPortData, m_ConnectedPortData.Length - 1);
                     ConnectedCount--;
                     other.ConnectedCount--;
-                    return true;
+                    return;
                 }
             }
-            return false;
         }
 #endif
     }

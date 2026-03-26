@@ -59,19 +59,6 @@ namespace YBFramework.Component
             return node;
         }
 
-        protected override PortDrawTarget PortDrawTargetIterator(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return m_IntOutput;
-                case 1:
-                    return m_StringOutput;
-                default:
-                    return null;
-            }
-        }
-
         public override void InitNodeInfo()
         {
             m_IntOutput.PortViewInfo = new PortViewInfo("int值输出", Direction.Output, Port.Capacity.Multi, Color.blue);

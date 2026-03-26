@@ -64,23 +64,6 @@ namespace YBFramework.Component
             m_LogicInput.PortViewInfo = new PortViewInfo("逻辑输入", Direction.Input, Port.Capacity.Multi, Color.red);
             m_LogicOutput.PortViewInfo = new PortViewInfo("逻辑输出", Direction.Output, Port.Capacity.Multi, Color.red);
         }
-
-        protected override PortDrawTarget PortDrawTargetIterator(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return m_StringInput;
-                case 1:
-                    return m_LogicInput;
-                case 2:
-                    return m_LogicOutput;
-                case 4:
-                    return m_ValueOutput;
-                default:
-                    return null;
-            }
-        }
 #endif
     }
 }

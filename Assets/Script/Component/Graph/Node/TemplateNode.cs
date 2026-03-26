@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using YBFramework.MyEditor;
 
 namespace YBFramework.Component
 {
@@ -24,7 +23,7 @@ namespace YBFramework.Component
             throw new NotImplementedException();
         }
 
-        protected override PortDrawTarget PortDrawTargetIterator(int index)
+        protected override BasePort PortDrawTargetIterator(int index)
         {
             IPortConnectionSource connectionSource = m_TemplateHelpEnter.GetCommonPort();
             foreach (ConnectedPortData connectedPortData in connectionSource.GetConnectedPortDataEnumerator())

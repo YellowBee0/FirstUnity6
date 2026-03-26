@@ -15,7 +15,7 @@ namespace YBFramework.MyEditor
 
         private NodeView m_NodeView;
 
-        public override VisualElement DrawPortView(NodeView nodeView, PortDrawTarget target)
+        public override VisualElement DrawPortView(NodeView nodeView, BasePort target)
         {
             m_NodeView = nodeView;
             m_Port = target as FuncPort<TValue>;

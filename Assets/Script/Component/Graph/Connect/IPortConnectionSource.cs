@@ -47,6 +47,8 @@ namespace YBFramework.Component
             }
         }
 
+        void Connect(BaseNode node, ConnectedPortData data);
+        
         void Connect(IReadOnlyList<BaseNode> nodes);
 
         ConnectedPortData ConnectedPortDataIterator(int index);
@@ -70,9 +72,11 @@ namespace YBFramework.Component
 
         bool CanConnect(BasePort other);
 
-        bool Connect(int nodeID, BasePort other);
+        void Connect(int nodeID, BasePort other);
 
-        bool Disconnect(int nodeID, BasePort other);
+        void Disconnect(int nodeID, BasePort other);
+
+        void CheckConnectValid(IReadOnlyList<BaseNode> nodes);
 #endif
     }
 }

@@ -27,11 +27,6 @@ namespace YBFramework.Component
             return null;
         }
 
-        protected override PortDrawTarget PortDrawTargetIterator(int index)
-        {
-            return index == 0 ? m_Port : null;
-        }
-
         public override void InitNodeInfo()
         {
             m_Port.PortViewInfo = new PortViewInfo("输入端口", Direction.Input, Port.Capacity.Multi, Color.green);

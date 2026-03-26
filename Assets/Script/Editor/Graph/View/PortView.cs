@@ -7,6 +7,59 @@ namespace YBFramework.MyEditor
 {
     public sealed class PortView : Port
     {
+        private sealed class EdgeConnectorListener : IEdgeConnectorListener
+        {
+            public void OnDropOutsidePort(Edge edge, Vector2 position)
+            {
+            }
+
+            public void OnDrop(GraphView graphView, Edge edge)
+            {
+                if (graphView is CustomGraphView customGraphView && edge.input is PortView input && edge.output is PortView output)
+                {
+                    bool isConnected = false;
+                    if (input.Port is IPortConnectionSource inputConnectionSource && inputConnectionSource.CanConnect(output.Port))
+                    {
+                        inputConnectionSource.Connect(output.NodeView.NodeAsset.GetNodeID(), output.Port);
+                        input.NodeView.NodeAsset.SetSelfDirty();
+                        isConnected = true;
+                    }
+                    else if (output.Port is IPortConnectionSource outputConnectionSource && outputConnectionSource.CanConnect(input.Port))
+                    {
+                        outputConnectionSource.Connect(input.NodeView.NodeAsset.GetNodeID(), input.Port);
+                        output.NodeView.NodeAsset.SetSelfDirty();
+                        isConnected = true;
+                    }
+                    if (isConnected)
+                    {
+                        if (input.capacity == Capacity.Single)
+                        {
+                            foreach (Edge connection in input.connections)
+                            {
+                                if (connection != edge)
+                                {
+                                    customGraphView.RemoveEdge(connection);
+                                    break;
+                                }
+                            }
+                        }
+                        if (output.capacity == Capacity.Single)
+                        {
+                            foreach (Edge connection in output.connections)
+                            {
+                                if (connection != edge)
+                                {
+                                    customGraphView.RemoveEdge(connection);
+                                    break;
+                                }
+                            }
+                        }
+                        customGraphView.AddEdge(edge);
+                    }
+                }
+            }
+        }
+
         public readonly NodeView NodeView;
 
         public readonly BasePort Port;
@@ -20,60 +73,6 @@ namespace YBFramework.MyEditor
             portColor = color;
             m_EdgeConnector = new EdgeConnector<Edge>(new EdgeConnectorListener());
             this.AddManipulator(m_EdgeConnector);
-        }
-
-        private sealed class EdgeConnectorListener : IEdgeConnectorListener
-        {
-            public void OnDropOutsidePort(Edge edge, Vector2 position)
-            {
-            }
-
-            public void OnDrop(GraphView graphView, Edge edge)
-            {
-                if (graphView is CustomGraphView customGraphView)
-                {
-                    if (edge.input is PortView input && edge.output is PortView output)
-                    {
-                        bool isConnected = false;
-                        if (input.Port is IPortConnectionSource inputConnectionSource && inputConnectionSource.Connect(output.NodeView.NodeAsset.GetNodeID(), output.Port))
-                        {
-                            isConnected = true;
-                            input.NodeView.NodeAsset.SetSelfDirty();
-                        }
-                        else if (output.Port is IPortConnectionSource outputConnectionSource && outputConnectionSource.Connect(input.NodeView.NodeAsset.GetNodeID(), input.Port))
-                        {
-                            isConnected = true;
-                            output.NodeView.NodeAsset.SetSelfDirty();
-                        }
-                        if (isConnected)
-                        {
-                            if (edge.input.capacity == Capacity.Single)
-                            {
-                                foreach (Edge connection in edge.input.connections)
-                                {
-                                    if (connection != edge)
-                                    {
-                                        customGraphView.RemoveEdge(connection);
-                                        break;
-                                    }
-                                }
-                            }
-                            if (edge.output.capacity == Capacity.Single)
-                            {
-                                foreach (Edge connection in edge.output.connections)
-                                {
-                                    if (connection != edge)
-                                    {
-                                        customGraphView.RemoveEdge(connection);
-                                        break;
-                                    }
-                                }
-                            }
-                            customGraphView.AddEdge(edge);
-                        }
-                    }
-                }
-            }
         }
     }
 }

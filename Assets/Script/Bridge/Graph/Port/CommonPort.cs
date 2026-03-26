@@ -11,6 +11,10 @@ namespace YBFramework.Component
     {
         [SerializeField] private List<ConnectedPortData> m_ConnectedPortData;
 
+        public void Connect(BaseNode node, ConnectedPortData data)
+        {
+        }
+
         public void Connect(IReadOnlyList<BaseNode> nodes)
         {
         }
@@ -20,44 +24,21 @@ namespace YBFramework.Component
             return true;
         }
 
-        public bool Connect(int nodeID, BasePort other)
+        public void Connect(int nodeID, BasePort other)
         {
-            if (m_ConnectedPortData != null)
+            if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.ID) == null)
             {
-                if (m_ConnectedPortData.Count > 0)
+                m_ConnectedPortData.Add(new ConnectedPortData
                 {
-                    if (PortViewInfo.Capacity == Port.Capacity.Single)
-                    {
-                        m_ConnectedPortData[0] = new ConnectedPortData
-                        {
-                            NodeID = nodeID,
-                            PortID = other.ID
-                        };
-                        ConnectedCount++;
-                        other.ConnectedCount++;
-                        return true;
-                    }
-                    if (IPortConnectionSource.FindConnectedPortData(m_ConnectedPortData, nodeID, other.ID) != null)
-                    {
-                        return false;
-                    }
-                }
+                    NodeID = nodeID,
+                    PortID = other.ID
+                });
+                ConnectedCount++;
+                other.ConnectedCount++;
             }
-            else
-            {
-                m_ConnectedPortData = new List<ConnectedPortData>();
-            }
-            m_ConnectedPortData.Add(new ConnectedPortData
-            {
-                NodeID = nodeID,
-                PortID = other.ID
-            });
-            ConnectedCount++;
-            other.ConnectedCount++;
-            return true;
         }
 
-        public bool Disconnect(int nodeID, BasePort other)
+        public void Disconnect(int nodeID, BasePort other)
         {
             for (int i = 0; i < m_ConnectedPortData.Count; i++)
             {
@@ -66,15 +47,33 @@ namespace YBFramework.Component
                     m_ConnectedPortData.RemoveAt(i);
                     ConnectedCount--;
                     other.ConnectedCount--;
-                    return true;
+                    return;
                 }
             }
-            return false;
+        }
+
+        public void CheckConnectValid(IReadOnlyList<BaseNode> nodes)
+        {
+            if (PortViewInfo.Capacity == Port.Capacity.Single)
+            {
+                if (ConnectedCount > 1)
+                {
+                    Debug.LogError($"port id {ID} is single connect,but connected multi count");
+                }
+            }
+            //在这里判断是否存在重复数据
         }
 
         public ConnectedPortData ConnectedPortDataIterator(int index)
         {
-            return index >= m_ConnectedPortData.Count ? null : m_ConnectedPortData[index];
+            if (m_ConnectedPortData != null)
+            {
+                if (index < m_ConnectedPortData.Count)
+                {
+                    return m_ConnectedPortData[index];
+                }
+            }
+            return null;
         }
 
         public override string GetConnectTip()

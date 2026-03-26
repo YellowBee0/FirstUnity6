@@ -8,9 +8,6 @@ namespace YBFramework.Component
 {
     [Serializable]
     public abstract class BasePort
-#if UNITY_EDITOR
-        : PortDrawTarget
-#endif
     {
 #if DEBUG
         [NonSerialized] public BaseNode Node;
@@ -25,6 +22,8 @@ namespace YBFramework.Component
         }
 #if UNITY_EDITOR
         protected static readonly StringBuilder s_StrBuilder = new();
+
+        public PortViewInfo PortViewInfo;
 
         public abstract string GetConnectTip();
 #endif

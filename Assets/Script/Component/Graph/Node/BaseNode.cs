@@ -1,11 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
-#if UNITY_EDITOR
-using YBFramework.MyEditor;
-#endif
 
 namespace YBFramework.Component
 {
@@ -91,6 +86,7 @@ namespace YBFramework.Component
 
         public abstract BaseNode Clone();
 
+        //TODO:补上这部分逻辑
         public virtual void OnStart()
         {
         }
@@ -99,54 +95,15 @@ namespace YBFramework.Component
         {
         }
 #if UNITY_EDITOR
-        private sealed class PortContentCreatorEnumerator : IEnumerable<PortDrawTarget>, IEnumerator<PortDrawTarget>
+        public IEnumerable<BasePort> GetPortDrawTargetEnumerable()
         {
-            private readonly BaseNode m_Node;
-
-            private int m_Index;
-
-            public PortContentCreatorEnumerator(BaseNode node)
-            {
-                m_Node = node;
-                m_Index = 0;
-            }
-
-            public PortDrawTarget Current { get; private set; }
-
-            object IEnumerator.Current => Current;
-
-            public IEnumerator<PortDrawTarget> GetEnumerator()
-            {
-                return this;
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-
-            public void Dispose()
-            {
-            }
-
-            public bool MoveNext()
-            {
-                Current = m_Node.PortDrawTargetIterator(m_Index++);
-                return Current != null;
-            }
-
-            public void Reset()
-            {
-                m_Index = 0;
-            }
+            return new PortEnumerator(this);
         }
 
-        public IEnumerable<PortDrawTarget> GetPortDrawTargetEnumerable()
+        protected virtual BasePort PortDrawTargetIterator(int index)
         {
-            return new PortContentCreatorEnumerator(this);
+            return PortIterator(index);
         }
-
-        protected abstract PortDrawTarget PortDrawTargetIterator(int index);
 
         public abstract void InitNodeInfo();
 #endif

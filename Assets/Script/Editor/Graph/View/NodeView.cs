@@ -26,7 +26,7 @@ namespace YBFramework.MyEditor
             //TODO:这一部分可能需要写成一个函数
             bool isInputAddElement = false;
             bool isOutputAddElement = false;
-            foreach (PortDrawTarget portDrawTarget in baseNode.GetPortDrawTargetEnumerable())
+            foreach (BasePort portDrawTarget in baseNode.GetPortDrawTargetEnumerable())
             {
                 if (DrawerManager.Allocate(portDrawTarget.GetType()) is CommonPortDrawer portDrawer)
                 {

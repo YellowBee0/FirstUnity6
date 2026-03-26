@@ -75,7 +75,7 @@ namespace YBFramework.Component
             return node;
         }
 
-        protected override PortDrawTarget PortDrawTargetIterator(int index)
+        protected override BasePort PortDrawTargetIterator(int index)
         {
             return index == 0 ? m_LogicInput : null;
         }

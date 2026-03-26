@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using UnityEngine;
 #if DEBUG
 using YBFramework.MyEditor;
@@ -58,52 +57,35 @@ namespace YBFramework.Component
             return $"no parameter return {typeof(TValue)}";
         }
 
-        protected override bool CanConnect(BasePort other, out bool isExplicitCast)
+        public override bool CanConnect(BasePort other)
         {
-            isExplicitCast = false;
             if (other is MethodPort methodPort)
             {
-                ParameterInfo[] methodPortParameterInfos = methodPort.GetParameters();
-                if (methodPortParameterInfos.Length == 0)
+                if (methodPort.GetParameters().Length == 0)
                 {
-                    Type methodPortReturnType = methodPort.GetReturnType();
-                    Type valueType = typeof(TValue);
-                    if (methodPortReturnType.IsValueType && methodPortReturnType != valueType)
-                    {
-                        isExplicitCast = true;
-                    }
-                    return valueType.IsAssignableFrom(methodPortReturnType);
+                    return typeof(TValue).IsAssignableFrom(methodPort.GetReturnType());
                 }
             }
             return false;
         }
 
-        public override bool Connect(int nodeID, BasePort other)
+        public override void Connect(int nodeID, BasePort other)
         {
-            if (CanConnect(other, out bool isExplicitCast))
+            MethodPort methodPort = (MethodPort)other;
+            Type valueType = typeof(TValue);
+            Type returnType = methodPort.GetReturnType();
+            bool isExplicitCast = returnType.IsValueType && returnType != valueType;
+            m_ConnectedPortData = new ConnectedDelegatePortData
             {
-                if (m_ConnectedPortData != null)
-                {
-                    if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.ID)
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    m_ConnectedPortData = new ConnectedDelegatePortData();
-                }
-                m_ConnectedPortData.NodeID = nodeID;
-                m_ConnectedPortData.PortID = other.ID;
-                m_ConnectedPortData.IsExplicitCast = isExplicitCast;
-                ConnectedCount++;
-                other.ConnectedCount++;
-                return true;
-            }
-            return false;
+                NodeID = nodeID,
+                PortID = other.ID,
+                IsExplicitCast = isExplicitCast,
+            };
+            ConnectedCount++;
+            other.ConnectedCount++;
         }
 
-        public override bool Disconnect(int nodeID, BasePort other)
+        public override void Disconnect(int nodeID, BasePort other)
         {
             if (m_ConnectedPortData != null)
             {
@@ -112,10 +94,8 @@ namespace YBFramework.Component
                     m_ConnectedPortData = null;
                     ConnectedCount--;
                     other.ConnectedCount--;
-                    return true;
                 }
             }
-            return false;
         }
 #endif
     }

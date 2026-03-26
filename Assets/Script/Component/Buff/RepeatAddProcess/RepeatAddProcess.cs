@@ -16,8 +16,6 @@ namespace YBFramework.Component
         {
             return left.GetName() == right.GetName();
         }
-        
-        private unsafe delegate*<BuffAsset, BuffAsset, bool> m_IsMatch;
 
         protected BuffAsset m_BuffAsset;
 
@@ -33,13 +31,14 @@ namespace YBFramework.Component
         public unsafe Buff CheckIsRepeatAdd(BuffManager manager, Entity caster)
         {
             IReadOnlyList<Buff> buffs = manager.GetBuffs();
+            delegate*<BuffAsset, BuffAsset, bool> isMatch;
             switch (m_RepeatAddCondition)
             {
                 case RepeatAddCondition.SameData:
-                    m_IsMatch = &IsSameData;
+                    isMatch = &IsSameData;
                     break;
                 case RepeatAddCondition.SameName:
-                    m_IsMatch = &IsSameName;
+                    isMatch = &IsSameName;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -47,7 +46,7 @@ namespace YBFramework.Component
             for (int i = 0; i < buffs.Count; i++)
             {
                 Buff buff = buffs[i];
-                if (m_IsMatch(buff.GetBuffAsset(), m_BuffAsset) && !m_IsJudgingByCaster || buff.GetCaster() == caster)
+                if (isMatch(buff.GetBuffAsset(), m_BuffAsset) && !m_IsJudgingByCaster || buff.GetCaster() == caster)
                 {
                     return buff;
                 }

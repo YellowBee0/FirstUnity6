@@ -64,13 +64,17 @@ namespace YBFramework.MyEditor
 
         public readonly BasePort Port;
 
-        public PortView(NodeView nodeView, BasePort port, string name, Direction direction, Capacity capacity, Color color) : base(Orientation.Horizontal, direction, capacity, null)
+        public readonly CommonPortDrawer PortDrawer;
+
+        public PortView(NodeView nodeView, BasePort port, string name, Direction direction, Capacity capacity, Color color, CommonPortDrawer portDrawer)
+            : base(Orientation.Horizontal, direction, capacity, null)
         {
             NodeView = nodeView;
             Port = port;
             tooltip = port.GetConnectTip();
             portName = name;
             portColor = color;
+            PortDrawer = portDrawer;
             m_EdgeConnector = new EdgeConnector<Edge>(new EdgeConnectorListener());
             this.AddManipulator(m_EdgeConnector);
         }

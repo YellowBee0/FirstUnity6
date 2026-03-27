@@ -95,9 +95,51 @@ namespace YBFramework.Component
         {
         }
 #if UNITY_EDITOR
+        private sealed class PortContentCreatorEnumerator : IEnumerable<BasePort>, IEnumerator<BasePort>
+        {
+            private readonly BaseNode m_Node;
+
+            private int m_Index;
+
+            public PortContentCreatorEnumerator(BaseNode node)
+            {
+                m_Node = node;
+                m_Index = 0;
+            }
+
+            public BasePort Current { get; private set; }
+
+            object IEnumerator.Current => Current;
+
+            public IEnumerator<BasePort> GetEnumerator()
+            {
+                return this;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                Current = m_Node.PortDrawTargetIterator(m_Index++);
+                return Current != null;
+            }
+
+            public void Reset()
+            {
+                m_Index = 0;
+            }
+        }
+
         public IEnumerable<BasePort> GetPortDrawTargetEnumerable()
         {
-            return new PortEnumerator(this);
+            return new PortContentCreatorEnumerator(this);
         }
 
         protected virtual BasePort PortDrawTargetIterator(int index)

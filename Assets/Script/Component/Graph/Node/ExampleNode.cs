@@ -63,6 +63,7 @@ namespace YBFramework.Component
             m_StringInput.PortViewInfo = new PortViewInfo("字符串输入", Direction.Input, Port.Capacity.Single, Color.blue);
             m_LogicInput.PortViewInfo = new PortViewInfo("逻辑输入", Direction.Input, Port.Capacity.Multi, Color.red);
             m_LogicOutput.PortViewInfo = new PortViewInfo("逻辑输出", Direction.Output, Port.Capacity.Multi, Color.red);
+            m_ValueOutput.PortViewInfo = new PortViewInfo("int值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
         }
 #endif
     }

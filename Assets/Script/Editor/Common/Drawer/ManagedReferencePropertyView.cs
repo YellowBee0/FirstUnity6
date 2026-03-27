@@ -55,6 +55,8 @@ namespace YBFramework.MyEditor.Common
         }
 
         private readonly PopupField<string> m_TypeSelectField;
+        
+        private readonly DerivedTypePopupField m_TypePopupField;
 
         private readonly PropertyField m_ElementField;
 

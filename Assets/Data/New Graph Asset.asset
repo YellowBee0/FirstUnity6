@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5569882676412350340
+--- !u!114 &-6507789307229719936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,78 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: Example(Test1)
+  m_Name: "\u6253\u5370\u65E5\u5FD7(Everything)"
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
   m_Node:
-    rid: 8360641934603321391
-  m_Position: {x: 407.5472, y: 165.73584}
+    rid: 8360641934603321413
+  m_Position: {x: 281.66037, y: 181.13205}
   m_ID: 4
   references:
     version: 2
     RefIds:
-    - rid: 8360641934603321391
-      type: {class: ExampleNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+    - rid: 8360641934603321413
+      type: {class: DebugNode, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
         Graph:
           m_GraphAsset: {fileID: 0}
-        ID: 2
-        m_StringInput:
-          ID: 0
-          ConnectedCount: 5
-          m_ConnectedPortData:
-            NodeID: 3
-            PortID: 1
-            IsExplicitCast: 0
-          m_Value: 
+        ID: 6
         m_LogicInput:
-          ID: 1
-          ConnectedCount: 0
-        m_ValueOutput:
-          ID: 3
-          ConnectedCount: 0
-        m_LogicOutput:
-          ID: 2
-          ConnectedCount: 2
-          m_ConnectedPortData:
-          - NodeID: 1
-            PortID: 0
-            IsExplicitCast: 1
-          - NodeID: 4
-            PortID: 0
-            IsExplicitCast: 1
---- !u!114 &-134037810226666458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: "\u83B7\u53D6\u503C(Everything)"
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
-  m_Node:
-    rid: 8360641934603321394
-  m_Position: {x: 187.47168, y: 321.5095}
-  m_ID: 2
-  references:
-    version: 2
-    RefIds:
-    - rid: 8360641934603321394
-      type: {class: GetValueNode, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        Graph:
-          m_GraphAsset: {fileID: 0}
-        ID: 3
-        m_IntOutput:
           ID: 0
           ConnectedCount: 0
-        m_StringOutput:
-          ID: 1
-          ConnectedCount: 3
-        m_IntValue: 0
-        m_StringValue: 
+        m_LogContextInput:
+        - rid: 8360641934603321414
+        SelectedTypeNames: []
+    - rid: 8360641934603321414
+      type: {class: 'FuncPort`1[[System.Int32, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        ID: 3
+        ConnectedCount: 0
+        m_ConnectedPortData:
+          NodeID: 0
+          PortID: 0
+          IsExplicitCast: 0
+        m_Value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,103 +54,6 @@ MonoBehaviour:
   m_Name: New Graph Asset
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.GraphAsset
   m_NodeAssets:
-  - {fileID: 8865994887175205806}
-  - {fileID: 27126488656981555}
-  - {fileID: -5569882676412350340}
-  - {fileID: -134037810226666458}
-  - {fileID: 8351396879655963643}
+  - {fileID: -6507789307229719936}
   m_GraphType: 1
-  m_ID: 5
---- !u!114 &27126488656981555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: "\u6253\u5370\u65E5\u5FD7(Everything)"
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
-  m_Node:
-    rid: 8360641934603321392
-  m_Position: {x: 763.4717, y: 165.73581}
-  m_ID: 1
-  references:
-    version: 2
-    RefIds:
-    - rid: 8360641934603321392
-      type: {class: DebugNode, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        Graph:
-          m_GraphAsset: {fileID: 0}
-        ID: 1
-        m_LogicInput:
-          ID: 0
-          ConnectedCount: 1
-        m_SelectedTypes: []
-        m_LogContextInput: []
---- !u!114 &8351396879655963643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: "\u6253\u5370\u65E5\u5FD7(Everything)"
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
-  m_Node:
-    rid: 8360641934603321396
-  m_Position: {x: 763.4717, y: 307.0189}
-  m_ID: 1
-  references:
-    version: 2
-    RefIds:
-    - rid: 8360641934603321396
-      type: {class: DebugNode, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        Graph:
-          m_GraphAsset: {fileID: 0}
-        ID: 4
-        m_LogicInput:
-          ID: 0
-          ConnectedCount: 1
-        m_SelectedTypes: []
-        m_LogContextInput: []
---- !u!114 &8865994887175205806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: "\u83B7\u53D6\u503C(Everything)"
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
-  m_Node:
-    rid: 8360641934603321393
-  m_Position: {x: 187.47171, y: 183.84903}
-  m_ID: 2
-  references:
-    version: 2
-    RefIds:
-    - rid: 8360641934603321393
-      type: {class: GetValueNode, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        Graph:
-          m_GraphAsset: {fileID: 0}
-        ID: 0
-        m_IntOutput:
-          ID: 0
-          ConnectedCount: 0
-        m_StringOutput:
-          ID: 1
-          ConnectedCount: 2
-        m_IntValue: 0
-        m_StringValue: 
+  m_ID: 7

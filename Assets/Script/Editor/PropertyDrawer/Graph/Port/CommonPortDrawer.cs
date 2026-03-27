@@ -10,7 +10,7 @@ namespace YBFramework.MyEditor
         public virtual VisualElement DrawPortView(NodeView nodeView, BasePort target)
         {
             PortViewInfo portViewInfo = target.PortViewInfo;
-            PortView portView = new(nodeView, target, portViewInfo.Name, portViewInfo.Direction, portViewInfo.Capacity, portViewInfo.Color);
+            PortView portView = new(nodeView, target, portViewInfo.Name, portViewInfo.Direction, portViewInfo.Capacity, portViewInfo.Color, this);
             nodeView.AddPortView(portView);
             return portView;
         }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using YBFramework.Component;
+using YBFramework.MyEditor.Common;
 
 namespace YBFramework.MyEditor
 {
@@ -11,9 +12,9 @@ namespace YBFramework.MyEditor
 
         public readonly GraphAsset GraphAsset;
 
-        private readonly List<Port> m_InputPorts = new();
-
         private readonly List<NodeView> m_NodeViews = new();
+
+        private readonly List<Port> m_InputPorts = new();
 
         private readonly List<Port> m_OutputPorts = new();
 
@@ -76,11 +77,6 @@ namespace YBFramework.MyEditor
                 }
             }
             return null;
-        }
-
-        public IReadOnlyList<NodeView> GetNodeViews()
-        {
-            return m_NodeViews;
         }
 
         public void AddNodeView(NodeView nodeView)
@@ -166,11 +162,13 @@ namespace YBFramework.MyEditor
                 for (int i = 0; i < s_RemovedNodeViewTemp.Count; i++)
                 {
                     NodeView nodeViewToRemove = s_RemovedNodeViewTemp[i];
+                    DrawerManager.Free(nodeViewToRemove.NodeDrawer);
                     m_NodeViews.Remove(nodeViewToRemove);
                     IReadOnlyList<PortView> portViews = nodeViewToRemove.GetPortViews();
                     for (int j = 0; j < portViews.Count; j++)
                     {
                         RemovePortView(portViews[j]);
+                        DrawerManager.Free(portViews[j].PortDrawer);
                     }
                     GraphAsset.RemoveNodeAsset(nodeViewToRemove.NodeAsset);
                 }

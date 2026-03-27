@@ -9,11 +9,13 @@ namespace YBFramework.MyEditor
 {
     public sealed class NodeView : Node
     {
-        public readonly NodeAsset NodeAsset;
-
         private readonly CustomGraphView GraphView;
 
         private readonly List<PortView> m_PortViews = new();
+
+        public readonly CommonNodeDrawer NodeDrawer;
+
+        public readonly NodeAsset NodeAsset;
 
         public NodeView(CustomGraphView graphView, NodeAsset nodeAsset)
         {
@@ -24,32 +26,10 @@ namespace YBFramework.MyEditor
             BaseNode baseNode = nodeAsset.GetNode();
             baseNode.InitNodeInfo();
             //TODO:这一部分可能需要写成一个函数
-            bool isInputAddElement = false;
-            bool isOutputAddElement = false;
-            foreach (BasePort portDrawTarget in baseNode.GetPortDrawTargetEnumerable())
-            {
-                if (DrawerManager.Allocate(portDrawTarget.GetType()) is CommonPortDrawer portDrawer)
-                {
-                    VisualElement element = portDrawer.DrawPortView(this, portDrawTarget);
-                    element.CommonBorder();
-                    if (portDrawTarget.PortViewInfo.Direction == Direction.Input)
-                    {
-                        inputContainer.Add(element);
-                        isInputAddElement = true;
-                    }
-                    else
-                    {
-                        outputContainer.Add(element);
-                        isOutputAddElement = true;
-                    }
-                }
-            }
-            inputContainer.style.display = isInputAddElement ? DisplayStyle.Flex : DisplayStyle.None;
-            outputContainer.style.display = isOutputAddElement ? DisplayStyle.Flex : DisplayStyle.None;
-            if (DrawerManager.Allocate(baseNode.GetType()) is INodeExtensionContainerDrawer nodeExtensionContainerDrawer)
-            {
-                nodeExtensionContainerDrawer.DrawNodeView(this, baseNode);
-            }
+            NodeDrawer = (CommonNodeDrawer)DrawerManager.Allocate(baseNode.GetType());
+            NodeDrawer.DrawNodeView(this, baseNode);
+            inputContainer.style.display = inputContainer.childCount > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            outputContainer.style.display = outputContainer.childCount > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         public PortView GetPortView(int portID)
@@ -79,18 +59,7 @@ namespace YBFramework.MyEditor
         {
             m_PortViews.Remove(portView);
             GraphView.RemovePortView(portView);
-        }
-
-        public void RemovePortContainerElement(Direction direction, VisualElement element)
-        {
-            if (direction == Direction.Input)
-            {
-                inputContainer.Remove(element);
-            }
-            else
-            {
-                outputContainer.Remove(element);
-            }
+            DrawerManager.Free(portView.PortDrawer);
         }
 
         public void SetName(string nodeName)

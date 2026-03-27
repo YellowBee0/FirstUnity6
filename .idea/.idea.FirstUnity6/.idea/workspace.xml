@@ -7,36 +7,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="项目结构整理">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/shelf/Uncommitted_changes_before_Update_at_2026_3_18_23_34_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/shelf/Uncommitted_changes_before_Update_at_2026_3_18_23_34__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/shelf/Uncommitted_changes_before_Update_at_2026_3_19_10_37_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/shelf/Uncommitted_changes_before_Update_at_2026_3_19_10_37__Changes_.xml" beforeDir="false" />
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="蓝图编辑器中连接和运行时连接流程修改，蓝图绘制逻辑开始重构">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type/DerivedTypeManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type/DerivedTypeManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/TypePopupField.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/TypePopupField.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphDrawerManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphDrawerManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/CommonNodeDrawer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/CommonNodeDrawer.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/TemplateHelpNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/TemplateHelpNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/CommonPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/CommonPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/PortDraw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/PortDraw/PortDrawTarget.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/PortDraw/PortDrawTarget.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/PortDraw/PortViewInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/PortViewInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/PortDraw/PortViewInfo.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/PortViewInfo.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/RepeatAddProcess/RepeatAddProcess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/RepeatAddProcess/RepeatAddProcess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Connect/IPortConnectionSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Connect/IPortConnectionSource.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/ExampleNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/ExampleNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/DelegatePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/DelegatePort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/TemplateNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/TemplateNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DrawerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DrawerManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/CustomGraphView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/CustomGraphView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/NodeView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/NodeView.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/PortView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/View/PortView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/INodeExtensionContainerDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/INodeExtensionContainerDrawer.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Port/CommonPortDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Port/CommonPortDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Port/FuncPortDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Port/FuncPortDrawer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,10 +69,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/5f/ee9ab3b3/VisualElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/9c/3f8db1d9/BasePopupField`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/dc/362ecc1d/ListView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ee16c2cb688d4766af955c0ec92acd90573638/28/5d11f889/ValueTuple`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f230b2ad54ff40f98260db61b68d247444400/a1/f7a471be/Port.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -178,7 +175,7 @@
       <workItem from="1774406937869" duration="3738000" />
       <workItem from="1774423329571" duration="7796000" />
       <workItem from="1774441929170" duration="1451000" />
-      <workItem from="1774499054011" duration="11957000" />
+      <workItem from="1774499054011" duration="29780000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -276,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774426148870</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="蓝图编辑器中连接和运行时连接流程修改，蓝图绘制逻辑开始重构">
+      <option name="closed" value="true" />
+      <created>1774516593733</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1774516593733</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,7 +306,8 @@
     <MESSAGE value="添加组件加载方式" />
     <MESSAGE value="准备完结蓝图" />
     <MESSAGE value="项目结构整理" />
-    <option name="LAST_COMMIT_MESSAGE" value="项目结构整理" />
+    <MESSAGE value="蓝图编辑器中连接和运行时连接流程修改，蓝图绘制逻辑开始重构" />
+    <option name="LAST_COMMIT_MESSAGE" value="蓝图编辑器中连接和运行时连接流程修改，蓝图绘制逻辑开始重构" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -36,11 +36,6 @@ namespace YBFramework.MyEditor.Common
             }
         }
 
-        public static TDrawer Allocate<TDrawer, TTarget>()
-        {
-            return (TDrawer)Allocate(typeof(TTarget));
-        }
-
         public static object Allocate(Type type)
         {
             Type drawerType = null;

@@ -18,25 +18,13 @@ namespace YBFramework.Component
 
         [SerializeField] private MethodPort m_LogicInput = new(s_LogMethodInfo);
 
-        public List<Type> m_OptionalTypes = new();
-
-        public List<string> m_SelectedTypes = new();
-
-        [SerializeReference] public List<DelegatePort> m_LogContextInput;
+        [SerializeReference] public List<DelegatePort> m_LogContextInput=new();
 
         [NonSerialized] public string LogListName;
 
-        public void Add(DelegatePort port)
-        {
-            m_LogContextInput ??= new List<DelegatePort>();
-            port.PortViewInfo = m_ListPortViewInfo;
-            m_LogContextInput.Add(port);
-        }
+        public List<Type> OptionalTypes;
 
-        public void Remove(DelegatePort port)
-        {
-            m_LogContextInput.Remove(port);
-        }
+        public List<string> SelectedTypeNames = new();
 
         public void Log()
         {
@@ -65,7 +53,7 @@ namespace YBFramework.Component
 
         public override BaseNode Clone()
         {
-            DebugNode node = new DebugNode
+            DebugNode node = new()
             {
                 ID = ID
             };
@@ -85,6 +73,14 @@ namespace YBFramework.Component
             m_LogicInput.PortViewInfo = new PortViewInfo("输入", Direction.Input, Port.Capacity.Multi, Color.red);
             LogListName = "打印内容";
             m_ListPortViewInfo = new PortViewInfo("日志", Direction.Input, Port.Capacity.Single, Color.blue);
+            OptionalTypes = new List<Type>
+            {
+                typeof(object),
+                typeof(bool),
+                typeof(int),
+                typeof(float),
+                typeof(string)
+            };
             if (m_LogContextInput != null)
             {
                 for (int i = 0; i < m_LogContextInput.Count; i++)

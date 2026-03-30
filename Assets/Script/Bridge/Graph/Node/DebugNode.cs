@@ -14,15 +14,13 @@ namespace YBFramework.Component
     {
         private static readonly MethodInfo s_LogMethodInfo = typeof(DebugNode).GetMethod(nameof(Log), BindingFlags.Instance | BindingFlags.Public);
 
-        private PortViewInfo m_ListPortViewInfo;
+        public PortViewInfo ListPortViewInfo;
 
         [SerializeField] private MethodPort m_LogicInput = new(s_LogMethodInfo);
 
         [SerializeReference] public List<DelegatePort> m_LogContextInput=new();
 
         [NonSerialized] public string LogListName;
-
-        public List<Type> OptionalTypes;
 
         public List<string> SelectedTypeNames = new();
 
@@ -72,20 +70,12 @@ namespace YBFramework.Component
         {
             m_LogicInput.PortViewInfo = new PortViewInfo("输入", Direction.Input, Port.Capacity.Multi, Color.red);
             LogListName = "打印内容";
-            m_ListPortViewInfo = new PortViewInfo("日志", Direction.Input, Port.Capacity.Single, Color.blue);
-            OptionalTypes = new List<Type>
-            {
-                typeof(object),
-                typeof(bool),
-                typeof(int),
-                typeof(float),
-                typeof(string)
-            };
+            ListPortViewInfo = new PortViewInfo("日志", Direction.Input, Port.Capacity.Single, Color.blue);
             if (m_LogContextInput != null)
             {
                 for (int i = 0; i < m_LogContextInput.Count; i++)
                 {
-                    m_LogContextInput[i].PortViewInfo = m_ListPortViewInfo;
+                    m_LogContextInput[i].PortViewInfo = ListPortViewInfo;
                 }
             }
         }

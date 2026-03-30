@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
   m_Node:
     rid: 8360641934603321413
-  m_Position: {x: 281.66037, y: 181.13205}
-  m_ID: 8
+  m_Position: {x: 464.60376, y: 198.3396}
+  m_ID: 13
   references:
     version: 2
     RefIds:
@@ -30,6 +30,7 @@ MonoBehaviour:
           ConnectedCount: 0
         m_LogContextInput:
         - rid: 8360642021010440258
+        - rid: 8360642021010440261
         SelectedTypeNames: []
     - rid: 8360642021010440258
       type: {class: 'FuncPort`1[[System.Boolean, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
@@ -40,7 +41,17 @@ MonoBehaviour:
           NodeID: 0
           PortID: 0
           IsExplicitCast: 0
-        m_Value: 0
+        m_Value: 1
+    - rid: 8360642021010440261
+      type: {class: 'FuncPort`1[[System.Boolean, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        ID: 12
+        ConnectedCount: 0
+        m_ConnectedPortData:
+          NodeID: 0
+          PortID: 0
+          IsExplicitCast: 0
+        m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

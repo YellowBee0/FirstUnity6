@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine.UIElements;
-using YBFramework.Common;
 using YBFramework.Component;
 using YBFramework.MyEditor.Common;
 
@@ -11,24 +9,21 @@ namespace YBFramework.MyEditor
     [Drawer(typeof(DebugNode))]
     public class DebugNodeDrawer : CommonNodeDrawer
     {
-        private sealed class SelectablePort
+        private sealed class LogContextView : VisualElement
         {
             private readonly DebugNodeDrawer m_DebugNodeDrawer;
-
-            private readonly VisualElement m_Container;
 
             private VisualElement m_PortView;
 
             public int Index;
 
-            public SelectablePort(DebugNodeDrawer debugNodeDrawer, VisualElement container, DerivedTypePopupField popupField, VisualElement portView)
+            public LogContextView(DebugNodeDrawer debugNodeDrawer, VisualElement portView, DerivedTypePopupField popupField)
             {
-                m_Container = container;
                 m_DebugNodeDrawer = debugNodeDrawer;
                 m_PortView = portView;
                 popupField.RegisterTypeChangedCallBack(OnTypeChanged);
-                container.Add(popupField);
-                container.Add(portView);
+                Add(popupField);
+                Add(portView);
             }
 
             private void OnTypeChanged(Type newType)
@@ -38,17 +33,16 @@ namespace YBFramework.MyEditor
                 {
                     m_DebugNodeDrawer.m_Node.m_LogContextInput[Index] = port;
                     port.ID = m_DebugNodeDrawer.m_NodeView.NodeAsset.AllocateID();
+                    port.PortViewInfo = m_DebugNodeDrawer.m_Node.ListPortViewInfo;
                     CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(portType);
                     VisualElement portView = portDrawer.DrawPortView(m_DebugNodeDrawer.m_NodeView, port);
                     m_PortView?.RemoveFromHierarchy();
                     m_PortView = portView;
-                    m_Container.Add(m_PortView);
+                    Add(m_PortView);
                     m_DebugNodeDrawer.m_NodeView.NodeAsset.SetSelfDirty();
                 }
             }
         }
-
-        private readonly List<string> m_TypeNames = new();
 
         private DebugNode m_Node;
 
@@ -61,10 +55,6 @@ namespace YBFramework.MyEditor
             base.DrawNodeView(nodeView, node);
             m_NodeView = nodeView;
             m_Node = (node as DebugNode)!;
-            for (int i = 0; i < m_Node.OptionalTypes.Count; i++)
-            {
-                m_TypeNames.Add(m_Node.OptionalTypes[i].Name);
-            }
             VisualElement container = new();
             m_PortContainer = new VisualElement();
             Label label = new(m_Node.LogListName);
@@ -107,11 +97,22 @@ namespace YBFramework.MyEditor
 
         private void OnClickAdd()
         {
-            VisualElement container = new();
             ValueTuple<List<string>, List<Type>> group = DerivedTypeManager.GetDerivedTypes(typeof(object));
             DerivedTypePopupField derivedTypePopupField = new("select type", group.Item1, group.Item2);
-            SelectablePort selectablePort = new SelectablePort(this, container, derivedTypePopupField, null);
-            m_PortContainer.Add(container);
+            Type defaultType = typeof(object);
+            derivedTypePopupField.Initialize(defaultType);
+            FuncPort<object> defaultPort = new()
+            {
+                ID = m_NodeView.NodeAsset.AllocateID(),
+                PortViewInfo = m_Node.ListPortViewInfo
+            };
+            CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(defaultPort.GetType());
+            LogContextView logContextView = new(this, portDrawer.DrawPortView(m_NodeView, defaultPort), derivedTypePopupField)
+            {
+                Index = m_Node.m_LogContextInput.Count
+            };
+            m_Node.m_LogContextInput.Add(defaultPort);
+            m_PortContainer.Add(logContextView);
         }
 
         private void OnClickRemove()

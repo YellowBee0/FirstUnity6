@@ -10,9 +10,19 @@ namespace YBFramework.MyEditor.Common
             {
                 for (int i = 0; i < from.Count; i++)
                 {
-                    if (from[i] != null && from[i].Equals(value))
+                    if (from[i] != null)
                     {
-                        return to[i];
+                        if (from[i].Equals(value))
+                        {
+                            return to[i];
+                        }
+                    }
+                    else
+                    {
+                        if (value == null)
+                        {
+                            return to[i];
+                        }
                     }
                 }
             }

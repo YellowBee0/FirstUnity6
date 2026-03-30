@@ -21,7 +21,10 @@ namespace YBFramework.Component
             }
             int oldValue = m_MaxValue;
             int newValue = m_MaxValue + delta;
-            if (newValue < m_MinValue) newValue = m_MinValue;
+            if (newValue < m_MinValue)
+            {
+                newValue = m_MinValue;
+            }
             m_MaxValue = newValue;
             Record(ValueConstraintType.Max, modifier, delta, newValue - oldValue);
             if (m_CurValue > m_MaxValue)
@@ -38,7 +41,10 @@ namespace YBFramework.Component
             }
             int oldValue = m_MaxValue;
             int newValue = m_MaxValue + delta;
-            if (newValue > m_MaxValue) newValue = m_MaxValue;
+            if (newValue > m_MaxValue)
+            {
+                newValue = m_MaxValue;
+            }
             m_MinValue = newValue;
             Record(ValueConstraintType.Min, modifier, delta, newValue - oldValue);
             if (m_CurValue < m_MinValue)

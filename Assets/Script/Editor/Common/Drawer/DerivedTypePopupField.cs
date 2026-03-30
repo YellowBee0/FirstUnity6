@@ -20,27 +20,28 @@ namespace YBFramework.MyEditor.Common
         {
             m_DerivedTypeNames = derivedTypeNames;
             m_DerivedTypes = derivedTypes;
+            choices = derivedTypeNames;
             this.RegisterValueChangedCallback(OnSelectedTypeChanged);
         }
 
+        public Type GetSelectedType()
+        {
+            return m_SelectedType;
+        }
+        
         public void Initialize(Type selectedType)
         {
             m_SelectedTypeName = ArrayUtility.FindValueByOtherIndex(m_DerivedTypes, m_DerivedTypeNames, selectedType);
             m_SelectedType = selectedType;
-        }
-
-        public void Initialize(string selectedTypeName)
-        {
-            m_SelectedTypeName = selectedTypeName;
-            m_SelectedType = ArrayUtility.FindValueByOtherIndex(m_DerivedTypeNames, m_DerivedTypes, selectedTypeName);
+            SetValueWithoutNotify(m_SelectedTypeName);
         }
         
-        public void RegisterCallBack(Action<Type> callback)
+        public void RegisterTypeChangedCallBack(Action<Type> callback)
         {
             m_TypeChangedCallback += callback;
         }
 
-        public void UnregisterCallBack(Action<Type> callback)
+        public void UnregisterTypeChangedCallBack(Action<Type> callback)
         {
             m_TypeChangedCallback -= callback;
         }

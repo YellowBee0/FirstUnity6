@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine.UIElements;
+using YBFramework.Common;
 using YBFramework.Component;
 using YBFramework.MyEditor.Common;
 
@@ -11,15 +13,38 @@ namespace YBFramework.MyEditor
     {
         private sealed class SelectablePort
         {
+            private readonly DebugNodeDrawer m_DebugNodeDrawer;
+
             private readonly VisualElement m_Container;
 
             private VisualElement m_PortView;
 
             public int Index;
 
-            public SelectablePort(VisualElement container)
+            public SelectablePort(DebugNodeDrawer debugNodeDrawer, VisualElement container, DerivedTypePopupField popupField, VisualElement portView)
             {
                 m_Container = container;
+                m_DebugNodeDrawer = debugNodeDrawer;
+                m_PortView = portView;
+                popupField.RegisterTypeChangedCallBack(OnTypeChanged);
+                container.Add(popupField);
+                container.Add(portView);
+            }
+
+            private void OnTypeChanged(Type newType)
+            {
+                Type portType = typeof(FuncPort<>).MakeGenericType(newType);
+                if (Activator.CreateInstance(portType) is DelegatePort port)
+                {
+                    m_DebugNodeDrawer.m_Node.m_LogContextInput[Index] = port;
+                    port.ID = m_DebugNodeDrawer.m_NodeView.NodeAsset.AllocateID();
+                    CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(portType);
+                    VisualElement portView = portDrawer.DrawPortView(m_DebugNodeDrawer.m_NodeView, port);
+                    m_PortView?.RemoveFromHierarchy();
+                    m_PortView = portView;
+                    m_Container.Add(m_PortView);
+                    m_DebugNodeDrawer.m_NodeView.NodeAsset.SetSelfDirty();
+                }
             }
         }
 
@@ -85,24 +110,8 @@ namespace YBFramework.MyEditor
             VisualElement container = new();
             ValueTuple<List<string>, List<Type>> group = DerivedTypeManager.GetDerivedTypes(typeof(object));
             DerivedTypePopupField derivedTypePopupField = new("select type", group.Item1, group.Item2);
-            if (type != null)
-            {
-                Type portType = typeof(FuncPort<>).MakeGenericType(type);
-                if (Activator.CreateInstance(portType) is DelegatePort port)
-                {
-                    m_Node.m_LogContextInput.Add(port);
-                    port.ID = m_NodeView.NodeAsset.AllocateID();
-                    CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(portType);
-                    VisualElement view = portDrawer.DrawPortView(m_NodeView, port);
-                    PopupField<string> popupField = new("选择类型", m_TypeNames, 0);
-                    VisualElement visualElement = new();
-                    visualElement.Add(popupField);
-                    visualElement.Add(view);
-                    new SelectablePort(this, visualElement, popupField, view, port.ID);
-                    m_PortContainer.Add(visualElement);
-                    m_NodeView.NodeAsset.SetSelfDirty();
-                }
-            }
+            SelectablePort selectablePort = new SelectablePort(this, container, derivedTypePopupField, null);
+            m_PortContainer.Add(container);
         }
 
         private void OnClickRemove()

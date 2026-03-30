@@ -12,36 +12,35 @@ namespace YBFramework.Component
     {
         private Timer m_Timer;
 
-        private BuffLayer m_BuffLayer;
-
         private Buff m_Buff;
 
         [SerializeField] private float m_TotalTime;
 
         [SerializeField] private int m_ModifyLayer;
 
+        [SerializeField] private bool m_RemoveBuffOnMinLayer;
+
+        [SerializeField] private bool m_RemoveBuffOnMaxLayer;
+
         private void ChangeLayer()
         {
-            m_BuffLayer.ModifyCurValue("buff layer time", m_ModifyLayer);
-            if (m_BuffLayer.GetCurValue() <= m_BuffLayer.GetMinValue())
+            BuffLayer buffLayer = m_Buff.GetComponent<BuffLayer>();
+            if (buffLayer != null)
             {
-                m_Buff.GetManager().RemoveBuff(m_Buff);
+                buffLayer.ModifyCurValue("buff layer time", m_ModifyLayer);
+                int curLayer = buffLayer.GetCurValue();
+                if ((m_RemoveBuffOnMinLayer && curLayer <= buffLayer.GetMinValue()) || (m_RemoveBuffOnMaxLayer && curLayer >= buffLayer.GetMaxValue()))
+                {
+                    m_Buff.GetManager().RemoveBuff(m_Buff);
+                }
             }
         }
 
         public void OnAdd(Buff buff)
         {
-            m_BuffLayer = buff.GetComponent<BuffLayer>();
-            if (m_BuffLayer == null)
-            {
-                buff.RemoveComponent(this);
-            }
-            else
-            {
-                m_Buff = buff;
-                m_Timer.RegisterCallback(ChangeLayer);
-                m_Timer.Start();
-            }
+            m_Buff = buff;
+            m_Timer.RegisterCallback(ChangeLayer);
+            m_Timer.Start();
         }
 
         public void OnRemove()

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Reflection;
+using UnityEditor;
+using YBFramework.Common;
+using YBFramework.Component;
 
 namespace YBFramework.MyEditor
 {
@@ -8,12 +11,35 @@ namespace YBFramework.MyEditor
     {
         private static readonly Dictionary<Type, ValueTuple<List<string>, List<Type>>> s_Groups = new();
 
+        [InitializeOnLoadMethod]
+        private static void Initialize()
+        {
+            RegisterDerivedTypes(typeof(object), new[]
+            {
+                typeof(object),
+                typeof(bool),
+                typeof(int),
+                typeof(float),
+                typeof(string)
+            }, false, null);
+            RegisterDerivedTypes(typeof(IBuffComponent), TypeCache.GetTypesDerivedFrom<IBuffComponent>(), true, GetDisplayName);
+            RegisterDerivedTypes(typeof(IExecutor), TypeCache.GetTypesDerivedFrom<IExecutor>(), false, GetDisplayName);
+            RegisterDerivedTypes(typeof(IComponent), TypeCache.GetTypesDerivedFrom<IComponent>(), true, GetDisplayName);
+            RegisterDerivedTypes(typeof(RepeatAddProcess), TypeCache.GetTypesDerivedFrom<RepeatAddProcess>(), true, GetDisplayName);
+        }
+
+        private static string GetDisplayName(Type type)
+        {
+            DisplayNameAttribute displayNameAttribute = type.GetCustomAttribute<DisplayNameAttribute>();
+            return displayNameAttribute != null ? displayNameAttribute.Name : type.Name;
+        }
+
         private static string DefaultNameSelector(Type type)
         {
             return type.Name;
         }
 
-        public static void RegisterDerivedTypes(Type baseType, IEnumerable<Type> derivedTypes, Func<Type, string> nameSelector)
+        public static void RegisterDerivedTypes(Type baseType, IEnumerable<Type> derivedTypes, bool registerNull, Func<Type, string> nameSelector)
         {
             if (baseType == null)
             {
@@ -24,41 +50,25 @@ namespace YBFramework.MyEditor
                 throw new ArgumentNullException(nameof(derivedTypes));
             }
             nameSelector ??= DefaultNameSelector;
-            if (s_Groups.TryGetValue(baseType, out ValueTuple<List<string>, List<Type>> group))
+            if (!s_Groups.TryGetValue(baseType, out ValueTuple<List<string>, List<Type>> group))
             {
-                Debug.LogWarning($"{baseType} has been registered");
-            }
-            group = new ValueTuple<List<string>, List<Type>>();
-            foreach (Type type in derivedTypes)
-            {
-                if (!type.IsAbstract && !type.IsGenericTypeDefinition)
+                List<string> derivedTypeNamesList = new();
+                List<Type> derivedTypesList = new();
+                group = new ValueTuple<List<string>, List<Type>>(derivedTypeNamesList, derivedTypesList);
+                if (registerNull)
                 {
-                    group.Item1.Add(nameSelector(type));
-                    group.Item2.Add(type);
+                    derivedTypeNamesList.Add("Null");
+                    derivedTypesList.Add(null);
                 }
-            }
-            s_Groups.Add(baseType, group);
-        }
-
-        public static void RegisterDerivedType(Type baseType, Type derivedType, string typeName)
-        {
-            if (derivedType == null || derivedType == null)
-            {
-                throw new ArgumentNullException();
-            }
-            if (!derivedType.IsAbstract && !derivedType.IsGenericTypeDefinition && baseType.IsAssignableFrom(derivedType))
-            {
-                if (!s_Groups.TryGetValue(baseType, out ValueTuple<List<string>, List<Type>> group))
+                foreach (Type type in derivedTypes)
                 {
-                    group = new ValueTuple<List<string>, List<Type>>();
-                    s_Groups.Add(baseType, group);
+                    if (type != null && !type.IsAbstract && !type.IsGenericTypeDefinition)
+                    {
+                        derivedTypeNamesList.Add(nameSelector(type));
+                        derivedTypesList.Add(type);
+                    }
                 }
-                if (group.Item2.Contains(derivedType))
-                {
-                    Debug.LogWarning($"{derivedType} has been added");
-                }
-                group.Item1.Add(string.IsNullOrEmpty(typeName) ? DefaultNameSelector(derivedType) : typeName);
-                group.Item2.Add(derivedType);
+                s_Groups.Add(baseType, group);
             }
         }
 

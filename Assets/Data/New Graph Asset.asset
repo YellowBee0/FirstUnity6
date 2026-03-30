@@ -15,7 +15,7 @@ MonoBehaviour:
   m_Node:
     rid: 8360641934603321413
   m_Position: {x: 281.66037, y: 181.13205}
-  m_ID: 4
+  m_ID: 8
   references:
     version: 2
     RefIds:
@@ -29,12 +29,12 @@ MonoBehaviour:
           ID: 0
           ConnectedCount: 0
         m_LogContextInput:
-        - rid: 8360641934603321414
+        - rid: 8360642021010440258
         SelectedTypeNames: []
-    - rid: 8360641934603321414
-      type: {class: 'FuncPort`1[[System.Int32, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
+    - rid: 8360642021010440258
+      type: {class: 'FuncPort`1[[System.Boolean, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
-        ID: 3
+        ID: 7
         ConnectedCount: 0
         m_ConnectedPortData:
           NodeID: 0

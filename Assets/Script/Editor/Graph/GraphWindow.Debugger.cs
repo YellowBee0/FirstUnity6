@@ -8,7 +8,6 @@ namespace YBFramework.MyEditor
 
         private void CreateDebugView()
         {
-            
         }
     }
 }

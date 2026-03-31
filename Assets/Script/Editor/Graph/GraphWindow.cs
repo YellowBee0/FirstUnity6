@@ -5,7 +5,7 @@ using YBFramework.Component;
 
 namespace YBFramework.MyEditor
 {
-    public partial class GraphWindow: EditorWindow
+    public partial class GraphWindow : EditorWindow
     {
         private static GraphWindow s_MainWindow;
 
@@ -20,13 +20,13 @@ namespace YBFramework.MyEditor
             {
                 s_MainWindow.Focus();
             }
-        } 
-        
+        }
+
         public static GraphWindow GetMainGraphWindow()
         {
             return s_MainWindow;
         }
-        
+
         private void CreateGUI()
         {
             if (s_MainWindow != null)

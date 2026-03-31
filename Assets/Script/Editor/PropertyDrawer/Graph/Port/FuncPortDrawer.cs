@@ -30,36 +30,36 @@ namespace YBFramework.MyEditor
                 {
                     if (drawValueType == typeof(bool))
                     {
-                        bindableElement = new Toggle();
+                        bindableElement = new Toggle("bool");
                     }
                     else if (drawValueType == typeof(int))
                     {
-                        bindableElement = new IntegerField();
+                        bindableElement = new IntegerField("int");
                     }
                     else if (drawValueType == typeof(float))
                     {
-                        bindableElement = new FloatField();
+                        bindableElement = new FloatField("float");
                     }
                     else if (drawValueType == typeof(double))
                     {
-                        bindableElement = new DoubleField();
+                        bindableElement = new DoubleField("double");
                     }
                     else if (drawValueType == typeof(Color))
                     {
-                        bindableElement = new ColorField();
+                        bindableElement = new ColorField("color");
                     }
                     else if (drawValueType == typeof(string))
                     {
-                        bindableElement = new TextField();
+                        bindableElement = new TextField("string");
                     }
                     else if (drawValueType == typeof(AnimationCurve))
                     {
-                        bindableElement = new CurveField();
+                        bindableElement = new CurveField("animation curve");
                     }
                     else if (typeof(Object).IsAssignableFrom(drawValueType))
                     {
                         isSpecialType = true;
-                        ObjectField field = new()
+                        ObjectField field = new("unity object")
                         {
                             objectType = drawValueType,
                             value = (Object)(object)m_Port.GetValue()
@@ -74,11 +74,11 @@ namespace YBFramework.MyEditor
                         Enum value = (Enum)Enum.ToObject(drawValueType, m_Port.GetValue());
                         if (drawValueType.IsDefined(typeof(FlagsAttribute), false))
                         {
-                            field = new EnumFlagsField(value);
+                            field = new EnumFlagsField("flags enum", value);
                         }
                         else
                         {
-                            field = new EnumField(value);
+                            field = new EnumField("enum", value);
                         }
                         field.RegisterValueChangedCallback(OnEnumValueChanged);
                         bindableElement = field;

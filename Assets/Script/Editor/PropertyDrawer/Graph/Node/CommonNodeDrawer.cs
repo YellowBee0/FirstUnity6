@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using YBFramework.Component;
@@ -9,8 +8,6 @@ namespace YBFramework.MyEditor
     [Drawer(typeof(BaseNode))]
     public class CommonNodeDrawer
     {
-        protected List<CommonPortDrawer> m_PortDrawers = new();
-
         public virtual void DrawNodeView(NodeView nodeView, BaseNode node)
         {
             foreach (BasePort portDrawTarget in node.GetPortDrawTargetEnumerable())
@@ -27,7 +24,6 @@ namespace YBFramework.MyEditor
                     {
                         nodeView.outputContainer.Add(element);
                     }
-                    m_PortDrawers.Add(portDrawer);
                 }
             }
         }

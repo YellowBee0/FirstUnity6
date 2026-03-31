@@ -28,14 +28,14 @@ namespace YBFramework.MyEditor.Common
         {
             return m_SelectedType;
         }
-        
+
         public void Initialize(Type selectedType)
         {
             m_SelectedTypeName = ArrayUtility.FindValueByOtherIndex(m_DerivedTypes, m_DerivedTypeNames, selectedType);
             m_SelectedType = selectedType;
             SetValueWithoutNotify(m_SelectedTypeName);
         }
-        
+
         public void RegisterTypeChangedCallBack(Action<Type> callback)
         {
             m_TypeChangedCallback += callback;
@@ -45,7 +45,7 @@ namespace YBFramework.MyEditor.Common
         {
             m_TypeChangedCallback -= callback;
         }
-        
+
         private void OnSelectedTypeChanged(ChangeEvent<string> evt)
         {
             m_SelectedTypeName = evt.newValue;

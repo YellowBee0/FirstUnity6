@@ -14,14 +14,14 @@ namespace YBFramework.Component
 #endif
         public int ID;
 
-        public int ConnectedCount;
-
         public virtual void Copy(BasePort from)
         {
             ID = from.ID;
         }
 #if UNITY_EDITOR
         protected static readonly StringBuilder s_StrBuilder = new();
+        
+        public int ConnectedCount;
 
         public PortViewInfo PortViewInfo;
 

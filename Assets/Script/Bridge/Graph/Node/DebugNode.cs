@@ -18,17 +18,15 @@ namespace YBFramework.Component
 
         [SerializeField] private MethodPort m_LogicInput = new(s_LogMethodInfo);
 
-        [SerializeReference] public List<DelegatePort> m_LogContextInput = new();
+        [SerializeReference] public List<DelegatePort> LogContextInput = new();
 
         [NonSerialized] public string LogListName;
 
-        public List<string> SelectedTypeNames = new();
-
         public void Log()
         {
-            for (int i = 0; i < m_LogContextInput.Count; i++)
+            for (int i = 0; i < LogContextInput.Count; i++)
             {
-                Debug.Log(m_LogContextInput[i].DynamicInvoke());
+                Debug.Log(LogContextInput[i].DynamicInvoke());
             }
         }
 
@@ -38,12 +36,12 @@ namespace YBFramework.Component
             {
                 return m_LogicInput;
             }
-            if (m_LogContextInput != null)
+            if (LogContextInput != null)
             {
                 int listIndex = index - 1;
-                if (listIndex < m_LogContextInput.Count)
+                if (listIndex < LogContextInput.Count)
                 {
-                    return m_LogContextInput[listIndex];
+                    return LogContextInput[listIndex];
                 }
             }
             return null;
@@ -71,13 +69,6 @@ namespace YBFramework.Component
             m_LogicInput.PortViewInfo = new PortViewInfo("输入", Direction.Input, Port.Capacity.Multi, Color.red);
             LogListName = "打印内容";
             ListPortViewInfo = new PortViewInfo("日志", Direction.Input, Port.Capacity.Single, Color.blue);
-            if (m_LogContextInput != null)
-            {
-                for (int i = 0; i < m_LogContextInput.Count; i++)
-                {
-                    m_LogContextInput[i].PortViewInfo = ListPortViewInfo;
-                }
-            }
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEditor;
 namespace YBFramework.MyEditor.Common
 {
     /// <summary>
-    /// TODO:这个类型需要改为只服务于Graph的绘制
+    ///     TODO:这个类型需要改为只服务于Graph的绘制
     /// </summary>
     public static class DrawerManager
     {
@@ -21,7 +21,7 @@ namespace YBFramework.MyEditor.Common
         [InitializeOnLoadMethod]
         private static void Init()
         {
-            UnityEditor.TypeCache.TypeCollection types = UnityEditor.TypeCache.GetTypesWithAttribute<DrawerAttribute>();
+            TypeCache.TypeCollection types = TypeCache.GetTypesWithAttribute<DrawerAttribute>();
             for (int i = 0; i < types.Count; i++)
             {
                 DrawerAttribute attribute = types[i].GetCustomAttribute<DrawerAttribute>();

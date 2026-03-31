@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
+using UnityEngine;
 using YBFramework.Common;
 using YBFramework.Component;
 
@@ -20,6 +21,7 @@ namespace YBFramework.MyEditor
                 typeof(bool),
                 typeof(int),
                 typeof(float),
+                typeof(Color),
                 typeof(string)
             }, false, null);
             RegisterDerivedTypes(typeof(IBuffComponent), TypeCache.GetTypesDerivedFrom<IBuffComponent>(), true, GetDisplayName);

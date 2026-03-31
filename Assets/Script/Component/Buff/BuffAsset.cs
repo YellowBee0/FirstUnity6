@@ -21,7 +21,7 @@ namespace YBFramework.Component
         {
             return m_Components;
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string GetName()
         {

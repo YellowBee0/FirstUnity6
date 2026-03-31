@@ -97,7 +97,7 @@ namespace YBFramework.Component
         }
 
         /// <summary>
-        /// 查找Buff中所有同类型的组件，数组通过ArrayPool创建，外部不再使用时需要使用ArrayPool.Shared.Return归还
+        ///     查找Buff中所有同类型的组件，数组通过ArrayPool创建，外部不再使用时需要使用ArrayPool.Shared.Return归还
         /// </summary>
         /// <typeparam name="T">组件类型</typeparam>
         /// <returns>数组集合</returns>

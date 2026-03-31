@@ -48,7 +48,7 @@ namespace YBFramework.Component
         }
 
         void Connect(BaseNode node, ConnectedPortData data);
-        
+
         void Connect(IReadOnlyList<BaseNode> nodes);
 
         ConnectedPortData ConnectedPortDataIterator(int index);

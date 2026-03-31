@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 #if UNITY_EDITOR
 using System.Text;
 using YBFramework.MyEditor;
@@ -13,9 +12,9 @@ namespace YBFramework.Component
 #if DEBUG
         [NonSerialized] public BaseNode Node;
 #endif
-        [HideInInspector] public int ID;
+        public int ID;
 
-        [HideInInspector] public int ConnectedCount;
+        public int ConnectedCount;
 
         public virtual void Copy(BasePort from)
         {

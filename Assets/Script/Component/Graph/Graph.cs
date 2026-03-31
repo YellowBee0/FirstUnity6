@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using YBFramework.Common;
 #if DEBUG
-using YBFramework.MyEditor;
 #endif
 
 namespace YBFramework.Component
@@ -82,7 +81,7 @@ namespace YBFramework.Component
             }
         }
 
-        public void Start()
+        /*public void Start()
         {
 #if DEBUG
             GraphDebugHelper.AddRunningGraph(this);
@@ -102,6 +101,6 @@ namespace YBFramework.Component
             {
                 m_Nodes[i].OnStop();
             }
-        }
+        }*/
     }
 }

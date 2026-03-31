@@ -3,7 +3,6 @@ using System;
 #if UNITY_EDITOR
 namespace YBFramework.MyEditor
 {
-    //这个需要改为flags
     [Flags]
     public enum GraphType
     {

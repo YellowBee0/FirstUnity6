@@ -130,8 +130,6 @@ GameObject:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
-  - component: {fileID: 330585547}
-  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -213,35 +211,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &330585547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c2c100db79ba14988359a6f4d193c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.Entity
-  m_ComponentAsset: {fileID: 11400000, guid: e500b91958669474fbc5eff0141cd482, type: 2}
---- !u!114 &330585548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5dfd495098946b3a2f74b5753c7ca87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Test.Test
-  Entity: {fileID: 330585547}
-  BuffAsset1: {fileID: 11400000, guid: c758e8035a0baba449633e54852ef8b0, type: 2}
-  BuffAsset2: {fileID: 11400000, guid: 75f9be405403a9248b83cf8a93f1f6fd, type: 2}
-  BuffAsset3: {fileID: 11400000, guid: e59d444260758f44fa770254c495f23f, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

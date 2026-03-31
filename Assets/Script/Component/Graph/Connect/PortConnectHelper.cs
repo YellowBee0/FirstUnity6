@@ -129,9 +129,9 @@ namespace YBFramework.Component
                 return m_Parameters.Length;
             }
         }
-        
+
         private static readonly List<WrapMethodInfo> s_WrapMethodInfos = new();
-        
+
         [RuntimeInitializeOnLoadMethod]
         public static void RegisterWrapMethod()
         {

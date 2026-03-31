@@ -18,9 +18,9 @@ namespace YBFramework.Component
             for (int i = 0; i < count; i++)
             {
                 IComponent component = components[i];
-                m_Components.Add(component.GetType(),component.Clone());
+                m_Components.Add(component.GetType(), component.Clone());
             }
-            foreach (KeyValuePair<Type,IComponent> kvp in m_Components)
+            foreach (KeyValuePair<Type, IComponent> kvp in m_Components)
             {
                 kvp.Value.OnAddComponent(this);
             }

@@ -20,9 +20,9 @@ namespace YBFramework.Component
 
         [SerializeField] private MethodPort m_StringOutput = new(s_GetValueMethods[1]);
 
-        [HideInInspector] [SerializeField] private int m_IntValue;
+        [SerializeField] private int m_IntValue;
 
-        [HideInInspector] [SerializeField] private string m_StringValue;
+        [SerializeField] private string m_StringValue;
 
         private int GetIntValue()
         {

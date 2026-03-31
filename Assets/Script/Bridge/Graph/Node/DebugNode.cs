@@ -22,7 +22,7 @@ namespace YBFramework.Component
 
         [NonSerialized] public string LogListName;
 
-        [HideInInspector] public List<string> SelectedTypeNames = new();
+        public List<string> SelectedTypeNames = new();
 
         public void Log()
         {

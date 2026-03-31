@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="3" />
+    <option name="SCOPE_TYPE" value="4" />
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="日志节点基本绘制思路">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Node.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Port.meta" afterDir="false" />
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="节点的保存改用SerializedObject">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/New Component Asset.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/New Component Asset.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 1.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 1.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 2.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 2.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 3.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset 3.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/NewBuffAsset.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Attribute/NodeMenuAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Attribute/NodeMenuAttribute.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/TemplateHelpNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/TemplateHelpNode.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/CommonPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/CommonPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Pool/IPooledObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/IPooledObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Common/Pool/ObjectPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Common/Pool/ObjectPool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Buff.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Buff.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/BuffAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Connect/IPortConnectionSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Connect/IPortConnectionSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Connect/PortConnectHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Connect/PortConnectHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Graph.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/GraphAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/GraphAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/GraphType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/GraphType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/NodeAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/NodeAsset.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.GraphView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.GraphView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/IComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/IComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Property/PropertyType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphDrawerManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphDrawerManager.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +196,7 @@
       <workItem from="1774423329571" duration="7796000" />
       <workItem from="1774441929170" duration="1451000" />
       <workItem from="1774499054011" duration="35696000" />
-      <workItem from="1774842774152" duration="21111000" />
+      <workItem from="1774842774152" duration="31357000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -303,7 +326,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774866885112</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="节点的保存改用SerializedObject">
+      <option name="closed" value="true" />
+      <created>1774929948445</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1774929948445</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +363,8 @@
     <MESSAGE value="对于serializedreference对象绘制内容修改" />
     <MESSAGE value="编辑器中派生类管理，以便后续绘制C#引用类型" />
     <MESSAGE value="日志节点基本绘制思路" />
-    <option name="LAST_COMMIT_MESSAGE" value="日志节点基本绘制思路" />
+    <MESSAGE value="节点的保存改用SerializedObject" />
+    <option name="LAST_COMMIT_MESSAGE" value="节点的保存改用SerializedObject" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

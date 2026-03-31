@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace YBFramework.Component
 {
@@ -61,9 +60,9 @@ namespace YBFramework.Component
             }
         }
 #if DEBUG
-        [HideInInspector] public Graph Graph;
+        [NonSerialized] public Graph Graph;
 #endif
-        [HideInInspector] public int ID;
+        public int ID;
 
         public IEnumerable<BasePort> GetPortEnumerable()
         {
@@ -85,15 +84,6 @@ namespace YBFramework.Component
         protected abstract BasePort PortIterator(int index);
 
         public abstract BaseNode Clone();
-
-        //TODO:补上这部分逻辑
-        public virtual void OnStart()
-        {
-        }
-
-        public virtual void OnStop()
-        {
-        }
 #if UNITY_EDITOR
         private sealed class PortContentCreatorEnumerator : IEnumerable<BasePort>, IEnumerator<BasePort>
         {

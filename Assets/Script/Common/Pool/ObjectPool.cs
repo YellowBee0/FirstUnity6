@@ -25,7 +25,7 @@ namespace YBFramework.Common
         }
 
         /// <summary>
-        /// 使用ArrayPool分配数组集合，赋值操作完后需要归还数组
+        ///     使用ArrayPool分配数组集合，赋值操作完后需要归还数组
         /// </summary>
         /// <param name="count">希望分配数组大小，但是大小不一定是count</param>
         /// <typeparam name="T">对象类型</typeparam>

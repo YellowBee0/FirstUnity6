@@ -15,7 +15,7 @@ namespace YBFramework.Component
 
         /// <summary>这一步用于重置组件状态，这里应该是Entity归还对象池而不是组件归还对象池，这一步不会释放任何资源，而是重置</summary>
         void ResetComponent();
-        
+
         IComponent Clone();
     }
 }

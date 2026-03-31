@@ -9,7 +9,7 @@ namespace YBFramework.Component
     [Serializable]
     public sealed class CommonPort : BasePort, IPortConnectionSource
     {
-        [SerializeField] private List<ConnectedPortData> m_ConnectedPortData;
+        [HideInInspector] [SerializeField] private List<ConnectedPortData> m_ConnectedPortData;
 
         public void Connect(BaseNode node, ConnectedPortData data)
         {

@@ -1,57 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6507789307229719936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: "\u6253\u5370\u65E5\u5FD7(Everything)"
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
-  m_Node:
-    rid: 8360641934603321413
-  m_Position: {x: 464.60376, y: 198.3396}
-  m_ID: 13
-  references:
-    version: 2
-    RefIds:
-    - rid: 8360641934603321413
-      type: {class: DebugNode, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        Graph:
-          m_GraphAsset: {fileID: 0}
-        ID: 6
-        m_LogicInput:
-          ID: 0
-          ConnectedCount: 0
-        m_LogContextInput:
-        - rid: 8360642021010440258
-        - rid: 8360642021010440261
-        SelectedTypeNames: []
-    - rid: 8360642021010440258
-      type: {class: 'FuncPort`1[[System.Boolean, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        ID: 7
-        ConnectedCount: 0
-        m_ConnectedPortData:
-          NodeID: 0
-          PortID: 0
-          IsExplicitCast: 0
-        m_Value: 1
-    - rid: 8360642021010440261
-      type: {class: 'FuncPort`1[[System.Boolean, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        ID: 12
-        ConnectedCount: 0
-        m_ConnectedPortData:
-          NodeID: 0
-          PortID: 0
-          IsExplicitCast: 0
-        m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,6 +13,35 @@ MonoBehaviour:
   m_Name: New Graph Asset
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.GraphAsset
   m_NodeAssets:
-  - {fileID: -6507789307229719936}
+  - {fileID: 1208262215806685806}
   m_GraphType: 1
-  m_ID: 7
+  m_ID: 11
+--- !u!114 &1208262215806685806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u6A21\u677F\u51FA\u5165\u53E3(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 8360642021010440270
+  m_Position: {x: 364.9811, y: 265.35852}
+  m_ID: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 8360642021010440270
+      type: {class: TemplateHelpNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Graph:
+          m_GraphAsset: {fileID: 0}
+        ID: 10
+        m_Port:
+          ID: 0
+          ConnectedCount: 0
+          m_ConnectedPortData: []

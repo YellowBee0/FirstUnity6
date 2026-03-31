@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace YBFramework.Component
 {
@@ -60,10 +61,9 @@ namespace YBFramework.Component
             }
         }
 #if DEBUG
-        public Graph Graph;
+        [HideInInspector] public Graph Graph;
 #endif
-
-        public int ID;
+        [HideInInspector] public int ID;
 
         public IEnumerable<BasePort> GetPortEnumerable()
         {

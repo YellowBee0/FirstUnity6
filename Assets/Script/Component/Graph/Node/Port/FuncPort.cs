@@ -9,7 +9,7 @@ namespace YBFramework.Component
     [Serializable]
     public sealed class FuncPort<TValue> : DelegatePort<Func<TValue>>
     {
-        [SerializeField] private ConnectedDelegatePortData m_ConnectedPortData;
+        [HideInInspector] [SerializeField] private ConnectedDelegatePortData m_ConnectedPortData;
 
         [SerializeField] private TValue m_Value;
 

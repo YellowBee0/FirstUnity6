@@ -14,9 +14,9 @@ namespace YBFramework.Component
             return m_Node.ID;
         }
 #if UNITY_EDITOR
-        [SerializeField] private Vector2 m_Position;
+        [HideInInspector] [SerializeField] private Vector2 m_Position;
 
-        [SerializeField] private int m_ID;
+        [HideInInspector] [SerializeField] private int m_ID;
 
         public BaseNode GetNode()
         {

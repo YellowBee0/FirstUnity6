@@ -17,9 +17,9 @@ namespace YBFramework.Component
             return m_NodeAssets;
         }
 #if UNITY_EDITOR
-        [SerializeField] private GraphType m_GraphType = GraphType.Test1;
+        [HideInInspector] [SerializeField] private GraphType m_GraphType = GraphType.Test1;
 
-        [SerializeField] private int m_ID;
+        [HideInInspector] [SerializeField] private int m_ID;
 
         public GraphType GetGraphType()
         {

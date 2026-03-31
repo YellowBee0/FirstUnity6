@@ -18,11 +18,11 @@ namespace YBFramework.Component
 
         [SerializeField] private MethodPort m_LogicInput = new(s_LogMethodInfo);
 
-        [SerializeReference] public List<DelegatePort> m_LogContextInput=new();
+        [SerializeReference] public List<DelegatePort> m_LogContextInput = new();
 
         [NonSerialized] public string LogListName;
 
-        public List<string> SelectedTypeNames = new();
+        [HideInInspector] public List<string> SelectedTypeNames = new();
 
         public void Log()
         {

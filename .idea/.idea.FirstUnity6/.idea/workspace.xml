@@ -7,22 +7,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="日志节点基本绘制思路">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Node.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/Drawer/Port.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/New Graph Asset.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type/DerivedTypeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type/DerivedTypeManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffLayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffLayerTime.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Buff/Component/BuffLayerTime.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/ArrayUtility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/ArrayUtility.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DerivedTypePopupField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DerivedTypePopupField.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferencePropertyView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/ManagedReferencePropertyView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/IBuffBehaviourDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/BuffComponentDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/IBuffBehaviourDrawer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/BuffComponentDrawer.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/IExecutorDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/ExecutorDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/IExecutorDrawer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Buff/ExecutorDrawer.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Component/IComponentDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Component/ComponentDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Component/IComponentDrawer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Component/ComponentDrawer.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/CommonPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Port/CommonPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/GraphAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/GraphAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/BaseNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/GetValueNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/NodeAsset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/NodeAsset.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/ActionPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/FuncPort.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.GraphView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.GraphView.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +54,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/e3/25ecc618/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/53/c754ab7d/BindingExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/74/d413bf00/ISerializedObjectBindingImplementation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/a0/93b3c845/PropertyField.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2e4eaf245b924ed1b8c17467295ae042a6ca00/bb/983a4880/InspectorElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/41d29b352f6a475ab1bf7c6628b8279046ae00/02/a4f652f5/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/50f04750a0da4bf0ae62261569d465d684800/47/e362d06c/DefaultSerializedObjectBindingImplementation.cs" root0="FORCE_HIGHLIGHTING" />
@@ -65,6 +66,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/dc/362ecc1d/ListView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ee16c2cb688d4766af955c0ec92acd90573638/28/5d11f889/ValueTuple`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f230b2ad54ff40f98260db61b68d247444400/a1/f7a471be/Port.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Temp/FirstUnity6/Assets/Script/Editor/Common/ArrayUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -171,7 +173,7 @@
       <workItem from="1774423329571" duration="7796000" />
       <workItem from="1774441929170" duration="1451000" />
       <workItem from="1774499054011" duration="35696000" />
-      <workItem from="1774842774152" duration="13857000" />
+      <workItem from="1774842774152" duration="21111000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -285,7 +287,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774606504562</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="编辑器中派生类管理，以便后续绘制C#引用类型">
+      <option name="closed" value="true" />
+      <created>1774865846386</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1774865846386</updated>
+    </task>
+    <task id="LOCAL-00016" summary="日志节点基本绘制思路">
+      <option name="closed" value="true" />
+      <created>1774866885112</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1774866885112</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,7 +330,9 @@
     <MESSAGE value="项目结构整理" />
     <MESSAGE value="蓝图编辑器中连接和运行时连接流程修改，蓝图绘制逻辑开始重构" />
     <MESSAGE value="对于serializedreference对象绘制内容修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="对于serializedreference对象绘制内容修改" />
+    <MESSAGE value="编辑器中派生类管理，以便后续绘制C#引用类型" />
+    <MESSAGE value="日志节点基本绘制思路" />
+    <option name="LAST_COMMIT_MESSAGE" value="日志节点基本绘制思路" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

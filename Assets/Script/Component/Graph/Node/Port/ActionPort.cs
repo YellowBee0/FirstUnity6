@@ -9,7 +9,7 @@ namespace YBFramework.Component
     [Serializable]
     public sealed class ActionPort : DelegatePort<Action>
     {
-        [SerializeField] private ConnectedDelegatePortData[] m_ConnectedPortData;
+        [HideInInspector] [SerializeField] private ConnectedDelegatePortData[] m_ConnectedPortData;
 
         public void Invoke()
         {

@@ -7,18 +7,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="还原绘制方式">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="先搁置蓝图，实在不想继续这个系统">
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationAsset.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationAsset.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationConnectionAsset.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationConnectionAsset.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationConnectionData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationConnectionData.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationEventData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationEventData.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.Animation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.Animation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationMixer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationMixer.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationPort.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationPort.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/CustomAnimation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/CustomAnimation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/IAnimationEventSource.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/IAnimationEventSource.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type/DerivedTypeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Common/Type/DerivedTypeManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Bridge/Graph/Node/DebugNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DerivedTypePopupField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DerivedTypePopupField.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DrawerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Common/Drawer/DrawerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.Debugger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.Debugger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Graph/GraphWindow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/CommonNodeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/CommonNodeDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Port/FuncPortDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Port/FuncPortDrawer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +55,9 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/0d/0dafd433/020009BCpdb49.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/0d/0dafd433/020009BCpdb49High.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/0d/0dafd433/020009BCpdb49Low.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/04/14902d2c/Mathf.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/31/01483459/RuntimeInitializeLoadType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6535aa091d41cf8b3ca222ed9ceef0212600/a5/6c768b6d/RuntimeInitializeOnLoadMethodAttribute.cs" root0="FORCE_HIGHLIGHTING" />
@@ -63,6 +77,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/aa7eb8f89f914134b4ea7013d80a81c325b600/dd/45737be4/MouseDownEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ee16c2cb688d4766af955c0ec92acd90573638/28/5d11f889/ValueTuple`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f230b2ad54ff40f98260db61b68d247444400/a1/f7a471be/Port.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://D:/Temp/FirstUnity6/Assets/Script/Editor/Common/ArrayUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
@@ -170,7 +185,7 @@
       <workItem from="1774423329571" duration="7796000" />
       <workItem from="1774441929170" duration="1451000" />
       <workItem from="1774499054011" duration="35696000" />
-      <workItem from="1774842774152" duration="35301000" />
+      <workItem from="1774842774152" duration="71479000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -316,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774941980397</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="先搁置蓝图，实在不想继续这个系统">
+      <option name="closed" value="true" />
+      <created>1774958072883</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1774958072883</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,7 +370,8 @@
     <MESSAGE value="日志节点基本绘制思路" />
     <MESSAGE value="节点的保存改用SerializedObject" />
     <MESSAGE value="还原绘制方式" />
-    <option name="LAST_COMMIT_MESSAGE" value="还原绘制方式" />
+    <MESSAGE value="先搁置蓝图，实在不想继续这个系统" />
+    <option name="LAST_COMMIT_MESSAGE" value="先搁置蓝图，实在不想继续这个系统" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

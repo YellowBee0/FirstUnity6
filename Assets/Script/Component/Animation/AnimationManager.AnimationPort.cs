@@ -28,20 +28,29 @@ namespace YBFramework.Component
                 return m_CurAnimation;
             }
 
-            public void ChangeAnimation(Animation animation)
+            public void Connect(Animation animation)
             {
                 if (m_CurAnimation == animation)
                 {
                     return;
                 }
+                if (animation != null)
+                {
+                    animation.SetSpeed(m_Speed);
+                    m_Mixer.ConnectPort(this);
+                }
+                m_CurAnimation = animation;
+            }
+
+            public void Disconnect()
+            {
                 if (m_CurAnimation != null)
                 {
                     m_CurAnimation.Pause();
                     m_CurAnimation.Reset();
+                    m_CurAnimation = null;
+                    m_Mixer.DisconnectPort(this);
                 }
-                m_Mixer.ChangePortConnectedAnimation(this, animation);
-                animation.SetSpeed(m_Speed);
-                m_CurAnimation = animation;
             }
 
             public void SetSpeed(float speed)

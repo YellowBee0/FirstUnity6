@@ -11,31 +11,6 @@ namespace YBFramework.Component
     {
         private sealed class Animation
         {
-            public class AnimationEvent
-            {
-                public readonly AnimationEventData EventData;
-
-                private readonly Action<object[]> m_Action;
-
-                public object[] Parameters;
-
-                public AnimationEvent(AnimationEventData eventData, Action<object[]> action)
-                {
-                    EventData = eventData;
-                    m_Action = action;
-                }
-
-                public void Invoke()
-                {
-                    m_Action.Invoke(Parameters);
-                }
-
-                public object GetTarget()
-                {
-                    return m_Action.Target;
-                }
-            }
-
             private static class AnimationEventInvoker
             {
                 private sealed class InvokeState
@@ -152,6 +127,31 @@ namespace YBFramework.Component
                 }
             }
 
+            public class AnimationEvent
+            {
+                public readonly AnimationEventData EventData;
+
+                private readonly Action<object[]> m_Action;
+
+                public object[] Parameters;
+
+                public AnimationEvent(AnimationEventData eventData, Action<object[]> action)
+                {
+                    EventData = eventData;
+                    m_Action = action;
+                }
+
+                public void Invoke()
+                {
+                    m_Action.Invoke(Parameters);
+                }
+
+                public object GetTarget()
+                {
+                    return m_Action.Target;
+                }
+            }
+
             private static readonly Queue<Animation> s_AnimationPool = new();
 
             public static Animation Allocate(AnimationAsset animationAsset, AnimationClipPlayable animationClipPlayable)
@@ -164,12 +164,15 @@ namespace YBFramework.Component
 
             public static void Free(Animation animation)
             {
+                animation.RegisteredPort = null;
+                animation.m_AnimationAsset = null;
+                animation.m_AnimationClipPlayable = default;
                 animation.m_AnimationEvents.Clear();
                 animation.m_IsPlaying = false;
                 s_AnimationPool.Enqueue(animation);
             }
 
-            public AnimationPort ConnectedPort;
+            public AnimationPort RegisteredPort;
 
             private AnimationAsset m_AnimationAsset;
 
@@ -265,15 +268,6 @@ namespace YBFramework.Component
                 }
             }
 
-            public void CoverAnimationEventParameters(AnimationEventData eventData)
-            {
-                int index = FindAnimationEventIndex(eventData);
-                if (index != -1)
-                {
-                    m_AnimationEvents[index].Parameters = eventData.Parameters;
-                }
-            }
-
             public void RemoveAnimationEvent(IAnimationEventSource eventSource)
             {
                 int i = 0;
@@ -290,6 +284,15 @@ namespace YBFramework.Component
                     {
                         i++;
                     }
+                }
+            }
+
+            public void CoverAnimationEventParameters(AnimationEventData eventData)
+            {
+                int index = FindAnimationEventIndex(eventData);
+                if (index != -1)
+                {
+                    m_AnimationEvents[index].Parameters = eventData.Parameters;
                 }
             }
 

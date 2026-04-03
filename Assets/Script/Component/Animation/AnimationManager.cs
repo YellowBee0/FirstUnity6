@@ -25,7 +25,9 @@ namespace YBFramework.Component
 
         [SerializeField] private LayerData[] m_LayerData;
 
-        private string m_BoneTypeName;
+        [SerializeField] private string m_BoneTypeName;
+
+        private Entity m_Owner;
 
         private PlayableGraph m_Graph;
 
@@ -40,17 +42,32 @@ namespace YBFramework.Component
 
         public Entity GetOwner()
         {
-            throw new NotImplementedException();
+            return m_Owner;
         }
 
         public void OnAddComponent(Entity entity)
         {
-            throw new NotImplementedException();
+            m_Owner = entity;
+            m_Graph = PlayableGraph.Create(entity.name);
+            //TODO: 找动画组件可能需要在编辑器中指定路径
+            Animator animator = entity.GetComponent<Animator>();
+            m_LayerMixer = AnimationLayerMixerPlayable.Create(m_Graph);
+            AnimationPlayableOutput.Create(m_Graph, null, animator).SetSourcePlayable(m_LayerMixer);
         }
 
         public void OnRemoveComponent()
         {
-            throw new NotImplementedException();
+            foreach (KeyValuePair<AnimationConnectionAsset, Animation[]> kvp in m_Connections)
+            {
+                Animation[] animations = kvp.Value;
+                for (int i = 0; i < animations.Length; i++)
+                {
+                    Animation.Free(animations[i]);
+                }
+            }
+            m_Connections.Clear();
+            m_AnimationEventSources.Clear();
+            m_Graph.Destroy();
         }
 
         public void ResetComponent()
@@ -60,7 +77,12 @@ namespace YBFramework.Component
 
         public IComponent Clone()
         {
-            throw new NotImplementedException();
+            AnimationManager manager = new()
+            {
+                m_LayerData = m_LayerData,
+                m_BoneTypeName = m_BoneTypeName
+            };
+            return manager;
         }
 
         public void RegisterAnimationEventSource(IAnimationEventSource eventSource)
@@ -145,7 +167,7 @@ namespace YBFramework.Component
                 if (animationMixer != null)
                 {
                     AnimationPort animationPort = animationMixer.GetOrCreatePort(connectionData.PortName);
-                    animation.ConnectedPort = animationPort;
+                    animation.RegisteredPort = animationPort;
                     animationPort.ConnectedAnimationCount++;
                     s_AnimationTemps.Add(animation);
                 }
@@ -164,8 +186,11 @@ namespace YBFramework.Component
                 for (int i = 0; i < animations.Length; i++)
                 {
                     Animation animation = animations[i];
-                    //TODO: 这里需要判断这个动画是否为当前连接的动画，如果是需要断开连接
-                    animation.ConnectedPort.ConnectedAnimationCount--;
+                    if (animation.RegisteredPort.GetCurAnimation() == animation)
+                    {
+                        animation.RegisteredPort.Disconnect();
+                    }
+                    animation.RegisteredPort.ConnectedAnimationCount--;
                     Animation.Free(animation);
                 }
             }
@@ -205,8 +230,7 @@ namespace YBFramework.Component
                 for (int i = 0; i < animations.Length; i++)
                 {
                     Animation animation = animations[i];
-                    //TODO: 这里考虑怎么连接到端口
-                    animation.ConnectedPort.ChangeAnimation(animation);
+                    animation.RegisteredPort.Connect(animation);
                 }
             }
         }

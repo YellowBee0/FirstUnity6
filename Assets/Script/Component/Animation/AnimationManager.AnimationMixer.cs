@@ -120,10 +120,14 @@ namespace YBFramework.Component
                 }
             }
 
-            public void ChangePortConnectedAnimation(AnimationPort port, Animation animation)
+            public void ConnectPort(AnimationPort port)
+            {
+                m_Mixer.ConnectInput(port.Index, port.GetCurAnimation().GetAnimationClipPlayable(), 0, port.Weight);
+            }
+
+            public void DisconnectPort(AnimationPort port)
             {
                 m_Mixer.DisconnectInput(port.Index);
-                m_Mixer.ConnectInput(port.Index, animation.GetAnimationClipPlayable(), 0, port.Weight);
             }
 
             public void SetSpeed(string portName, float speed)

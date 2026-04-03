@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
@@ -7,15 +11,185 @@ namespace YBFramework.Component
     {
         private sealed class Animation
         {
-            public AnimationAsset AnimationAsset;
+            public class AnimationEvent
+            {
+                public readonly AnimationEventData EventData;
 
-            public AnimationClipPlayable AnimationClipPlayable;
-                
+                private readonly Action<object[]> m_Action;
+
+                public object[] Parameters;
+
+                public AnimationEvent(AnimationEventData eventData, Action<object[]> action)
+                {
+                    EventData = eventData;
+                    m_Action = action;
+                }
+
+                public void Invoke()
+                {
+                    m_Action.Invoke(Parameters);
+                }
+
+                public object GetTarget()
+                {
+                    return m_Action.Target;
+                }
+            }
+
+            private static class AnimationEventInvoker
+            {
+                private sealed class InvokeState
+                {
+                    private static readonly Queue<InvokeState> s_InvokeStatePool = new();
+
+                    public static InvokeState Allocate(AnimationClipPlayable animationClipPlayable, IReadOnlyList<AnimationEvent> animationEvents, float lenght, bool isLooping)
+                    {
+                        InvokeState state = s_InvokeStatePool.Count > 0 ? s_InvokeStatePool.Dequeue() : new InvokeState();
+                        state.m_AnimationClipPlayable = animationClipPlayable;
+                        state.m_AnimationEvents = animationEvents;
+                        state.m_Lenght = lenght;
+                        state.m_PreTime = 0;
+                        state.m_InvokedEventCount = 0;
+                        state.m_IsLooping = isLooping;
+                        return state;
+                    }
+
+                    public static void Free(InvokeState state)
+                    {
+                        s_InvokeStatePool.Enqueue(state);
+                    }
+
+                    private AnimationClipPlayable m_AnimationClipPlayable;
+
+                    private IReadOnlyList<AnimationEvent> m_AnimationEvents;
+
+                    private float m_Lenght;
+
+                    private float m_PreTime;
+
+                    private int m_InvokedEventCount;
+
+                    private bool m_IsLooping;
+
+                    public void OnUpdate()
+                    {
+                        float curTime = (float)m_AnimationClipPlayable.GetTime() % m_Lenght;
+                        //如果上一帧时间大于当前时间，说明动画已经循环了
+                        if (m_PreTime > curTime)
+                        {
+                            //保证每个动画事件都会触发
+                            for (int i = m_InvokedEventCount; i < m_AnimationEvents.Count; i++)
+                            {
+                                m_AnimationEvents[i].Invoke();
+                            }
+                            m_InvokedEventCount = m_IsLooping ? 0 : m_AnimationEvents.Count;
+                        }
+                        //从上次触发事件的索引开始，遍历事件列表，触发时间小于等于当前时间的事件
+                        for (int i = m_InvokedEventCount; i < m_AnimationEvents.Count; i++)
+                        {
+                            if (m_AnimationEvents[i].EventData.TriggerTime <= curTime)
+                            {
+                                m_AnimationEvents[i].Invoke();
+                                m_InvokedEventCount++;
+                            }
+                            //因为事件列表是有序的，所以如果当前事件的触发时间大于当前时间，则后续事件都不会触发
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        //更新上一帧时间
+                        m_PreTime = curTime;
+                    }
+                }
+
+                private static readonly List<InvokeState> s_InvokeStates = new();
+
+                private static bool s_IsUpdating;
+
+                public static void AddEventListener(Animation animation)
+                {
+                    if (animation.m_AnimationEvents.Count > 0)
+                    {
+                        AnimationClip animationClip = animation.m_AnimationAsset.GetAnimationClip();
+                        InvokeState invokeState = InvokeState.Allocate(animation.m_AnimationClipPlayable, animation.m_AnimationEvents, animationClip.length, animationClip.isLooping);
+                        animation.m_InvokeStateIndex = s_InvokeStates.Count;
+                        s_InvokeStates.Add(invokeState);
+                        if (!s_IsUpdating)
+                        {
+                            Update().Forget();
+                            s_IsUpdating = true;
+                        }
+                    }
+                }
+
+                public static void RemoveEventListener(Animation animation)
+                {
+                    if (animation.m_InvokeStateIndex != -1)
+                    {
+                        int lastIndex = s_InvokeStates.Count - 1;
+                        (s_InvokeStates[animation.m_InvokeStateIndex], s_InvokeStates[lastIndex]) = (s_InvokeStates[lastIndex], s_InvokeStates[animation.m_InvokeStateIndex]);
+                        InvokeState.Free(s_InvokeStates[lastIndex]);
+                        s_InvokeStates.RemoveAt(lastIndex);
+                        if (lastIndex == 0 && s_IsUpdating)
+                        {
+                            s_IsUpdating = false;
+                        }
+                        animation.m_InvokeStateIndex = -1;
+                    }
+                }
+
+                private static async UniTaskVoid Update()
+                {
+                    while (s_IsUpdating)
+                    {
+                        await UniTask.NextFrame();
+                        for (int i = 0; i < s_InvokeStates.Count; i++)
+                        {
+                            s_InvokeStates[i].OnUpdate();
+                        }
+                    }
+                }
+            }
+
+            private static readonly Queue<Animation> s_AnimationPool = new();
+
+            public static Animation Allocate(AnimationAsset animationAsset, AnimationClipPlayable animationClipPlayable)
+            {
+                Animation animation = s_AnimationPool.Count > 0 ? s_AnimationPool.Dequeue() : new Animation();
+                animation.m_AnimationAsset = animationAsset;
+                animation.m_AnimationClipPlayable = animationClipPlayable;
+                return animation;
+            }
+
+            public static void Free(Animation animation)
+            {
+                animation.m_AnimationEvents.Clear();
+                animation.m_IsPlaying = false;
+                s_AnimationPool.Enqueue(animation);
+            }
+
             public AnimationPort ConnectedPort;
 
-            //TODO:在这里加上动画事件的覆盖值
+            private AnimationAsset m_AnimationAsset;
+
+            private AnimationClipPlayable m_AnimationClipPlayable;
+
+            private readonly List<AnimationEvent> m_AnimationEvents = new();
+
+            private int m_InvokeStateIndex;
 
             private bool m_IsPlaying;
+
+            public AnimationAsset GetAnimationAsset()
+            {
+                return m_AnimationAsset;
+            }
+
+            public AnimationClipPlayable GetAnimationClipPlayable()
+            {
+                return m_AnimationClipPlayable;
+            }
 
             public void Play()
             {
@@ -23,7 +197,8 @@ namespace YBFramework.Component
                 {
                     return;
                 }
-                AnimationClipPlayable.Play();
+                AnimationEventInvoker.AddEventListener(this);
+                m_AnimationClipPlayable.Play();
                 m_IsPlaying = true;
             }
 
@@ -31,24 +206,104 @@ namespace YBFramework.Component
             {
                 if (m_IsPlaying)
                 {
-                    AnimationClipPlayable.Pause();
+                    m_AnimationClipPlayable.Pause();
+                    AnimationEventInvoker.RemoveEventListener(this);
                     m_IsPlaying = false;
                 }
             }
 
             public void Reset()
             {
-                AnimationClipPlayable.SetTime(0);
+                m_AnimationClipPlayable.SetTime(0);
             }
 
             public void SetSpeed(float speed)
             {
-                AnimationClipPlayable.SetSpeed(speed);
+                m_AnimationClipPlayable.SetSpeed(speed);
             }
 
-            public bool IsPlaying()
+            public void AddAnimationEvent(AnimationEventData eventData, IAnimationEventSource eventSource)
             {
-                return m_IsPlaying;
+                string sourceName = eventData.SourceName;
+                string eventName = eventData.EventName;
+                float triggerTime = eventData.TriggerTime;
+                for (int i = 0; i < m_AnimationEvents.Count; i++)
+                {
+                    AnimationEvent animationEvent = m_AnimationEvents[i];
+                    if (Mathf.Approximately(animationEvent.EventData.TriggerTime, triggerTime))
+                    {
+                        if (animationEvent.EventData.SourceName == sourceName && animationEvent.EventData.EventName == eventName)
+                        {
+                            return;
+                        }
+                    }
+                    else if (animationEvent.EventData.TriggerTime > triggerTime)
+                    {
+                        Action<object[]> action = eventSource.CreateAnimationEvent(eventName);
+                        if (action != null)
+                        {
+                            m_AnimationEvents.Insert(i, new AnimationEvent(eventData, action)
+                            {
+                                Parameters = eventData.Parameters
+                            });
+                        }
+                        else
+                        {
+                            Debug.LogError($"{eventSource.GetSourceName()}中没有找到事件{eventName}");
+                        }
+                        return;
+                    }
+                }
+            }
+
+            public void RemoveAnimationEvent(AnimationEventData eventData)
+            {
+                int index = FindAnimationEventIndex(eventData);
+                if (index != -1)
+                {
+                    m_AnimationEvents.RemoveAt(index);
+                }
+            }
+
+            public void CoverAnimationEventParameters(AnimationEventData eventData)
+            {
+                int index = FindAnimationEventIndex(eventData);
+                if (index != -1)
+                {
+                    m_AnimationEvents[index].Parameters = eventData.Parameters;
+                }
+            }
+
+            public void RemoveAnimationEvent(IAnimationEventSource eventSource)
+            {
+                int i = 0;
+                while (i < m_AnimationEvents.Count)
+                {
+                    if (m_AnimationEvents[i].GetTarget() == eventSource)
+                    {
+                        int lastIndex = m_AnimationEvents.Count - 1;
+                        (m_AnimationEvents[i], m_AnimationEvents[lastIndex]) = (m_AnimationEvents[lastIndex], m_AnimationEvents[i]);
+                        Debug.LogWarning($"animation {m_AnimationAsset.name} removed event {m_AnimationEvents[i].EventData.EventName} because of {eventSource.GetSourceName()} unregistered");
+                        m_AnimationEvents.RemoveAt(lastIndex);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+
+            private int FindAnimationEventIndex(AnimationEventData eventData)
+            {
+                for (int i = 0; i < m_AnimationEvents.Count; i++)
+                {
+                    AnimationEvent animationEvent = m_AnimationEvents[i];
+                    if (animationEvent.EventData == eventData)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
             }
         }
     }

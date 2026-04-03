@@ -9,6 +9,6 @@ namespace YBFramework.Component
 
         public string PortName;
 
-        public int LayerIndex;
+        public LayerType Layer;
     }
 }

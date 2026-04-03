@@ -1,18 +1,16 @@
-using System.Collections.Generic;
-
 namespace YBFramework.Component
 {
     public sealed partial class AnimationManager
     {
         private sealed class AnimationPort
         {
-            private readonly List<Animation> m_ConnectedAnimations = new();
+            private readonly AnimationMixer m_Mixer;
 
             private Animation m_CurAnimation;
 
             private float m_Speed;
 
-            private int m_Index;
+            public int Index;
 
             public int ConnectedAnimationCount;
 
@@ -20,31 +18,14 @@ namespace YBFramework.Component
 
             public string Name;
 
-            public void ConnectAnimation(Animation animation)
+            public AnimationPort(AnimationMixer mixer)
             {
-                animation.ConnectedPort = this;
-                m_ConnectedAnimations.Add(animation);
+                m_Mixer = mixer;
             }
 
-            public void DisconnectAnimation(Animation animation)
+            public Animation GetCurAnimation()
             {
-                if (m_ConnectedAnimations.Remove(animation))
-                {
-                    if (m_CurAnimation == animation)
-                    {
-                        Animation newAnimation = null;
-                        if (m_ConnectedAnimations.Count > 0)
-                        {
-                            if (m_CurAnimation != null)
-                            {
-                                m_CurAnimation.Pause();
-                                m_CurAnimation.Reset();
-                            }
-                            newAnimation = m_ConnectedAnimations[^1];
-                        }
-                        m_CurAnimation = newAnimation;
-                    }
-                }
+                return m_CurAnimation;
             }
 
             public void ChangeAnimation(Animation animation)
@@ -58,19 +39,15 @@ namespace YBFramework.Component
                     m_CurAnimation.Pause();
                     m_CurAnimation.Reset();
                 }
-                animation?.SetSpeed(m_Speed);
+                m_Mixer.ChangePortConnectedAnimation(this, animation);
+                animation.SetSpeed(m_Speed);
                 m_CurAnimation = animation;
             }
 
             public void SetSpeed(float speed)
             {
-                m_CurAnimation?.SetSpeed(speed);
+                m_CurAnimation.SetSpeed(speed);
                 m_Speed = speed;
-            }
-
-            public int GetIndex()
-            {
-                return m_Index;
             }
         }
     }

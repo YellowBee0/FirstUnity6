@@ -8,82 +8,99 @@ namespace YBFramework.Component
     {
         private sealed class AnimationMixer
         {
-            private readonly AnimationMixerPlayable m_Mixer;
-
             private readonly List<AnimationPort> m_Ports = new();
 
-            private readonly List<(AnimationConnectionAsset animationSetAsset, Animation[] animations)> m_AnimationKits = new();
+            private readonly AnimationMixerPlayable m_Mixer;
+
+            private readonly LayerType m_LayerType;
 
             private AnimationPort m_CurPort;
 
             private bool m_IsPlaying;
 
-            public void RegisterAnimationKit(AnimationConnectionAsset animationConnectionAsset)
+            public AnimationMixer(PlayableGraph graph, LayerType layerType)
             {
-                
+                m_Mixer = AnimationMixerPlayable.Create(graph);
+                m_LayerType = layerType;
             }
 
-            private int FindPortIndex(string portName)
+            public int GetPortCount()
             {
-                for (int i = 0; i < m_Ports.Count; i++)
-                {
-                    if (m_Ports[i].Name == portName)
-                    {
-                        return i;
-                    }
-                }
-                return -1;
+                return m_Ports.Count;
             }
 
-            public void AddPort(string portName)
+            public AnimationMixerPlayable GetMixer()
             {
-                if (FindPortIndex(portName) == -1)
+                return m_Mixer;
+            }
+
+            public LayerType GetLayerType()
+            {
+                return m_LayerType;
+            }
+
+            public AnimationPort GetOrCreatePort(string portName)
+            {
+                int index = FindPortIndex(portName);
+                if (index == -1)
                 {
-                    AnimationPort port = new()
+                    AnimationPort port = new(this)
                     {
                         Name = portName
                     };
                     m_Ports.Add(port);
                 }
+                return m_Ports[index];
             }
 
-            public void RemovePort(string portName)
+            public void RefreshPort()
             {
-                int index = FindPortIndex(portName);
-                if (index != -1)
+                int i = 0;
+                int oldCount = m_Ports.Count;
+                while (i < m_Ports.Count)
                 {
-                    m_Ports.RemoveAt(index);
+                    if (m_Ports[i].ConnectedAnimationCount <= 0)
+                    {
+                        int lastIndex = m_Ports.Count - 1;
+                        AnimationPort lastPort = m_Ports[lastIndex];
+                        m_Mixer.DisconnectInput(lastPort.Index);
+                        Animation lastAnimation = lastPort.GetCurAnimation();
+                        if (lastAnimation != null)
+                        {
+                            m_Mixer.ConnectInput(i, lastAnimation.GetAnimationClipPlayable(), 0, lastPort.Weight);
+                        }
+                        lastPort.Index = i;
+                        (m_Ports[i], m_Ports[lastIndex]) = (m_Ports[lastIndex], m_Ports[i]);
+                        m_Ports.RemoveAt(lastIndex);
+                    }
+                    else
+                    {
+                        i++;
+                    }
                 }
-            }
-
-            public void RefreshPorts()
-            {
-                m_Mixer.SetInputCount(m_Ports.Count);
-                for (int i = 0; i < m_Ports.Count; i++)
+                int newCount = m_Ports.Count;
+                if (newCount != oldCount)
                 {
-                    m_Mixer.DisconnectInput(i);
-                    AnimationPort port = m_Ports[i];
-                    Animation animation = port.GetCurAnimation();
-                    m_Mixer.ConnectInput(i, animation?.GetCurAnimationClipPlayable() ?? default, 0, port.Weight);
+                    m_Mixer.SetInputCount(newCount);
                 }
             }
 
             public void ChangePort(string portName)
             {
-                if (m_CurPort != null)
+                if (m_CurPort != null && m_CurPort.Name == portName)
                 {
-                    if (m_CurPort.Name == portName)
+                    return;
+                }
+                int index = FindPortIndex(portName);
+                if (index != -1)
+                {
+                    AnimationPort port = m_Ports[index];
+                    Animation animation = port.GetCurAnimation();
+                    if (animation != null)
                     {
-                        return;
-                    }
-                    int index = FindPortIndex(portName);
-                    if (index != -1)
-                    {
-                        AnimationPort port = m_Ports[index];
-                        Animation animation = port.GetCurAnimation();
-                        if (animation != null)
+                        if (m_CurPort != null)
                         {
-                            m_Mixer.SetInputWeight(m_CurPort.GetIndex(), 0);
+                            m_Mixer.SetInputWeight(m_CurPort.Index, 0);
                             m_CurPort.Weight = 0;
                             Animation curAnimation = m_CurPort.GetCurAnimation();
                             if (curAnimation != null)
@@ -91,16 +108,22 @@ namespace YBFramework.Component
                                 curAnimation.Pause();
                                 curAnimation.Reset();
                             }
-                            port.Weight = 1;
-                            m_Mixer.SetInputWeight(port.GetIndex(), 1);
-                            m_CurPort = port;
-                            if (m_IsPlaying)
-                            {
-                                animation.Play();
-                            }
+                        }
+                        port.Weight = 1;
+                        m_Mixer.SetInputWeight(port.Index, 1);
+                        m_CurPort = port;
+                        if (m_IsPlaying)
+                        {
+                            animation.Play();
                         }
                     }
                 }
+            }
+
+            public void ChangePortConnectedAnimation(AnimationPort port, Animation animation)
+            {
+                m_Mixer.DisconnectInput(port.Index);
+                m_Mixer.ConnectInput(port.Index, animation.GetAnimationClipPlayable(), 0, port.Weight);
             }
 
             public void SetSpeed(string portName, float speed)
@@ -129,6 +152,18 @@ namespace YBFramework.Component
                     m_CurPort.GetCurAnimation()?.Pause();
                     m_IsPlaying = false;
                 }
+            }
+
+            private int FindPortIndex(string portName)
+            {
+                for (int i = 0; i < m_Ports.Count; i++)
+                {
+                    if (m_Ports[i].Name == portName)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
             }
         }
     }

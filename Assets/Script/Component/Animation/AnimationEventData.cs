@@ -1,38 +1,42 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace YBFramework.Component
 {
     [Serializable]
-    public sealed class AnimationEventData
+    public struct AnimationEventData : IEquatable<AnimationEventData>
     {
-        [SerializeField] private string m_EventName;
+        [SerializeField] public string SourceName;
 
-        [SerializeField] private float m_TriggerTime;
+        [SerializeField] public string EventName;
 
-        /// <summary>
-        /// 函数的参数集合，调用函数时只能读不能写入
-        /// TODO：需要支持覆盖，不管编辑器中还是运行时
-        /// </summary>
-        [SerializeReference] private object[] m_Parameters;
+        [SerializeField] public float TriggerTime;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public string GetEventName()
+        [SerializeReference] public object[] Parameters;
+
+        public static bool operator ==(AnimationEventData left, AnimationEventData right)
         {
-            return m_EventName;
+            return left.SourceName == right.SourceName && left.EventName == right.EventName && Mathf.Approximately(left.TriggerTime, right.TriggerTime);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float GetTriggerTime()
+        public static bool operator !=(AnimationEventData left, AnimationEventData right)
         {
-            return m_TriggerTime;
+            return !(left == right);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public object[] GetParameters()
+        public bool Equals(AnimationEventData other)
         {
-            return m_Parameters;
+            return this == other;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AnimationEventData other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(SourceName, EventName, TriggerTime);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace YBFramework.Component
         }
 #if UNITY_EDITOR
         protected static readonly StringBuilder s_StrBuilder = new();
-        
+
         public int ConnectedCount;
 
         public PortViewInfo PortViewInfo;

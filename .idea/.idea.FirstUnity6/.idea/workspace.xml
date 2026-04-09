@@ -7,12 +7,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="动画系统的动画事件逻辑处理">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="动画坑我，先提交把事做完了在搞动画了">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.Animation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.Animation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationMixer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationMixer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationPort.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/CustomAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/CustomAnimation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/IAnimationEventSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/IAnimationEventSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,8 +64,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ee16c2cb688d4766af955c0ec92acd90573638/28/5d11f889/ValueTuple`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f230b2ad54ff40f98260db61b68d247444400/a1/f7a471be/Port.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Temp/FirstUnity6/Assets/Script/Editor/Common/ArrayUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Editor/PropertyDrawer/Graph/Node/DebugNodeDrawer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTask.Delay.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTask.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@ad5ed25e82a3/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -80,22 +84,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.50047845&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.build.unityPlugin&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "XThreadsFramesViewSplitterKey": "0.50047845",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CodeLensConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity-a\Unity6000.3.11f1\Editor\Unity.exe" />
@@ -167,7 +174,10 @@
       <workItem from="1774441929170" duration="1451000" />
       <workItem from="1774499054011" duration="35696000" />
       <workItem from="1774842774152" duration="111109000" />
-      <workItem from="1775200740296" duration="937000" />
+      <workItem from="1775200740296" duration="3568000" />
+      <workItem from="1775544199429" duration="8934000" />
+      <workItem from="1775707183136" duration="216000" />
+      <workItem from="1775707419370" duration="18481000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -337,7 +347,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775200506780</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="动画坑我，先提交把事做完了在搞动画了">
+      <option name="closed" value="true" />
+      <created>1775205063685</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1775205063685</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,7 +389,8 @@
     <MESSAGE value="先搁置蓝图，实在不想继续这个系统" />
     <MESSAGE value="动画系统开端" />
     <MESSAGE value="动画系统的动画事件逻辑处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="动画系统的动画事件逻辑处理" />
+    <MESSAGE value="动画坑我，先提交把事做完了在搞动画了" />
+    <option name="LAST_COMMIT_MESSAGE" value="动画坑我，先提交把事做完了在搞动画了" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

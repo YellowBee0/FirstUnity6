@@ -98,6 +98,10 @@ namespace YBFramework.Component
                     }
                 }
 
+                /// <summary>
+                ///     移除一个动画的事件监听者，这个函数不能在动画事件中调用，因为集合在轮询的过程中移除（除了移除最后一个元素的情况）都会导致索引略过某一个元素
+                /// </summary>
+                /// <param name="animation">动画</param>
                 public static void RemoveEventListener(Animation animation)
                 {
                     if (animation.m_InvokeStateIndex != -1)
@@ -127,7 +131,7 @@ namespace YBFramework.Component
                 }
             }
 
-            public class AnimationEvent
+            public sealed class AnimationEvent
             {
                 public readonly AnimationEventData EventData;
 

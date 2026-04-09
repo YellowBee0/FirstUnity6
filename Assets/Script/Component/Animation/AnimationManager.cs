@@ -40,49 +40,8 @@ namespace YBFramework.Component
 
         private readonly List<IAnimationEventSource> m_AnimationEventSources = new();
 
-        public Entity GetOwner()
+        private AnimationManager()
         {
-            return m_Owner;
-        }
-
-        public void OnAddComponent(Entity entity)
-        {
-            m_Owner = entity;
-            m_Graph = PlayableGraph.Create(entity.name);
-            //TODO: 找动画组件可能需要在编辑器中指定路径
-            Animator animator = entity.GetComponent<Animator>();
-            m_LayerMixer = AnimationLayerMixerPlayable.Create(m_Graph);
-            AnimationPlayableOutput.Create(m_Graph, null, animator).SetSourcePlayable(m_LayerMixer);
-        }
-
-        public void OnRemoveComponent()
-        {
-            foreach (KeyValuePair<AnimationConnectionAsset, Animation[]> kvp in m_Connections)
-            {
-                Animation[] animations = kvp.Value;
-                for (int i = 0; i < animations.Length; i++)
-                {
-                    Animation.Free(animations[i]);
-                }
-            }
-            m_Connections.Clear();
-            m_AnimationEventSources.Clear();
-            m_Graph.Destroy();
-        }
-
-        public void ResetComponent()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IComponent Clone()
-        {
-            AnimationManager manager = new()
-            {
-                m_LayerData = m_LayerData,
-                m_BoneTypeName = m_BoneTypeName
-            };
-            return manager;
         }
 
         public void RegisterAnimationEventSource(IAnimationEventSource eventSource)
@@ -186,40 +145,13 @@ namespace YBFramework.Component
                 for (int i = 0; i < animations.Length; i++)
                 {
                     Animation animation = animations[i];
-                    if (animation.RegisteredPort.GetCurAnimation() == animation)
+                    if (animation.RegisteredPort.GetCurConnectedAnimation() == animation)
                     {
                         animation.RegisteredPort.Disconnect();
                     }
                     animation.RegisteredPort.ConnectedAnimationCount--;
                     Animation.Free(animation);
                 }
-            }
-        }
-
-        public void RefreshGraph()
-        {
-            int i = 0;
-            int oldCount = m_AnimationMixers.Length;
-            int newCount = oldCount;
-            while (i < newCount)
-            {
-                AnimationMixer animationMixer = m_AnimationMixers[i];
-                animationMixer.RefreshPort();
-                if (animationMixer.GetPortCount() <= 0)
-                {
-                    newCount--;
-                    m_LayerMixer.DisconnectInput(newCount);
-                    m_LayerMixer.ConnectInput(i, m_AnimationMixers[newCount].GetMixer(), 0);
-                    (m_AnimationMixers[i], m_AnimationMixers[newCount]) = (m_AnimationMixers[newCount], m_AnimationMixers[i]);
-                }
-                else
-                {
-                    i++;
-                }
-            }
-            if (oldCount != newCount)
-            {
-                m_LayerMixer.SetInputCount(newCount);
             }
         }
 
@@ -230,26 +162,12 @@ namespace YBFramework.Component
                 for (int i = 0; i < animations.Length; i++)
                 {
                     Animation animation = animations[i];
-                    animation.RegisteredPort.Connect(animation);
+                    if (animation.RegisteredPort.GetCurConnectedAnimation() != animation)
+                    {
+                        animation.RegisteredPort.Disconnect();
+                        animation.RegisteredPort.Connect(animation);
+                    }
                 }
-            }
-        }
-
-        public void ChangePort(LayerType layer, string portName)
-        {
-            int index = FindAnimationMixerIndex(layer);
-            if (index != -1)
-            {
-                m_AnimationMixers[index].ChangePort(portName);
-            }
-        }
-
-        public void SetSpeed(LayerType layer, string portName, float speed)
-        {
-            int index = FindAnimationMixerIndex(layer);
-            if (index != -1)
-            {
-                m_AnimationMixers[index].SetSpeed(portName, speed);
             }
         }
 
@@ -308,6 +226,148 @@ namespace YBFramework.Component
             }
         }
 
+        public void ChangePort(LayerType layer, string portName, bool isUseCross = false)
+        {
+            int index = FindAnimationMixerIndex(layer);
+            if (index != -1)
+            {
+                if (isUseCross)
+                {
+                    m_AnimationMixers[index].ChangePortWithCross(portName);
+                }
+                else
+                {
+                    m_AnimationMixers[index].ChangePort(portName);
+                }
+            }
+        }
+
+        public void SetSpeed(LayerType layer, string portName, float speed)
+        {
+            int index = FindAnimationMixerIndex(layer);
+            if (index != -1)
+            {
+                m_AnimationMixers[index].SetSpeed(portName, speed);
+            }
+        }
+
+        public void Play()
+        {
+            if (!m_Graph.IsPlaying())
+            {
+                for (int i = 0; i < m_AnimationMixers.Length; i++)
+                {
+                    m_AnimationMixers[i].Play();
+                }
+                m_Graph.Play();
+            }
+        }
+
+        public void Pause()
+        {
+            if (m_Graph.IsPlaying())
+            {
+                if (m_AnimationMixers != null)
+                {
+                    for (int i = 0; i < m_AnimationMixers.Length; i++)
+                    {
+                        m_AnimationMixers[i].Pause();
+                    }
+                }
+                m_Graph.Stop();
+            }
+        }
+
+        public void RefreshGraph()
+        {
+            int i = 0;
+            int oldCount = m_AnimationMixers.Length;
+            int newCount = oldCount;
+            while (i < newCount)
+            {
+                AnimationMixer animationMixer = m_AnimationMixers[i];
+                animationMixer.RefreshPort();
+                if (animationMixer.GetPortCount() <= 0)
+                {
+                    newCount--;
+                    m_LayerMixer.DisconnectInput(newCount);
+                    m_LayerMixer.ConnectInput(i, m_AnimationMixers[newCount].GetMixer(), 0);
+                    (m_AnimationMixers[i], m_AnimationMixers[newCount]) = (m_AnimationMixers[newCount], m_AnimationMixers[i]);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            if (oldCount != newCount)
+            {
+                if (newCount != 0)
+                {
+                    Array.Resize(ref m_AnimationMixers, newCount);
+                }
+                else
+                {
+                    m_AnimationMixers = null;
+                }
+                m_LayerMixer.SetInputCount(newCount);
+            }
+        }
+
+        public Entity GetOwner()
+        {
+            return m_Owner;
+        }
+
+        public void OnAddComponent(Entity entity)
+        {
+            m_Owner = entity;
+            m_Graph = PlayableGraph.Create(entity.name);
+            //TODO: 找动画组件可能需要在编辑器中指定路径
+            Animator animator = entity.GetComponent<Animator>();
+            m_LayerMixer = AnimationLayerMixerPlayable.Create(m_Graph);
+            AnimationPlayableOutput.Create(m_Graph, null, animator).SetSourcePlayable(m_LayerMixer);
+        }
+
+        public void OnRemoveComponent()
+        {
+            foreach (KeyValuePair<AnimationConnectionAsset, Animation[]> kvp in m_Connections)
+            {
+                Animation[] animations = kvp.Value;
+                for (int i = 0; i < animations.Length; i++)
+                {
+                    Animation.Free(animations[i]);
+                }
+            }
+            m_Connections.Clear();
+            m_AnimationEventSources.Clear();
+            m_Graph.Destroy();
+        }
+
+        public void ResetComponent()
+        {
+            if (m_Graph.IsPlaying())
+            {
+                m_Graph.Stop();
+                for (int i = 0; i < m_AnimationMixers.Length; i++)
+                {
+                    m_AnimationMixers[i].InterruptCross();
+                    m_AnimationMixers[i].GetMixer().Destroy();
+                }
+                m_AnimationMixers = null;
+                m_LayerMixer.SetInputCount(0);
+            }
+        }
+
+        public IComponent Clone()
+        {
+            AnimationManager manager = new()
+            {
+                m_LayerData = m_LayerData,
+                m_BoneTypeName = m_BoneTypeName
+            };
+            return manager;
+        }
+
         private IAnimationEventSource FindAnimationEventSource(string sourceName)
         {
             for (int i = 0; i < m_AnimationEventSources.Count; i++)
@@ -323,11 +383,14 @@ namespace YBFramework.Component
 
         private int FindAnimationMixerIndex(LayerType layer)
         {
-            for (int i = 0; i < m_AnimationMixers.Length; i++)
+            if (m_AnimationMixers != null)
             {
-                if (m_AnimationMixers[i].GetLayerType() == layer)
+                for (int i = 0; i < m_AnimationMixers.Length; i++)
                 {
-                    return i;
+                    if (m_AnimationMixers[i].GetLayerType() == layer)
+                    {
+                        return i;
+                    }
                 }
             }
             return -1;

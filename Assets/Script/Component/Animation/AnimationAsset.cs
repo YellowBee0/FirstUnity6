@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace YBFramework.Component
 {
+    [CreateAssetMenu(fileName = "AnimationAsset", menuName = "YBFramework/Animation/AnimationAsset")]
     public sealed class AnimationAsset : ScriptableObject
     {
         [SerializeField] private AnimationClip m_AnimationClip;

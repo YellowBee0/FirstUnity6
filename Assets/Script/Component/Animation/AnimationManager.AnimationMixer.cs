@@ -296,6 +296,7 @@ namespace YBFramework.Component
                 return -1;
             }
 
+            //TODO: 测试全局timescale改变后，这个过渡时间是不是也会跟着改变
             private async UniTaskVoid UpdateCross()
             {
                 await UniTask.NextFrame();

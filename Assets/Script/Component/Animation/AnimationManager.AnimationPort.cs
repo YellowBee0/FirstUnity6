@@ -38,6 +38,12 @@ namespace YBFramework.Component
             {
                 return m_Speed;
             }
+            
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public Animation GetCurConnectedAnimation()
+            {
+                return m_CurConnectedAnimation;
+            }
 
             public void SetWeight(float weight)
             {
@@ -68,12 +74,7 @@ namespace YBFramework.Component
                     Connect(m_CurConnectedAnimation);
                 }
             }
-
-            public Animation GetCurConnectedAnimation()
-            {
-                return m_CurConnectedAnimation;
-            }
-
+            
             public void Connect(Animation animation)
             {
                 m_Mixer.InterruptCross();

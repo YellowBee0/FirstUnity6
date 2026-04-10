@@ -8,7 +8,7 @@ namespace YBFramework.Component
     {
         [SerializeField] private AnimationClip m_AnimationClip;
 
-        [SerializeField] private AnimationEventData[] m_AnimationEvents;
+        [SerializeField] private AnimationEventData[] m_AnimationEventData;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AnimationClip GetAnimationClip()
@@ -19,7 +19,7 @@ namespace YBFramework.Component
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerable<AnimationEventData> GetAnimationEventData()
         {
-            return m_AnimationEvents;
+            return m_AnimationEventData;
         }
     }
 }

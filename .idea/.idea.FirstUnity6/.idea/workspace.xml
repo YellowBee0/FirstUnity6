@@ -7,15 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="动画坑我，先提交把事做完了在搞动画了">
+    <list default="true" id="61ca736f-7663-445b-aa98-ff32404cc9d3" name="Changes" comment="完善动画过渡">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FirstUnity6/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.Animation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.Animation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationMixer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationMixer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationPort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.AnimationPort.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/AnimationManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/CustomAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/CustomAnimation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Animation/IAnimationEventSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Animation/IAnimationEventSource.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Component/Graph/Node/Port/BasePort.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +170,7 @@
       <workItem from="1775200740296" duration="3568000" />
       <workItem from="1775544199429" duration="8934000" />
       <workItem from="1775707183136" duration="216000" />
-      <workItem from="1775707419370" duration="18481000" />
+      <workItem from="1775707419370" duration="19290000" />
     </task>
     <task id="LOCAL-00001" summary="修改低级错误">
       <option name="closed" value="true" />
@@ -355,7 +348,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775205063685</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="完善动画过渡">
+      <option name="closed" value="true" />
+      <created>1775733816668</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1775733816668</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,7 +391,8 @@
     <MESSAGE value="动画系统开端" />
     <MESSAGE value="动画系统的动画事件逻辑处理" />
     <MESSAGE value="动画坑我，先提交把事做完了在搞动画了" />
-    <option name="LAST_COMMIT_MESSAGE" value="动画坑我，先提交把事做完了在搞动画了" />
+    <MESSAGE value="完善动画过渡" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善动画过渡" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

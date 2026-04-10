@@ -18,14 +18,19 @@ namespace YBFramework.Component
         {
             public LayerType Layer;
 
-            public string AvatarMaskName;
+            public AvatarMask Mask;
         }
 
         private static readonly List<Animation> s_AnimationTemps = new();
 
+        //层数数据和骨骼名是一个整体，这里作为两个字段主要是不想做一个继承ScriptableObject的类存储数据，感觉有点小题大做
+        //但是这样可能会导致层数和骨骼名不匹配
         [SerializeField] private LayerData[] m_LayerData;
 
         [SerializeField] private string m_BoneTypeName;
+
+        //TODO: 需要添加针对哪一个动画
+        [SerializeField] private AnimationEventData[] m_OverrideAnimationEventData;
 
         private Entity m_Owner;
 
@@ -36,13 +41,9 @@ namespace YBFramework.Component
 
         private AnimationMixer[] m_AnimationMixers;
 
-        private readonly Dictionary<AnimationConnectionAsset, Animation[]> m_Connections = new();
+        private readonly Dictionary<AnimationConnectionData[], Animation[]> m_Connections = new();
 
         private readonly List<IAnimationEventSource> m_AnimationEventSources = new();
-
-        private AnimationManager()
-        {
-        }
 
         public void RegisterAnimationEventSource(IAnimationEventSource eventSource)
         {
@@ -61,7 +62,7 @@ namespace YBFramework.Component
         {
             if (m_AnimationEventSources.Remove(eventSource))
             {
-                foreach (KeyValuePair<AnimationConnectionAsset, Animation[]> kvp in m_Connections)
+                foreach (KeyValuePair<AnimationConnectionData[], Animation[]> kvp in m_Connections)
                 {
                     Animation[] animations = kvp.Value;
                     for (int i = 0; i < animations.Length; i++)
@@ -72,16 +73,16 @@ namespace YBFramework.Component
             }
         }
 
-        public void RegisterConnection(AnimationConnectionAsset connectionAsset)
+        public void RegisterConnection(AnimationConnectionData[] connections)
         {
-            if (m_Connections.ContainsKey(connectionAsset))
+            if (m_Connections.ContainsKey(connections))
             {
                 return;
             }
             s_AnimationTemps.Clear();
-            foreach (AnimationConnectionData connectionData in connectionAsset.GetAnimationConnectionData())
+            foreach (AnimationConnectionData connection in connections)
             {
-                string animationAssetName = m_BoneTypeName + connectionData.ActionName;
+                string animationAssetName = m_BoneTypeName + connection.ActionName;
                 //TODO: 通过animationAssetName动画资源加载,现在使用new替代
                 AnimationAsset animationAsset = ScriptableObject.CreateInstance<AnimationAsset>();
                 Animation animation = Animation.Allocate(animationAsset, AnimationClipPlayable.Create(m_Graph, animationAsset.GetAnimationClip()));
@@ -90,11 +91,22 @@ namespace YBFramework.Component
                     IAnimationEventSource eventSource = FindAnimationEventSource(eventData.SourceName);
                     if (eventSource != null)
                     {
-                        animation.AddAnimationEvent(eventData, eventSource);
+                        //查找是否存在覆盖的事件，覆盖事件就只是事件参数不同
+                        AnimationEventData eventDataToAdd = eventData;
+                        for (int i = 0; i < m_OverrideAnimationEventData.Length; i++)
+                        {
+                            AnimationEventData animationEventData = m_OverrideAnimationEventData[i];
+                            if (animationEventData == eventData)
+                            {
+                                eventDataToAdd = animationEventData;
+                                break;
+                            }
+                        }
+                        animation.AddAnimationEvent(eventDataToAdd, eventSource);
                     }
                 }
                 AnimationMixer animationMixer = null;
-                int animationMixerIndex = FindAnimationMixerIndex(connectionData.Layer);
+                int animationMixerIndex = FindAnimationMixerIndex(connection.Layer);
                 if (animationMixerIndex != -1)
                 {
                     animationMixer = m_AnimationMixers[animationMixerIndex];
@@ -103,21 +115,18 @@ namespace YBFramework.Component
                 {
                     for (int i = 0; i < m_LayerData.Length; i++)
                     {
-                        if (m_LayerData[i].Layer == connectionData.Layer)
+                        LayerData layerData = m_LayerData[i];
+                        if (layerData.Layer == connection.Layer)
                         {
-                            animationMixer = new AnimationMixer(m_Graph, connectionData.Layer);
+                            animationMixer = new AnimationMixer(m_Graph, connection.Layer);
                             int lastIndex = m_AnimationMixers?.Length ?? 0;
                             Array.Resize(ref m_AnimationMixers, lastIndex + 1);
                             m_LayerMixer.SetInputCount(lastIndex + 1);
                             m_LayerMixer.ConnectInput(lastIndex, animationMixer.GetMixer(), 0);
                             m_AnimationMixers[lastIndex] = animationMixer;
-                            string avatarMaskName = m_LayerData[i].AvatarMaskName;
-                            //TODO: 如果存在AvatarMaskName就加载AvatarMask，不存在不加载
-                            if (!string.IsNullOrEmpty(avatarMaskName))
+                            if (layerData.Mask)
                             {
-                                Debug.Log("加载AvatarMask:" + avatarMaskName);
-                                AvatarMask avatarMask = new();
-                                m_LayerMixer.SetLayerMaskFromAvatarMask((uint)lastIndex, avatarMask);
+                                m_LayerMixer.SetLayerMaskFromAvatarMask((uint)lastIndex, layerData.Mask);
                             }
                             break;
                         }
@@ -125,22 +134,22 @@ namespace YBFramework.Component
                 }
                 if (animationMixer != null)
                 {
-                    AnimationPort animationPort = animationMixer.GetOrCreatePort(connectionData.PortName);
+                    AnimationPort animationPort = animationMixer.GetOrCreatePort(connection.PortName);
                     animation.RegisteredPort = animationPort;
                     animationPort.ConnectedAnimationCount++;
                     s_AnimationTemps.Add(animation);
                 }
                 else
                 {
-                    Debug.LogError($"{m_BoneTypeName}骨骼中不允许动画层{connectionData.Layer}");
+                    Debug.LogError($"{m_BoneTypeName}骨骼中不允许动画层{connection.Layer}");
                 }
             }
-            m_Connections.Add(connectionAsset, s_AnimationTemps.ToArray());
+            m_Connections.Add(connections, s_AnimationTemps.ToArray());
         }
 
-        public void UnregisterConnection(AnimationConnectionAsset connectionAsset)
+        public void UnregisterConnection(AnimationConnectionData[] connections)
         {
-            if (m_Connections.Remove(connectionAsset, out Animation[] animations))
+            if (m_Connections.Remove(connections, out Animation[] animations))
             {
                 for (int i = 0; i < animations.Length; i++)
                 {
@@ -155,9 +164,9 @@ namespace YBFramework.Component
             }
         }
 
-        public void ChangeConnection(AnimationConnectionAsset connectionAsset)
+        public void ChangeConnection(AnimationConnectionData[] connections)
         {
-            if (m_Connections.TryGetValue(connectionAsset, out Animation[] animations))
+            if (m_Connections.TryGetValue(connections, out Animation[] animations))
             {
                 for (int i = 0; i < animations.Length; i++)
                 {
@@ -171,9 +180,9 @@ namespace YBFramework.Component
             }
         }
 
-        public void AddAnimationEvent(AnimationConnectionAsset connectionAsset, string actionName, AnimationEventData eventData)
+        public void AddAnimationEvent(AnimationConnectionData[] connections, string actionName, AnimationEventData eventData)
         {
-            if (m_Connections.TryGetValue(connectionAsset, out Animation[] animations))
+            if (m_Connections.TryGetValue(connections, out Animation[] animations))
             {
                 string animationAssetName = m_BoneTypeName + actionName;
                 for (int i = 0; i < animations.Length; i++)
@@ -192,9 +201,9 @@ namespace YBFramework.Component
             }
         }
 
-        public void RemoveAnimationEvent(AnimationConnectionAsset connectionAsset, string actionName, AnimationEventData eventData)
+        public void RemoveAnimationEvent(AnimationConnectionData[] connections, string actionName, AnimationEventData eventData)
         {
-            if (m_Connections.TryGetValue(connectionAsset, out Animation[] animations))
+            if (m_Connections.TryGetValue(connections, out Animation[] animations))
             {
                 string animationAssetName = m_BoneTypeName + actionName;
                 for (int i = 0; i < animations.Length; i++)
@@ -209,9 +218,9 @@ namespace YBFramework.Component
             }
         }
 
-        public void CoverAnimationEventParameters(AnimationConnectionAsset connectionAsset, string actionName, AnimationEventData eventData)
+        public void CoverAnimationEventParameters(AnimationConnectionData[] connections, string actionName, AnimationEventData eventData)
         {
-            if (m_Connections.TryGetValue(connectionAsset, out Animation[] animations))
+            if (m_Connections.TryGetValue(connections, out Animation[] animations))
             {
                 string animationAssetName = m_BoneTypeName + actionName;
                 for (int i = 0; i < animations.Length; i++)
@@ -330,7 +339,7 @@ namespace YBFramework.Component
 
         public void OnRemoveComponent()
         {
-            foreach (KeyValuePair<AnimationConnectionAsset, Animation[]> kvp in m_Connections)
+            foreach (KeyValuePair<AnimationConnectionData[], Animation[]> kvp in m_Connections)
             {
                 Animation[] animations = kvp.Value;
                 for (int i = 0; i < animations.Length; i++)

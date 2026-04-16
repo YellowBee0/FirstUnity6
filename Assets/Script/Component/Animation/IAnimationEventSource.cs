@@ -1,11 +1,9 @@
-using System;
-
 namespace YBFramework.Component
 {
     public interface IAnimationEventSource
     {
         string GetSourceName();
 
-        Action<object[]> CreateAnimationEvent(string eventName);
+        AnimationEvent CreateAnimationEvent(int index, AnimationEventData eventData);
     }
 }

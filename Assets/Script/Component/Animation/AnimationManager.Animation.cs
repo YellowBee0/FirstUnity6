@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -62,7 +61,7 @@ namespace YBFramework.Component
                         //从上次触发事件的索引开始，遍历事件列表，触发时间小于等于当前时间的事件
                         for (int i = m_InvokedEventCount; i < m_AnimationEvents.Count; i++)
                         {
-                            if (m_AnimationEvents[i].EventData.TriggerTime <= curTime)
+                            if (m_AnimationEvents[i].GetEventData().TriggerTime <= curTime)
                             {
                                 m_AnimationEvents[i].Invoke();
                                 m_InvokedEventCount++;
@@ -128,31 +127,6 @@ namespace YBFramework.Component
                             s_InvokeStates[i].OnUpdate();
                         }
                     }
-                }
-            }
-
-            public sealed class AnimationEvent
-            {
-                public readonly AnimationEventData EventData;
-
-                private readonly Action<object[]> m_Action;
-
-                public object[] Parameters;
-
-                public AnimationEvent(AnimationEventData eventData, Action<object[]> action)
-                {
-                    EventData = eventData;
-                    m_Action = action;
-                }
-
-                public void Invoke()
-                {
-                    m_Action.Invoke(Parameters);
-                }
-
-                public object GetTarget()
-                {
-                    return m_Action.Target;
                 }
             }
 
@@ -231,32 +205,29 @@ namespace YBFramework.Component
 
             public void AddAnimationEvent(AnimationEventData eventData, IAnimationEventSource eventSource)
             {
-                string sourceName = eventData.SourceName;
-                string eventName = eventData.EventName;
+                int eventIndex = eventData.EventIndex;
                 float triggerTime = eventData.TriggerTime;
                 for (int i = 0; i < m_AnimationEvents.Count; i++)
                 {
                     AnimationEvent animationEvent = m_AnimationEvents[i];
-                    if (Mathf.Approximately(animationEvent.EventData.TriggerTime, triggerTime))
+                    AnimationEventData animationEventData = animationEvent.GetEventData();
+                    if (Mathf.Approximately(animationEventData.TriggerTime, triggerTime))
                     {
-                        if (animationEvent.EventData.SourceName == sourceName && animationEvent.EventData.EventName == eventName)
+                        if (animationEventData.SourceName == eventData.SourceName && animationEventData.EventIndex == eventIndex)
                         {
                             return;
                         }
                     }
-                    else if (animationEvent.EventData.TriggerTime > triggerTime)
+                    else if (animationEventData.TriggerTime > triggerTime)
                     {
-                        Action<object[]> action = eventSource.CreateAnimationEvent(eventName);
-                        if (action != null)
+                        AnimationEvent newAnimationEvent = eventSource.CreateAnimationEvent(eventIndex, animationEventData);
+                        if (newAnimationEvent != null)
                         {
-                            m_AnimationEvents.Insert(i, new AnimationEvent(eventData, action)
-                            {
-                                Parameters = eventData.Parameters
-                            });
+                            m_AnimationEvents.Insert(i, newAnimationEvent);
                         }
                         else
                         {
-                            Debug.LogError($"{eventSource.GetSourceName()}中没有找到事件{eventName}");
+                            Debug.LogError($"{eventSource.GetSourceName()}中没有找到事件{eventIndex}");
                         }
                         return;
                     }
@@ -277,11 +248,11 @@ namespace YBFramework.Component
                 int i = 0;
                 while (i < m_AnimationEvents.Count)
                 {
-                    if (m_AnimationEvents[i].GetTarget() == eventSource)
+                    if (m_AnimationEvents[i].GetEventSource() == eventSource)
                     {
                         int lastIndex = m_AnimationEvents.Count - 1;
                         (m_AnimationEvents[i], m_AnimationEvents[lastIndex]) = (m_AnimationEvents[lastIndex], m_AnimationEvents[i]);
-                        Debug.LogWarning($"animation {m_AnimationAsset.name} removed event {m_AnimationEvents[i].EventData.EventName} because of {eventSource.GetSourceName()} unregistered");
+                        Debug.LogWarning($"animation {m_AnimationAsset.name} removed event {m_AnimationEvents[i].GetEventData().EventIndex} because of {eventSource.GetSourceName()} unregistered");
                         m_AnimationEvents.RemoveAt(lastIndex);
                     }
                     else
@@ -291,12 +262,12 @@ namespace YBFramework.Component
                 }
             }
 
-            public void CoverAnimationEventParameters(AnimationEventData eventData)
+            public void ReplaceAnimationEventArg(AnimationEventData eventData)
             {
                 int index = FindAnimationEventIndex(eventData);
                 if (index != -1)
                 {
-                    m_AnimationEvents[index].Parameters = eventData.Parameters;
+                    m_AnimationEvents[index].SetArg(eventData.EventArgs);
                 }
             }
 
@@ -305,7 +276,7 @@ namespace YBFramework.Component
                 for (int i = 0; i < m_AnimationEvents.Count; i++)
                 {
                     AnimationEvent animationEvent = m_AnimationEvents[i];
-                    if (animationEvent.EventData == eventData)
+                    if (animationEvent.GetEventData() == eventData)
                     {
                         return i;
                     }

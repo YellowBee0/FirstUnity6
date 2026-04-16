@@ -40,6 +40,7 @@ namespace YBFramework.MyEditor.Common
             }
             m_Property.managedReferenceValue = newValue;
             m_ElementField.BindProperty(m_Property);
+            m_Property.serializedObject.ApplyModifiedProperties();
         }
 
         public void Bind(SerializedProperty property)

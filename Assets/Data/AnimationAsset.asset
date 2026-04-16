@@ -14,10 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.AnimationAsset
   m_AnimationClip: {fileID: 0}
   m_AnimationEventData:
-  - SourceName: test
-    EventName: test
-    TriggerTime: 0.1
-    Parameters: []
+  - SourceName: 
+    EventIndex: 0
+    TriggerTime: 0
+    EventArgs:
+      rid: 3590358834671518039
+  - SourceName: 
+    EventIndex: 0
+    TriggerTime: 0
+    EventArgs:
+      rid: 3590358834671518040
+  - SourceName: 
+    EventIndex: 0
+    TriggerTime: 0
+    EventArgs:
+      rid: 3590358834671518040
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3590358834671518039
+      type: {class: IntArg, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Arg: 33
+    - rid: 3590358834671518040
+      type: {class: IntStringArg, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        IntArg: 47
+        StringArg: c3

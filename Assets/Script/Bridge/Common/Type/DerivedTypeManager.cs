@@ -28,6 +28,7 @@ namespace YBFramework.MyEditor
             RegisterDerivedTypes(typeof(IExecutor), TypeCache.GetTypesDerivedFrom<IExecutor>(), false, GetDisplayName);
             RegisterDerivedTypes(typeof(IComponent), TypeCache.GetTypesDerivedFrom<IComponent>(), true, GetDisplayName);
             RegisterDerivedTypes(typeof(RepeatAddProcess), TypeCache.GetTypesDerivedFrom<RepeatAddProcess>(), true, GetDisplayName);
+            RegisterDerivedTypes(typeof(AnimationEventArgs), TypeCache.GetTypesDerivedFrom<AnimationEventArgs>(), true, null);
         }
 
         private static string GetDisplayName(Type type)

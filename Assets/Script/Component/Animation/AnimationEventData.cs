@@ -8,15 +8,15 @@ namespace YBFramework.Component
     {
         [SerializeField] public string SourceName;
 
-        [SerializeField] public string EventName;
+        [SerializeField] public int EventIndex;
 
         [SerializeField] public float TriggerTime;
 
-        [SerializeReference] public object[] Parameters;
+        [SerializeReference] public AnimationEventArgs EventArgs;
 
         public static bool operator ==(AnimationEventData left, AnimationEventData right)
         {
-            return left.SourceName == right.SourceName && left.EventName == right.EventName && Mathf.Approximately(left.TriggerTime, right.TriggerTime);
+            return left.SourceName == right.SourceName && left.EventIndex == right.EventIndex && Mathf.Approximately(left.TriggerTime, right.TriggerTime);
         }
 
         public static bool operator !=(AnimationEventData left, AnimationEventData right)
@@ -36,7 +36,7 @@ namespace YBFramework.Component
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(SourceName, EventName, TriggerTime);
+            return HashCode.Combine(SourceName, EventIndex, TriggerTime);
         }
     }
 }

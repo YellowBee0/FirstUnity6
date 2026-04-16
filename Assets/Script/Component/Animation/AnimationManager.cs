@@ -218,7 +218,7 @@ namespace YBFramework.Component
             }
         }
 
-        public void CoverAnimationEventParameters(AnimationConnectionData[] connections, string actionName, AnimationEventData eventData)
+        public void ReplaceAnimationEventArg(AnimationConnectionData[] connections, string actionName, AnimationEventData eventData)
         {
             if (m_Connections.TryGetValue(connections, out Animation[] animations))
             {
@@ -228,7 +228,7 @@ namespace YBFramework.Component
                     Animation animation = animations[i];
                     if (animation.GetAnimationAsset().name == animationAssetName)
                     {
-                        animation.CoverAnimationEventParameters(eventData);
+                        animation.ReplaceAnimationEventArg(eventData);
                         return;
                     }
                 }

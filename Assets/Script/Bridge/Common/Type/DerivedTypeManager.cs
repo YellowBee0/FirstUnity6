@@ -24,7 +24,7 @@ namespace YBFramework.MyEditor
                 typeof(Color),
                 typeof(string)
             }, false, null);
-            RegisterDerivedTypes(typeof(IBuffComponent), TypeCache.GetTypesDerivedFrom<IBuffComponent>(), true, GetDisplayName);
+            RegisterDerivedTypes(typeof(IBuffComponent), TypeCache.GetTypesDerivedFrom<IBuffComponent>(), false, GetDisplayName);
             RegisterDerivedTypes(typeof(IExecutor), TypeCache.GetTypesDerivedFrom<IExecutor>(), false, GetDisplayName);
             RegisterDerivedTypes(typeof(IComponent), TypeCache.GetTypesDerivedFrom<IComponent>(), true, GetDisplayName);
             RegisterDerivedTypes(typeof(RepeatAddProcess), TypeCache.GetTypesDerivedFrom<RepeatAddProcess>(), true, GetDisplayName);

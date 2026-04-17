@@ -5,12 +5,12 @@ using YBFramework.Component;
 namespace YBFramework.MyEditor
 {
     [CustomPropertyDrawer(typeof(AnimationEventArgs))]
-    public sealed class AnimationAssetPropertyDrawer : PropertyDrawer
+    public sealed class AnimationEventArgsPropertyDrawer : PropertyDrawer
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            AnimationEventArgs args = property.managedReferenceValue as AnimationEventArgs;
-            return args?.DrawGUI(property);
+            AnimationEventArgs eventArgs = property.managedReferenceValue as AnimationEventArgs;
+            return eventArgs?.DrawGUI(property);
         }
     }
 }

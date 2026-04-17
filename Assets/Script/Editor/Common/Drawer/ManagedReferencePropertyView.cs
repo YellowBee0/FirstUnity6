@@ -8,13 +8,13 @@ namespace YBFramework.MyEditor.Common
 {
     public class ManagedReferencePropertyView : VisualElement
     {
-        private readonly DerivedTypePopupField m_TypePopupField;
+        private readonly DerivedTypePopupField TypePopupField;
 
-        private readonly PropertyField m_ElementField;
+        private readonly PropertyField m_PropertyField;
 
         private readonly Type m_DefaultDerivedType;
 
-        private SerializedProperty m_Property;
+        private SerializedProperty m_BindProperty;
 
         public ManagedReferencePropertyView(Type baseType, Type defaultDerivedType)
         {
@@ -22,44 +22,44 @@ namespace YBFramework.MyEditor.Common
             if (group != default)
             {
                 m_DefaultDerivedType = defaultDerivedType;
-                m_TypePopupField = new DerivedTypePopupField("select type", group.Item1, group.Item2);
-                m_TypePopupField.RegisterTypeChangedCallBack(OnSelectedTypeChanged);
-                m_ElementField = new PropertyField();
-                Add(m_TypePopupField);
-                Add(m_ElementField);
+                TypePopupField = new DerivedTypePopupField("select type", group.Item1, group.Item2);
+                TypePopupField.RegisterTypeChangedCallBack(OnSelectedTypeChanged);
+                m_PropertyField = new PropertyField();
+                Add(TypePopupField);
+                Add(m_PropertyField);
             }
         }
 
         private void OnSelectedTypeChanged(Type newType)
         {
-            m_Property.serializedObject.Update();
+            m_BindProperty.serializedObject.Update();
             object newValue = null;
             if (newType != null)
             {
                 newValue = Activator.CreateInstance(newType);
             }
-            m_Property.managedReferenceValue = newValue;
-            m_ElementField.BindProperty(m_Property);
-            m_Property.serializedObject.ApplyModifiedProperties();
+            m_BindProperty.managedReferenceValue = newValue;
+            m_PropertyField.BindProperty(m_BindProperty);
+            m_BindProperty.serializedObject.ApplyModifiedProperties();
         }
 
         public void Bind(SerializedProperty property)
         {
-            m_Property = property;
-            if (m_Property.managedReferenceValue == null)
+            m_BindProperty = property;
+            if (m_BindProperty.managedReferenceValue == null)
             {
-                m_TypePopupField.Initialize(m_DefaultDerivedType);
-                Type type = m_TypePopupField.GetSelectedType();
+                TypePopupField.Initialize(m_DefaultDerivedType);
+                Type type = TypePopupField.GetSelectedType();
                 if (type != null)
                 {
-                    m_Property.managedReferenceValue = Activator.CreateInstance(type);
+                    m_BindProperty.managedReferenceValue = Activator.CreateInstance(type);
                 }
             }
             else
             {
-                m_TypePopupField.Initialize(m_Property.managedReferenceValue.GetType());
+                TypePopupField.Initialize(m_BindProperty.managedReferenceValue.GetType());
             }
-            m_ElementField.BindProperty(m_Property);
+            m_PropertyField.BindProperty(m_BindProperty);
         }
     }
 }

@@ -12,25 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3e837046b079a40b7c339dbf04f9ac, type: 3}
   m_Name: NewBuffAsset
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.BuffAsset
-  m_BuffName: test
-  m_BuffType: 1
+  m_BuffName: 
+  m_BuffType: 0
   m_RepeatAddProcess:
-    rid: 3590358830004830280
+    rid: -2
   m_Components:
-  - rid: 3590358830004830281
+  - rid: 3590358855316668479
   references:
     version: 2
     RefIds:
-    - rid: 3590358830004830280
-      type: {class: ModifyLayer, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        m_RepeatAddCondition: 0
-        m_IsJudgingByCaster: 0
-        m_ModifyLayerCount: 105
-    - rid: 3590358830004830281
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3590358855316668479
       type: {class: BuffLayerTime, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
-        m_TotalTime: 1.81
-        m_ModifyLayer: 43
+        m_TotalTime: 0
+        m_ModifyLayer: 0
         m_RemoveBuffOnMinLayer: 0
         m_RemoveBuffOnMaxLayer: 0

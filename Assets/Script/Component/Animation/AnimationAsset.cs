@@ -22,12 +22,5 @@ namespace YBFramework.Component
         {
             return m_AnimationEventData;
         }
-
-#if UNITY_EDITOR
-        public AnimationEventData[] GetAnimationEventDataList()
-        {
-            return m_AnimationEventData;
-        }
-#endif
     }
 }

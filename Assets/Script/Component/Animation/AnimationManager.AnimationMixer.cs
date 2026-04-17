@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -59,11 +60,13 @@ namespace YBFramework.Component
                 return m_Ports.Count;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public AnimationMixerPlayable GetMixer()
             {
                 return m_Mixer;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public LayerType GetLayerType()
             {
                 return m_LayerType;

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9beaaa8181542018323e1177150207d, type: 3}
+  m_Name: New Component Asset
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.ComponentAsset
+  m_Components:
+  - rid: 3590358855316668499
+  - rid: 3590358855316668501
+  - rid: 3590358855316668502
+  - rid: 3590358855316668503
+  references:
+    version: 2
+    RefIds:
+    - rid: 3590358855316668499
+      type: {class: AnimationManager, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_LayerData: []
+        m_BoneTypeName: 
+        m_OverrideAnimationEventData: []
+    - rid: 3590358855316668501
+      type: {class: Graph, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_GraphAsset: {fileID: 0}
+    - rid: 3590358855316668502
+      type: {class: PropertyManager, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Properties:
+        - m_CurValue: 0
+          m_MaxValue: 0
+          m_MinValue: 0
+          m_IsRecordedCurValue: 0
+          m_IsRecordedMaxValue: 0
+          m_IsRecordedMinValue: 0
+          m_PropertyType: 0
+    - rid: 3590358855316668503
+      type: {class: BuffManager, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data: 

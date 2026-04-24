@@ -26,6 +26,7 @@ namespace YBFramework.Component
         public PortViewInfo PortViewInfo;
 
         public abstract string GetConnectTip();
+        
 #endif
     }
 }

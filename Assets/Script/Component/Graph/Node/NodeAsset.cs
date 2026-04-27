@@ -19,14 +19,18 @@ namespace YBFramework.Component
 
         [SerializeField] private int m_ID;
 
-        public void CreateNodeView()
+        private SerializedObject m_SerializedObject;
+
+        public void CreateNodeView(NewCustomGraphView graphView)
         {
-            NewNodeView nodeView = new()
+            NewNodeView nodeView = new(this, graphView)
             {
-                name = name
+                title = name
             };
             nodeView.SetPosition(new Rect(m_Position, Vector2.zero));
-            m_Node.FillNodeView(nodeView);
+            m_SerializedObject = new SerializedObject(this);
+            m_Node.FillNodeContentView(m_SerializedObject.FindProperty(nameof(m_Node)), nodeView);
+            graphView.Add(nodeView);
         }
 
         public BaseNode GetNode()

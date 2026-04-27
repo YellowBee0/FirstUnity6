@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using YBFramework.MyEditor;
@@ -140,22 +141,25 @@ namespace YBFramework.Component
             return PortIterator(index);
         }
 
-        public abstract void InitNodeInfo();
+        public abstract void InitNodeViewInfo();
 
-        public virtual void FillNodeView(NewNodeView nodeView)
+        public virtual void FillNodeContentView(SerializedProperty property, NewNodeView nodeView)
         {
             foreach (BasePort port in GetPortEnumerable())
             {
-                Direction direction = port.GetDirection();
-                NewPortView portView = new(port, port.GetName(), direction, port.GetCapacity(), port.GetColor());
-                VisualElement portContainer = port.FillPortView(portView);
-                if (direction == Direction.Output)
+                SerializedProperty portProperty = property.FindPropertyRelative(port.GetFieldName());
+                if (portProperty != null)
                 {
-                    nodeView.inputContainer.Add(portContainer);
-                }
-                else
-                {
-                    nodeView.outputContainer.Add(portContainer);
+                    VisualElement portContentView = port.CreatePortContentView(portProperty, out NewPortView portView);
+                    nodeView.AddPortView(portView);
+                    if (port.GetDirection() == Direction.Output)
+                    {
+                        nodeView.inputContainer.Add(portContentView);
+                    }
+                    else
+                    {
+                        nodeView.outputContainer.Add(portContentView);
+                    }
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using UnityEngine.UIElements;
+﻿using System;
+using UnityEngine.UIElements;
 using YBFramework.Component;
 using YBFramework.MyEditor.Common;
 
@@ -9,10 +10,10 @@ namespace YBFramework.MyEditor
     {
         public virtual VisualElement DrawPortView(NodeView nodeView, BasePort target)
         {
-            PortViewInfo portViewInfo = target.PortViewInfo;
-            PortView portView = new(nodeView, target, portViewInfo.Name, portViewInfo.Direction, portViewInfo.Capacity, portViewInfo.Color, this);
+            /*PortView portView = new(nodeView, target, portViewInfo.Name, portViewInfo.Direction, portViewInfo.Capacity, portViewInfo.Color, this);
             nodeView.AddPortView(portView);
-            return portView;
+            return portView;*/
+            throw new NotImplementedException();
         }
     }
 }

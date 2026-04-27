@@ -1,5 +1,11 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
+#endif
 #if DEBUG
 using YBFramework.MyEditor;
 #endif
@@ -79,7 +85,7 @@ namespace YBFramework.Component
             {
                 NodeID = nodeID,
                 PortID = other.ID,
-                IsExplicitCast = isExplicitCast,
+                IsExplicitCast = isExplicitCast
             };
             ConnectedCount++;
             other.ConnectedCount++;
@@ -96,6 +102,27 @@ namespace YBFramework.Component
                     other.ConnectedCount--;
                 }
             }
+        }
+
+        public override void InitPortViewInfo(string name, string fieldName, Direction direction, Port.Capacity capacity, Color color)
+        {
+            direction = Direction.Input;
+            capacity = Port.Capacity.Single;
+            color = Color.blue;
+            base.InitPortViewInfo(name, fieldName, direction, capacity, color);
+        }
+
+        public override VisualElement CreatePortContentView(SerializedProperty property, out NewPortView portView)
+        {
+            VisualElement root = base.CreatePortContentView(property, out portView);
+            SerializedProperty valueProperty = property.FindPropertyRelative(nameof(m_Value));
+            if (valueProperty != null)
+            {
+                root = new VisualElement();
+                PropertyField fieldView = new(valueProperty);
+                root.Add(fieldView);
+            }
+            return root;
         }
 #endif
     }

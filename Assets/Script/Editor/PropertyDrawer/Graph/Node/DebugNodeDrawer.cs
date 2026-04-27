@@ -36,7 +36,7 @@ namespace YBFramework.MyEditor
                 {
                     m_DebugNodeDrawer.m_Node.LogContextInput[Index] = port;
                     port.ID = m_DebugNodeDrawer.m_NodeView.NodeAsset.AllocateID();
-                    port.PortViewInfo = m_DebugNodeDrawer.m_Node.ListPortViewInfo;
+                    //port.PortViewInfo = m_DebugNodeDrawer.m_Node.ListPortViewInfo;
                     CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(portType);
                     VisualElement portView = portDrawer.DrawPortView(m_DebugNodeDrawer.m_NodeView, port);
                     m_PortView?.RemoveFromHierarchy();
@@ -98,7 +98,7 @@ namespace YBFramework.MyEditor
         private void DrawLogContextView(BasePort port, int index)
         {
             DerivedTypePopupField derivedTypePopupField = new("select type", s_TypeGroup.Item1, s_TypeGroup.Item2);
-            port.PortViewInfo = m_Node.ListPortViewInfo;
+            //port.PortViewInfo = m_Node.ListPortViewInfo;
             Type valueType = port.GetType().GetGenericArguments()[0];
             derivedTypePopupField.Initialize(valueType);
             CommonPortDrawer portDrawer = (CommonPortDrawer)DrawerManager.Allocate(port.GetType());

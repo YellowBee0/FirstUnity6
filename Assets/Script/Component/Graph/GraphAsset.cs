@@ -16,6 +16,11 @@ namespace YBFramework.Component
         {
             return m_NodeAssets;
         }
+
+        public IEnumerable<NodeAsset> NewGetNodeAssets()
+        {
+            return m_NodeAssets;
+        }
 #if UNITY_EDITOR
         [SerializeField] private GraphType m_GraphType = GraphType.Test1;
 

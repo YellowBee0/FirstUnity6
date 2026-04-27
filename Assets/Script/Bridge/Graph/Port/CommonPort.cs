@@ -54,7 +54,7 @@ namespace YBFramework.Component
 
         public void CheckConnectValid(IReadOnlyList<BaseNode> nodes)
         {
-            if (PortViewInfo.Capacity == Port.Capacity.Single)
+            if (m_Capacity == Port.Capacity.Single)
             {
                 if (ConnectedCount > 1)
                 {

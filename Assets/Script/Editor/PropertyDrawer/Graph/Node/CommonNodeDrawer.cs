@@ -16,7 +16,7 @@ namespace YBFramework.MyEditor
                 {
                     VisualElement element = portDrawer.DrawPortView(nodeView, portDrawTarget);
                     element.CommonBorder();
-                    if (portDrawTarget.PortViewInfo.Direction == Direction.Input)
+                    if (portDrawTarget.GetDirection() == Direction.Input)
                     {
                         nodeView.inputContainer.Add(element);
                     }

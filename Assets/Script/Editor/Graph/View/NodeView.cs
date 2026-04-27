@@ -24,7 +24,7 @@ namespace YBFramework.MyEditor
             title = nodeAsset.name;
             SetPosition(new Rect(nodeAsset.GetPosition(), Vector2.zero));
             BaseNode baseNode = nodeAsset.GetNode();
-            baseNode.InitNodeInfo();
+            baseNode.InitNodeViewInfo();
             //TODO:这一部分可能需要写成一个函数
             NodeDrawer = (CommonNodeDrawer)DrawerManager.Allocate(baseNode.GetType());
             NodeDrawer.DrawNodeView(this, baseNode);

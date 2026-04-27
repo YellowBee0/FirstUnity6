@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 #if DEBUG
 using YBFramework.MyEditor;
@@ -71,7 +72,7 @@ namespace YBFramework.Component
                 {
                     NodeID = nodeID,
                     PortID = other.ID,
-                    IsExplicitCast = isExplicitCast,
+                    IsExplicitCast = isExplicitCast
                 };
                 ConnectedCount++;
                 other.ConnectedCount++;
@@ -92,6 +93,13 @@ namespace YBFramework.Component
                     return;
                 }
             }
+        }
+
+        public override void InitPortViewInfo(string name, string fieldName, Direction direction, Port.Capacity capacity, Color color)
+        {
+            direction = Direction.Output;
+            color = Color.red;
+            base.InitPortViewInfo(name, fieldName, direction, capacity, color);
         }
 #endif
     }

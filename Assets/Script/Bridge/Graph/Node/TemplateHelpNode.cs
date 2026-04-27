@@ -27,9 +27,9 @@ namespace YBFramework.Component
             return null;
         }
 
-        public override void InitNodeInfo()
+        public override void InitNodeViewInfo()
         {
-            m_Port.PortViewInfo = new PortViewInfo("输入端口", Direction.Input, Port.Capacity.Multi, Color.green);
+            m_Port.InitPortViewInfo("输入端口", nameof(m_Port), Direction.Input, Port.Capacity.Multi, Color.green);
         }
     }
 }

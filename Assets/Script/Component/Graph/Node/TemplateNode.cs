@@ -41,7 +41,7 @@ namespace YBFramework.Component
             return null;
         }
 
-        public override void InitNodeInfo()
+        public override void InitNodeViewInfo()
         {
             throw new NotImplementedException();
         }

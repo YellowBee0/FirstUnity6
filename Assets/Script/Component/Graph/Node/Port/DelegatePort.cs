@@ -24,7 +24,7 @@ namespace YBFramework.Component
 
         public void CheckConnectValid(IReadOnlyList<BaseNode> nodes)
         {
-            if (PortViewInfo.Capacity == Port.Capacity.Single && ConnectedCount > 1)
+            if (m_Capacity == Port.Capacity.Single && ConnectedCount > 1)
             {
                 Debug.LogError($"port id {ID} is single connect,but connected multi count");
                 return;

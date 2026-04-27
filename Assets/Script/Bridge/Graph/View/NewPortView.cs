@@ -60,15 +60,13 @@ namespace YBFramework.MyEditor
                 }
             }
         }*/
+        
+        public readonly BasePort BindPort;
 
-        public static readonly NewPortView Empty = null;
-
-        public readonly BasePort Port;
-
-        public NewPortView(BasePort port, string name, Direction direction, Capacity capacity, Color color) : base(Orientation.Horizontal, direction, capacity, null)
+        public NewPortView(BasePort bindPort, string name, Direction direction, Capacity capacity, Color color) : base(Orientation.Horizontal, direction, capacity, null)
         {
-            Port = port;
-            tooltip = port.GetConnectTip();
+            BindPort = bindPort;
+            tooltip = bindPort.GetConnectTip();
             portName = name;
             portColor = color;
             //m_EdgeConnector = new EdgeConnector<Edge>(new EdgeConnectorListener());

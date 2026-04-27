@@ -64,9 +64,9 @@ namespace YBFramework.Component
             return index == 0 ? m_LogicInput : null;
         }
 
-        public override void InitNodeInfo()
+        public override void InitNodeViewInfo()
         {
-            m_LogicInput.PortViewInfo = new PortViewInfo("输入", Direction.Input, Port.Capacity.Multi, Color.red);
+            m_LogicInput.InitPortViewInfo("输入", nameof(m_LogicInput), Direction.Input, Port.Capacity.Multi, Color.red);
             LogListName = "打印内容";
             ListPortViewInfo = new PortViewInfo("日志", Direction.Input, Port.Capacity.Single, Color.blue);
         }

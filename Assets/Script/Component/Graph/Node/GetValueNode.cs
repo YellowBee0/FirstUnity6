@@ -59,10 +59,10 @@ namespace YBFramework.Component
             return node;
         }
 
-        public override void InitNodeInfo()
+        public override void InitNodeViewInfo()
         {
-            m_IntOutput.PortViewInfo = new PortViewInfo("int值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
-            m_StringOutput.PortViewInfo = new PortViewInfo("string值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
+            m_IntOutput.InitPortViewInfo("int值输出", nameof(m_IntOutput), Direction.Output, Port.Capacity.Multi, Color.blue);
+            m_StringOutput.InitPortViewInfo("string值输出", nameof(m_StringOutput), Direction.Output, Port.Capacity.Multi, Color.blue);
         }
     }
 }

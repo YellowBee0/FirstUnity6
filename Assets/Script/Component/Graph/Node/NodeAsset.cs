@@ -1,6 +1,7 @@
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using YBFramework.MyEditor;
 #endif
 
 namespace YBFramework.Component
@@ -17,6 +18,16 @@ namespace YBFramework.Component
         [SerializeField] private Vector2 m_Position;
 
         [SerializeField] private int m_ID;
+
+        public void CreateNodeView()
+        {
+            NewNodeView nodeView = new()
+            {
+                name = name
+            };
+            nodeView.SetPosition(new Rect(m_Position, Vector2.zero));
+            m_Node.FillNodeView(nodeView);
+        }
 
         public BaseNode GetNode()
         {

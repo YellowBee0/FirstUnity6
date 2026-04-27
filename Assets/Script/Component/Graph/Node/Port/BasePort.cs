@@ -1,6 +1,9 @@
 using System;
 #if UNITY_EDITOR
 using System.Text;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UIElements;
 using YBFramework.MyEditor;
 #endif
 
@@ -25,8 +28,40 @@ namespace YBFramework.Component
 
         public PortViewInfo PortViewInfo;
 
-        public abstract string GetConnectTip();
+        private string m_Name;
         
+        private Direction m_Direction;
+        
+        private Port.Capacity m_Capacity;
+
+        private Color m_Color;
+
+        public string GetName()
+        {
+            return m_Name;
+        }
+
+        public Direction GetDirection()
+        {
+            return m_Direction;
+        }
+
+        public Port.Capacity GetCapacity()
+        {
+            return m_Capacity;
+        }
+
+        public Color GetColor()
+        {
+            return m_Color;
+        }
+        
+        public abstract string GetConnectTip();
+
+        public virtual VisualElement FillPortView(NewPortView portView)
+        {
+            throw new NotImplementedException();
+        }
 #endif
     }
 }

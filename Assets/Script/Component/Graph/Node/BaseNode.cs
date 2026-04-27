@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.UIElements;
+using YBFramework.MyEditor;
 
 namespace YBFramework.Component
 {
@@ -138,6 +141,24 @@ namespace YBFramework.Component
         }
 
         public abstract void InitNodeInfo();
+
+        public virtual void FillNodeView(NewNodeView nodeView)
+        {
+            foreach (BasePort port in GetPortEnumerable())
+            {
+                Direction direction = port.GetDirection();
+                NewPortView portView = new(port, port.GetName(), direction, port.GetCapacity(), port.GetColor());
+                VisualElement portContainer = port.FillPortView(portView);
+                if (direction == Direction.Output)
+                {
+                    nodeView.inputContainer.Add(portContainer);
+                }
+                else
+                {
+                    nodeView.outputContainer.Add(portContainer);
+                }
+            }
+        }
 #endif
     }
 }

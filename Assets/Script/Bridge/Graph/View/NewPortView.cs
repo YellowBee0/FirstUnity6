@@ -6,9 +6,9 @@ using YBFramework.Component;
 
 namespace YBFramework.MyEditor
 {
-    public sealed class PortView : Port
+    public sealed class NewPortView : Port
     {
-        private sealed class EdgeConnectorListener : IEdgeConnectorListener
+        /*private sealed class EdgeConnectorListener : IEdgeConnectorListener
         {
             public void OnDropOutsidePort(Edge edge, Vector2 position)
             {
@@ -22,11 +22,13 @@ namespace YBFramework.MyEditor
                     if (input.Port is IPortConnectionSource inputConnectionSource && inputConnectionSource.CanConnect(output.Port))
                     {
                         inputConnectionSource.Connect(output.NodeView.NodeAsset.GetNodeID(), output.Port);
+                        input.NodeView.NodeAsset.SetSelfDirty();
                         isConnected = true;
                     }
                     else if (output.Port is IPortConnectionSource outputConnectionSource && outputConnectionSource.CanConnect(input.Port))
                     {
                         outputConnectionSource.Connect(input.NodeView.NodeAsset.GetNodeID(), input.Port);
+                        output.NodeView.NodeAsset.SetSelfDirty();
                         isConnected = true;
                     }
                     if (isConnected)
@@ -57,17 +59,19 @@ namespace YBFramework.MyEditor
                     }
                 }
             }
-        }
+        }*/
 
-        private readonly BasePort Port;
+        public static readonly NewPortView Empty = null;
 
-        public PortView(BasePort port, string name, Direction direction, Capacity capacity, Color color) : base(Orientation.Horizontal, direction, capacity, null)
+        public readonly BasePort Port;
+
+        public NewPortView(BasePort port, string name, Direction direction, Capacity capacity, Color color) : base(Orientation.Horizontal, direction, capacity, null)
         {
             Port = port;
             tooltip = port.GetConnectTip();
             portName = name;
             portColor = color;
-            m_EdgeConnector = new EdgeConnector<Edge>(new EdgeConnectorListener());
+            //m_EdgeConnector = new EdgeConnector<Edge>(new EdgeConnectorListener());
             this.AddManipulator(m_EdgeConnector);
         }
     }

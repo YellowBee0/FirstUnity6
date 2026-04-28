@@ -60,10 +60,10 @@ namespace YBFramework.Component
 #if UNITY_EDITOR
         public override void InitNodeViewInfo()
         {
-            m_StringInput.InitPortViewInfo("字符串输入", nameof(m_StringInput), Direction.Input, Port.Capacity.Single, Color.blue);
-            m_LogicInput.InitPortViewInfo("逻辑输入", nameof(m_LogicInput), Direction.Input, Port.Capacity.Multi, Color.red);
-            m_LogicOutput.InitPortViewInfo("逻辑输出", nameof(m_LogicOutput), Direction.Output, Port.Capacity.Multi, Color.red);
-            m_ValueOutput.InitPortViewInfo("int值输出", nameof(m_ValueOutput), Direction.Output, Port.Capacity.Multi, Color.blue);
+            m_StringInput.InitPortViewInfo(nameof(m_StringInput), "字符串输入", Direction.Input, Port.Capacity.Single, Color.blue);
+            m_LogicInput.InitPortViewInfo(nameof(m_LogicInput), "逻辑输入", Direction.Input, Port.Capacity.Multi, Color.red);
+            m_LogicOutput.InitPortViewInfo(nameof(m_LogicOutput), "逻辑输出", Direction.Output, Port.Capacity.Multi, Color.red);
+            m_ValueOutput.InitPortViewInfo(nameof(m_ValueOutput), "int值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
         }
 #endif
     }

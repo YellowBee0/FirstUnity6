@@ -23,9 +23,9 @@ namespace YBFramework.Component
             ID = from.ID;
         }
 #if UNITY_EDITOR
-        protected static readonly StringBuilder s_StrBuilder = new();
-
         public int ConnectedCount;
+
+        protected static readonly StringBuilder s_StrBuilder = new();
 
         protected string m_Name;
 
@@ -62,10 +62,10 @@ namespace YBFramework.Component
             return m_Color;
         }
 
-        public virtual void InitPortViewInfo(string name, string fieldName, Direction direction, Port.Capacity capacity, Color color)
+        public virtual void InitPortViewInfo(string fieldName, string name, Direction direction, Port.Capacity capacity, Color color)
         {
-            m_Name = name;
             m_FieldName = fieldName;
+            m_Name = name;
             m_Direction = direction;
             m_Capacity = capacity;
             m_Color = color;

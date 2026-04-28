@@ -104,12 +104,12 @@ namespace YBFramework.Component
             }
         }
 
-        public override void InitPortViewInfo(string name, string fieldName, Direction direction, Port.Capacity capacity, Color color)
+        public override void InitPortViewInfo(string fieldName, string name, Direction direction, Port.Capacity capacity, Color color)
         {
             direction = Direction.Input;
             capacity = Port.Capacity.Single;
             color = Color.blue;
-            base.InitPortViewInfo(name, fieldName, direction, capacity, color);
+            base.InitPortViewInfo(fieldName, name, direction, capacity, color);
         }
 
         public override VisualElement CreatePortContentView(SerializedProperty property, out NewPortView portView)

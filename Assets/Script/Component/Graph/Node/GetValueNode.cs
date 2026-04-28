@@ -1,7 +1,10 @@
 using System;
 using System.Reflection;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 using YBFramework.MyEditor;
 
 namespace YBFramework.Component
@@ -10,28 +13,26 @@ namespace YBFramework.Component
     [NodeMenu("Test/获取值", GraphType.Everything)]
     public sealed class GetValueNode : BaseNode
     {
-        private static readonly MethodInfo[] s_GetValueMethods =
+        private static readonly MethodInfo s_GetValueMethod = typeof(GetValueNode).GetMethod(nameof(GetIntValue), BindingFlags.Instance | BindingFlags.NonPublic);
+
+        [SerializeField] private MethodPort m_ValueOutput = new(s_GetValueMethod);
+
+        [SerializeReference] private object m_Value;
+
+#if UNITY_EDITOR
+        [SerializeField] private string m_SelectedValueType;
+
+        private PropertyField m_PropertyField;
+        
+        private SerializedProperty m_ValueProperty;
+#endif
+
+        //TODO:对于任何类型的节点，字段：object m_Value，string selectedTypeName；函数T GetValue<T>；MethodPort运行时获取GetValue的MethodInfo，
+        //再通过MakerGenericMethod构造出准确的MethodInfo
+
+        private T GetIntValue<T>()
         {
-            typeof(GetValueNode).GetMethod(nameof(GetIntValue), BindingFlags.Instance | BindingFlags.NonPublic),
-            typeof(GetValueNode).GetMethod(nameof(GetStringValue), BindingFlags.Instance | BindingFlags.NonPublic)
-        };
-
-        [SerializeField] private MethodPort m_IntOutput = new(s_GetValueMethods[0]);
-
-        [SerializeField] private MethodPort m_StringOutput = new(s_GetValueMethods[1]);
-
-        [SerializeField] private int m_IntValue;
-
-        [SerializeField] private string m_StringValue;
-
-        private int GetIntValue()
-        {
-            return m_IntValue;
-        }
-
-        private string GetStringValue()
-        {
-            return m_StringValue;
+            return (T)m_Value;
         }
 
         protected override BasePort PortIterator(int index)
@@ -39,9 +40,7 @@ namespace YBFramework.Component
             switch (index)
             {
                 case 0:
-                    return m_IntOutput;
-                case 1:
-                    return m_StringOutput;
+                    return m_ValueOutput;
                 default:
                     return null;
             }
@@ -52,8 +51,6 @@ namespace YBFramework.Component
             GetValueNode node = new()
             {
                 ID = ID,
-                m_IntValue = m_IntValue,
-                m_StringValue = m_StringValue
             };
             CopyPort(this, node);
             return node;
@@ -61,8 +58,28 @@ namespace YBFramework.Component
 
         public override void InitNodeViewInfo()
         {
-            m_IntOutput.InitPortViewInfo("int值输出", nameof(m_IntOutput), Direction.Output, Port.Capacity.Multi, Color.blue);
-            m_StringOutput.InitPortViewInfo("string值输出", nameof(m_StringOutput), Direction.Output, Port.Capacity.Multi, Color.blue);
+            m_ValueOutput.InitPortViewInfo(nameof(m_ValueOutput), "值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
+        }
+
+        public override void FillNodeContentView(SerializedProperty property, NewNodeView nodeView)
+        {
+            base.FillNodeContentView(property, nodeView);
+            PopupField<Type> popupField = new();
+            popupField.RegisterValueChangedCallback(OnSelectedTypeChanged);
+            m_ValueProperty = property.FindPropertyRelative(nameof(m_Value));
+            m_PropertyField = new PropertyField(m_ValueProperty);
+            nodeView.extensionContainer.Add(m_PropertyField);
+        }
+
+        private void OnSelectedTypeChanged(ChangeEvent<Type> evt)
+        {
+            m_SelectedValueType = evt.newValue.Name;
+            Type newType = Type.GetType(m_SelectedValueType);
+            if (newType != null)
+            {
+                m_ValueOutput.SetMethodInfo(s_GetValueMethod.MakeGenericMethod(newType));
+                m_ValueProperty.managedReferenceValue = Activator.CreateInstance(newType);
+            }
         }
     }
 }

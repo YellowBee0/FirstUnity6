@@ -29,7 +29,7 @@ namespace YBFramework.Component
 
         public override void InitNodeViewInfo()
         {
-            m_Port.InitPortViewInfo("输入端口", nameof(m_Port), Direction.Input, Port.Capacity.Multi, Color.green);
+            m_Port.InitPortViewInfo(nameof(m_Port), "输入端口", Direction.Input, Port.Capacity.Multi, Color.green);
         }
     }
 }

@@ -95,11 +95,11 @@ namespace YBFramework.Component
             }
         }
 
-        public override void InitPortViewInfo(string name, string fieldName, Direction direction, Port.Capacity capacity, Color color)
+        public override void InitPortViewInfo(string fieldName, string name, Direction direction, Port.Capacity capacity, Color color)
         {
             direction = Direction.Output;
             color = Color.red;
-            base.InitPortViewInfo(name, fieldName, direction, capacity, color);
+            base.InitPortViewInfo(fieldName, name, direction, capacity, color);
         }
 #endif
     }

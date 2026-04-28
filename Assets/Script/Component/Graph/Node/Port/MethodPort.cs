@@ -26,6 +26,15 @@ namespace YBFramework.Component
             }
         }
 
+        public void SetMethodInfo(MethodInfo methodInfo)
+        {
+            m_MethodInfo = methodInfo;
+#if UNITY_EDITOR
+            m_ParameterInfos = methodInfo.GetParameters();
+            m_ReturnType = m_MethodInfo.ReturnType;
+#endif
+        }
+
         public MethodInfo GetMethodInfo()
         {
             return m_MethodInfo;

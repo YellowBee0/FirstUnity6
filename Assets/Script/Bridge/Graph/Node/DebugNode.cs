@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 using YBFramework.MyEditor;
 
 namespace YBFramework.Component
@@ -13,8 +15,6 @@ namespace YBFramework.Component
     public sealed class DebugNode : BaseNode
     {
         private static readonly MethodInfo s_LogMethodInfo = typeof(DebugNode).GetMethod(nameof(Log), BindingFlags.Instance | BindingFlags.Public);
-
-        public PortViewInfo ListPortViewInfo;
 
         [SerializeField] private MethodPort m_LogicInput = new(s_LogMethodInfo);
 
@@ -64,11 +64,48 @@ namespace YBFramework.Component
             return index == 0 ? m_LogicInput : null;
         }
 
+        private static readonly List<Type> s_Types = new() { typeof(object), typeof(int) };
+
+        private SerializedProperty m_ListProperty;
+
+        private NewNodeView m_NodeView;
+
+        private static VisualElement MakeItem()
+        {
+            VisualElement container = new();
+            PopupField<Type> popupField = new("选择类型", s_Types, typeof(object));
+            container.Add(popupField);
+            return container;
+        }
+
+        private void BindElement(VisualElement element, int index)
+        {
+            SerializedProperty property = m_ListProperty.GetArrayElementAtIndex(index);
+            if (property.managedReferenceValue is BasePort port)
+            {
+                element.Add(port.CreatePortContentView(property, out NewPortView portView));
+                m_NodeView.AddPortView(portView);
+            }
+        }
+
         public override void InitNodeViewInfo()
         {
-            m_LogicInput.InitPortViewInfo("输入", nameof(m_LogicInput), Direction.Input, Port.Capacity.Multi, Color.red);
-            LogListName = "打印内容";
-            ListPortViewInfo = new PortViewInfo("日志", Direction.Input, Port.Capacity.Single, Color.blue);
+            m_LogicInput.InitPortViewInfo(nameof(m_LogicInput), "输入", Direction.Input, Port.Capacity.Multi, Color.red);
+            for (int i = 0; i < LogContextInput.Count; i++)
+            {
+                LogContextInput[i].InitPortViewInfo(null, "日志输入", default, default, default);
+            }
+        }
+
+        public override void FillNodeContentView(SerializedProperty property, NewNodeView nodeView)
+        {
+            base.FillNodeContentView(property, nodeView);
+            m_ListProperty = property.FindPropertyRelative(nameof(LogContextInput));
+            ListView listView = new(LogContextInput, 20, MakeItem, BindElement)
+            {
+                headerTitle = "输出日志"
+            };
+            nodeView.inputContainer.Add(listView);
         }
     }
 }

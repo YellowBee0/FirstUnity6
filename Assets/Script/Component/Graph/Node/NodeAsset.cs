@@ -28,9 +28,11 @@ namespace YBFramework.Component
                 title = name
             };
             nodeView.SetPosition(new Rect(m_Position, Vector2.zero));
+            m_Node.InitNodeViewInfo();
             m_SerializedObject = new SerializedObject(this);
+            m_SerializedObject.Update();
             m_Node.FillNodeContentView(m_SerializedObject.FindProperty(nameof(m_Node)), nodeView);
-            graphView.Add(nodeView);
+            graphView.AddElement(nodeView);
         }
 
         public BaseNode GetNode()
@@ -41,7 +43,6 @@ namespace YBFramework.Component
         public void SetNode(BaseNode node)
         {
             m_Node = node;
-            SetSelfDirty();
         }
 
         public Vector2 GetPosition()
@@ -52,7 +53,6 @@ namespace YBFramework.Component
         public void SetPosition(Vector2 position)
         {
             m_Position = position;
-            SetSelfDirty();
         }
 
         public int AllocateID()

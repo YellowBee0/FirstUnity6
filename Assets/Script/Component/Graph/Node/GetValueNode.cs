@@ -1,11 +1,13 @@
 using System;
 using System.Reflection;
+using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
 using YBFramework.MyEditor;
+#endif
 
 namespace YBFramework.Component
 {
@@ -18,17 +20,6 @@ namespace YBFramework.Component
         [SerializeField] private MethodPort m_ValueOutput = new(s_GetValueMethod);
 
         [SerializeReference] private object m_Value;
-
-#if UNITY_EDITOR
-        [SerializeField] private string m_SelectedValueType;
-
-        private PropertyField m_PropertyField;
-        
-        private SerializedProperty m_ValueProperty;
-#endif
-
-        //TODO:对于任何类型的节点，字段：object m_Value，string selectedTypeName；函数T GetValue<T>；MethodPort运行时获取GetValue的MethodInfo，
-        //再通过MakerGenericMethod构造出准确的MethodInfo
 
         private T GetIntValue<T>()
         {
@@ -50,11 +41,18 @@ namespace YBFramework.Component
         {
             GetValueNode node = new()
             {
-                ID = ID,
+                ID = ID
             };
             CopyPort(this, node);
             return node;
         }
+
+#if UNITY_EDITOR
+        [SerializeField] private string m_SelectedValueType;
+
+        private PropertyField m_PropertyField;
+
+        private SerializedProperty m_ValueProperty;
 
         public override void InitNodeViewInfo()
         {
@@ -68,6 +66,7 @@ namespace YBFramework.Component
             popupField.RegisterValueChangedCallback(OnSelectedTypeChanged);
             m_ValueProperty = property.FindPropertyRelative(nameof(m_Value));
             m_PropertyField = new PropertyField(m_ValueProperty);
+            nodeView.extensionContainer.Add(popupField);
             nodeView.extensionContainer.Add(m_PropertyField);
         }
 
@@ -81,5 +80,6 @@ namespace YBFramework.Component
                 m_ValueProperty.managedReferenceValue = Activator.CreateInstance(newType);
             }
         }
+#endif
     }
 }

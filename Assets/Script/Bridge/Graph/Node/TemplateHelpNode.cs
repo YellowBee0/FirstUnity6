@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -33,4 +33,4 @@ namespace YBFramework.Component
         }
     }
 }
-#endif
+#endif*/

@@ -119,7 +119,11 @@ namespace YBFramework.Component
             if (valueProperty != null)
             {
                 root = new VisualElement();
-                PropertyField fieldView = new(valueProperty);
+                PropertyField fieldView = new();
+                //TODO:做一个USS资源管理器
+                fieldView.styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/USS/PropertyLabel.uss"));
+                fieldView.BindProperty(valueProperty);
+                root.Add(portView);
                 root.Add(fieldView);
             }
             return root;

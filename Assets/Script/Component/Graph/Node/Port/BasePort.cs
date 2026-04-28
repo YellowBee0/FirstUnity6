@@ -13,9 +13,6 @@ namespace YBFramework.Component
     [Serializable]
     public abstract class BasePort
     {
-#if DEBUG
-        [NonSerialized] public BaseNode Node;
-#endif
         public int ID;
 
         public virtual void Copy(BasePort from)
@@ -23,8 +20,6 @@ namespace YBFramework.Component
             ID = from.ID;
         }
 #if UNITY_EDITOR
-        public int ConnectedCount;
-
         protected static readonly StringBuilder s_StrBuilder = new();
 
         protected string m_Name;
@@ -36,6 +31,10 @@ namespace YBFramework.Component
         protected Port.Capacity m_Capacity;
 
         protected Color m_Color;
+        
+        [NonSerialized] public BaseNode Node;
+
+        public int ConnectedCount;
 
         public string GetName()
         {

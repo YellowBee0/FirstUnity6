@@ -85,6 +85,10 @@ namespace YBFramework.Component
             return null;
         }
 
+        public virtual void InitPortInfo()
+        {
+        }
+        
         protected abstract BasePort PortIterator(int index);
 
         public abstract BaseNode Clone();
@@ -152,7 +156,7 @@ namespace YBFramework.Component
                 {
                     VisualElement portContentView = port.CreatePortContentView(portProperty, out NewPortView portView);
                     nodeView.AddPortView(portView);
-                    if (port.GetDirection() == Direction.Output)
+                    if (port.GetDirection() == Direction.Input)
                     {
                         nodeView.inputContainer.Add(portContentView);
                     }

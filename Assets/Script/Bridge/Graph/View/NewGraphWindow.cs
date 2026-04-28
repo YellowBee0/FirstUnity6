@@ -5,16 +5,16 @@ using YBFramework.Component;
 
 namespace YBFramework.MyEditor
 {
-    public partial class GraphWindow : EditorWindow
+    public partial class NewGraphWindow : EditorWindow
     {
-        private static GraphWindow s_MainWindow;
+        private static NewGraphWindow s_MainWindow;
 
-        //[MenuItem("Window/Graph")]
+        [MenuItem("Window/Graph")]
         public static void Open()
         {
             if (s_MainWindow == null)
             {
-                s_MainWindow = GetWindow<GraphWindow>();
+                s_MainWindow = GetWindow<NewGraphWindow>();
             }
             else
             {
@@ -22,7 +22,7 @@ namespace YBFramework.MyEditor
             }
         }
 
-        public static GraphWindow GetMainGraphWindow()
+        public static NewGraphWindow GetMainGraphWindow()
         {
             return s_MainWindow;
         }

@@ -57,9 +57,16 @@ namespace YBFramework.Component
             CopyPort(this, node);
             return node;
         }
+
+        public override void InitPortInfo()
+        {
+            m_LogicInput.SetMethodInfo(s_MethodInfo);
+            m_ValueOutput.SetMethodInfo(s_MethodInfo1);
+        }
 #if UNITY_EDITOR
         public override void InitNodeViewInfo()
         {
+            InitPortInfo();
             m_StringInput.InitPortViewInfo(nameof(m_StringInput), "字符串输入", Direction.Input, Port.Capacity.Single, Color.blue);
             m_LogicInput.InitPortViewInfo(nameof(m_LogicInput), "逻辑输入", Direction.Input, Port.Capacity.Multi, Color.red);
             m_LogicOutput.InitPortViewInfo(nameof(m_LogicOutput), "逻辑输出", Direction.Output, Port.Capacity.Multi, Color.red);

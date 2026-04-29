@@ -64,7 +64,7 @@ namespace YBFramework.Component
             return index == 0 ? m_LogicInput : null;
         }
 
-        private static readonly List<Type> s_Types = new() { typeof(object), typeof(int) };
+        public static readonly List<Type> s_Types = new() { typeof(object), typeof(int), typeof(string) };
 
         private SerializedProperty m_ListProperty;
 
@@ -103,7 +103,10 @@ namespace YBFramework.Component
             m_ListProperty = property.FindPropertyRelative(nameof(LogContextInput));
             ListView listView = new(LogContextInput, 20, MakeItem, BindElement)
             {
-                headerTitle = "输出日志"
+                headerTitle = "输出日志",
+                showFoldoutHeader = true,
+                showBorder = true,
+                showAddRemoveFooter = true,
             };
             nodeView.inputContainer.Add(listView);
         }

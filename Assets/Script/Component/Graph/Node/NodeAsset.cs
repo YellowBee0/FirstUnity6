@@ -1,3 +1,4 @@
+using UnityEditor.UIElements;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,6 +11,8 @@ namespace YBFramework.Component
     {
         [SerializeReference] private BaseNode m_Node;
 
+        [SerializeReference] private object m_Test="Test";
+        
         public int GetNodeID()
         {
             return m_Node.ID;
@@ -30,7 +33,6 @@ namespace YBFramework.Component
             nodeView.SetPosition(new Rect(m_Position, Vector2.zero));
             m_Node.InitNodeViewInfo();
             m_SerializedObject = new SerializedObject(this);
-            m_SerializedObject.Update();
             m_Node.FillNodeContentView(m_SerializedObject.FindProperty(nameof(m_Node)), nodeView);
             graphView.AddElement(nodeView);
         }
@@ -53,6 +55,15 @@ namespace YBFramework.Component
         public void SetPosition(Vector2 position)
         {
             m_Position = position;
+        }
+
+        public void SaveData()
+        {
+            if (m_SerializedObject != null)
+            {
+                m_SerializedObject.Update();
+                m_SerializedObject.ApplyModifiedProperties();
+            }
         }
 
         public int AllocateID()

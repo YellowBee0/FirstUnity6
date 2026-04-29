@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-#endif
-#if DEBUG
 using YBFramework.MyEditor;
 #endif
 
@@ -120,8 +118,7 @@ namespace YBFramework.Component
             {
                 root = new VisualElement();
                 PropertyField fieldView = new();
-                //TODO:做一个USS资源管理器
-                fieldView.styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/USS/PropertyLabel.uss"));
+                fieldView.styleSheets.Add(StyleSheetManager.LoadStylesheet("PropertyLabel"));
                 fieldView.BindProperty(valueProperty);
                 root.Add(portView);
                 root.Add(fieldView);

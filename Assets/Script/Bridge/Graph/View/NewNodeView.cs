@@ -27,6 +27,7 @@ namespace YBFramework.MyEditor
         public void AddPortView(NewPortView portView)
         {
             m_PortViews.Add(portView);
+            portView.NodeView = this;
             m_GraphView.AddPortView(portView);
         }
 
@@ -34,6 +35,7 @@ namespace YBFramework.MyEditor
         {
             if (m_PortViews.Remove(portView))
             {
+                portView.NodeView = null;
                 m_GraphView.RemovePortView(portView);
             }
         }

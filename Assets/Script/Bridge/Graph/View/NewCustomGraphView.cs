@@ -36,8 +36,7 @@ namespace YBFramework.MyEditor
                 nodeAsset.CreateNodeView(this);
             }
         }
-
-
+        
         public void AddPortView(NewPortView portView)
         {
             if (portView.direction == Direction.Input)
@@ -64,7 +63,7 @@ namespace YBFramework.MyEditor
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
-            return startPort.direction == Direction.Input ? m_InputPortViews : m_OutputPortViews;
+            return startPort.direction == Direction.Input ? m_OutputPortViews : m_InputPortViews;
         }
     }
 }

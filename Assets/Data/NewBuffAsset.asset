@@ -15,14 +15,14 @@ MonoBehaviour:
   m_BuffName: 
   m_BuffType: 0
   m_RepeatAddProcess:
-    rid: -2
+    rid: 3590359127740908113
   m_Components:
   - rid: 3590358855316668479
+  - rid: 3590359127740907586
+  - rid: 3590359127740907755
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 3590358855316668479
       type: {class: BuffLayerTime, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
@@ -30,3 +30,35 @@ MonoBehaviour:
         m_ModifyLayer: 0
         m_RemoveBuffOnMinLayer: 0
         m_RemoveBuffOnMaxLayer: 0
+    - rid: 3590359127740907586
+      type: {class: ModifyProperty, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Executor:
+          rid: 3590359127740907587
+        m_PropertyType: 0
+        m_ConstraintType: 0
+        m_ModifyValue: 0
+    - rid: 3590359127740907587
+      type: {class: TimeExecutor, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_TotalTime: 0
+        m_IsLoop: 0
+    - rid: 3590359127740907755
+      type: {class: ModifyProperty, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_Executor:
+          rid: 3590359127740908087
+        m_PropertyType: 1
+        m_ConstraintType: 1
+        m_ModifyValue: 3.06
+    - rid: 3590359127740908087
+      type: {class: TimeExecutor, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_TotalTime: 0
+        m_IsLoop: 0
+    - rid: 3590359127740908113
+      type: {class: ModifyLayer, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        m_RepeatAddCondition: 0
+        m_IsJudgingByCaster: 0
+        m_ModifyLayerCount: 0

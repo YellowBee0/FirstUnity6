@@ -60,11 +60,14 @@ namespace YBFramework.Component
 #if UNITY_EDITOR
         public static ConnectedPortData FindConnectedPortData(IEnumerable<ConnectedPortData> collection, int nodeID, int portID)
         {
-            foreach (ConnectedPortData connectedPortData in collection)
+            if (collection != null)
             {
-                if (connectedPortData.NodeID == nodeID && connectedPortData.PortID == portID)
+                foreach (ConnectedPortData connectedPortData in collection)
                 {
-                    return connectedPortData;
+                    if (connectedPortData.NodeID == nodeID && connectedPortData.PortID == portID)
+                    {
+                        return connectedPortData;
+                    }
                 }
             }
             return null;

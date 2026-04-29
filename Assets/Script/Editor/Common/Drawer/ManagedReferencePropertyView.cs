@@ -39,7 +39,7 @@ namespace YBFramework.MyEditor.Common
                 newValue = Activator.CreateInstance(newType);
             }
             m_BindProperty.managedReferenceValue = newValue;
-            m_PropertyField.BindProperty(m_BindProperty);
+            //m_PropertyField.BindProperty(m_BindProperty);
             m_BindProperty.serializedObject.ApplyModifiedProperties();
         }
 

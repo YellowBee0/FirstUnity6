@@ -122,6 +122,7 @@ namespace YBFramework.MyEditor
                     basePort.ID = nodeAsset.AllocateID();
                 }
                 nodeAsset.CreateNodeView(m_SelectedGraphView);
+                AssetDatabase.AddObjectToAsset(nodeAsset, m_SelectedGraphView.m_BindGraphAsset);
             }
         }
     }

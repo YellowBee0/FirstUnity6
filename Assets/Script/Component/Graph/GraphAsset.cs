@@ -34,8 +34,8 @@ namespace YBFramework.Component
         public void AddNodeAsset(NodeAsset nodeAsset)
         {
             m_NodeAssets.Add(nodeAsset);
-            EditorUtility.SetDirty(this);
             AssetDatabase.AddObjectToAsset(nodeAsset, this);
+            EditorUtility.SetDirty(this);
             AssetDatabase.Refresh();
         }
 
@@ -43,8 +43,8 @@ namespace YBFramework.Component
         {
             if (m_NodeAssets.Remove(nodeAsset))
             {
-                EditorUtility.SetDirty(this);
                 AssetDatabase.RemoveObjectFromAsset(nodeAsset);
+                EditorUtility.SetDirty(this);
                 AssetDatabase.Refresh();
             }
         }

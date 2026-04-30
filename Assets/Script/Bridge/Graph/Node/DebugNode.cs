@@ -16,12 +16,17 @@ namespace YBFramework.Component
     {
         private static readonly MethodInfo s_LogMethodInfo = typeof(DebugNode).GetMethod(nameof(Log), BindingFlags.Instance | BindingFlags.Public);
 
-        [SerializeField] private MethodPort m_LogicInput = new(s_LogMethodInfo);
+        [SerializeField] private MethodPort m_LogicInput = new();
 
         [SerializeReference] public List<DelegatePort> LogContextInput = new();
 
-        [NonSerialized] public string LogListName;
+        //TODO:这个需要提到外面去
+        public static readonly List<Type> s_Types = new() { typeof(object), typeof(int), typeof(string), typeof(Vector2), typeof(Color), typeof(AnimationClip) };
 
+        private SerializedProperty m_ListProperty;
+
+        private NodeView m_NodeView;
+        
         public void Log()
         {
             for (int i = 0; i < LogContextInput.Count; i++)
@@ -64,12 +69,34 @@ namespace YBFramework.Component
             return index == 0 ? m_LogicInput : null;
         }
 
-        public static readonly List<Type> s_Types = new() { typeof(object), typeof(int), typeof(string) };
+        public override void InitPortInfo()
+        {
+            m_LogicInput.SetMethodInfo(s_LogMethodInfo);
+        }
 
-        private SerializedProperty m_ListProperty;
+        public override void InitNodeViewInfo()
+        {
+            m_LogicInput.InitPortViewInfo(nameof(m_LogicInput), "输入", Direction.Input, Port.Capacity.Multi, Color.red);
+            for (int i = 0; i < LogContextInput.Count; i++)
+            {
+                LogContextInput[i].InitPortViewInfo(null, "日志输入", default, default, default);
+            }
+        }
 
-        private NewNodeView m_NodeView;
-
+        public override void FillNodeContentView(SerializedProperty property, NodeView nodeView)
+        {
+            base.FillNodeContentView(property, nodeView);
+            m_ListProperty = property.FindPropertyRelative(nameof(LogContextInput));
+            ListView listView = new(LogContextInput, 20, MakeItem, BindElement)
+            {
+                headerTitle = "输出日志",
+                showFoldoutHeader = true,
+                showBorder = true,
+                showAddRemoveFooter = true,
+            };
+            nodeView.inputContainer.Add(listView);
+        }
+        
         private static VisualElement MakeItem()
         {
             VisualElement container = new();
@@ -83,32 +110,9 @@ namespace YBFramework.Component
             SerializedProperty property = m_ListProperty.GetArrayElementAtIndex(index);
             if (property.managedReferenceValue is BasePort port)
             {
-                element.Add(port.CreatePortContentView(property, out NewPortView portView));
+                element.Add(port.CreatePortContentView(property, out PortView portView));
                 m_NodeView.AddPortView(portView);
             }
-        }
-
-        public override void InitNodeViewInfo()
-        {
-            m_LogicInput.InitPortViewInfo(nameof(m_LogicInput), "输入", Direction.Input, Port.Capacity.Multi, Color.red);
-            for (int i = 0; i < LogContextInput.Count; i++)
-            {
-                LogContextInput[i].InitPortViewInfo(null, "日志输入", default, default, default);
-            }
-        }
-
-        public override void FillNodeContentView(SerializedProperty property, NewNodeView nodeView)
-        {
-            base.FillNodeContentView(property, nodeView);
-            m_ListProperty = property.FindPropertyRelative(nameof(LogContextInput));
-            ListView listView = new(LogContextInput, 20, MakeItem, BindElement)
-            {
-                headerTitle = "输出日志",
-                showFoldoutHeader = true,
-                showBorder = true,
-                showAddRemoveFooter = true,
-            };
-            nodeView.inputContainer.Add(listView);
         }
     }
 }

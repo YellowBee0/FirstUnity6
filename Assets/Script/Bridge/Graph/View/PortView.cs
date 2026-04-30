@@ -1,4 +1,5 @@
-﻿using UnityEditor.Experimental.GraphView;
+#if UNITY_EDITOR
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using YBFramework.Component;
@@ -18,27 +19,31 @@ namespace YBFramework.MyEditor
                 if (graphView is CustomGraphView customGraphView && edge.input is PortView input && edge.output is PortView output)
                 {
                     bool isConnected = false;
-                    if (input.Port is IPortConnectionSource inputConnectionSource && inputConnectionSource.CanConnect(output.Port))
+                    NodeAsset nodeAsset = null;
+                    if (input.BindPort is IPortConnectionSource inputConnectionSource && inputConnectionSource.CanConnect(output.BindPort))
                     {
-                        inputConnectionSource.Connect(output.NodeView.NodeAsset.GetNodeID(), output.Port);
-                        input.NodeView.NodeAsset.SetSelfDirty();
+                        nodeAsset = output.NodeView.BindNodeAsset;
+                        inputConnectionSource.Connect(nodeAsset.GetNodeID(), output.BindPort);
                         isConnected = true;
                     }
-                    else if (output.Port is IPortConnectionSource outputConnectionSource && outputConnectionSource.CanConnect(input.Port))
+                    else if (output.BindPort is IPortConnectionSource outputConnectionSource && outputConnectionSource.CanConnect(input.BindPort))
                     {
-                        outputConnectionSource.Connect(input.NodeView.NodeAsset.GetNodeID(), input.Port);
-                        output.NodeView.NodeAsset.SetSelfDirty();
+                        nodeAsset = input.NodeView.BindNodeAsset;
+                        outputConnectionSource.Connect(nodeAsset.GetNodeID(), input.BindPort);
                         isConnected = true;
                     }
                     if (isConnected)
                     {
+                        nodeAsset.SaveData();
                         if (input.capacity == Capacity.Single)
                         {
                             foreach (Edge connection in input.connections)
                             {
                                 if (connection != edge)
                                 {
-                                    customGraphView.RemoveEdge(connection);
+                                    connection.input.Disconnect(connection);
+                                    connection.output.Disconnect(connection);
+                                    customGraphView.RemoveElement(connection);
                                     break;
                                 }
                             }
@@ -49,34 +54,34 @@ namespace YBFramework.MyEditor
                             {
                                 if (connection != edge)
                                 {
-                                    customGraphView.RemoveEdge(connection);
+                                    connection.input.Disconnect(connection);
+                                    connection.output.Disconnect(connection);
+                                    customGraphView.RemoveElement(connection);
                                     break;
                                 }
                             }
                         }
-                        customGraphView.AddEdge(edge);
+                        edge.input.Connect(edge);
+                        edge.output.Connect(edge);
+                        customGraphView.AddElement(edge);
                     }
                 }
             }
         }
 
-        public readonly NodeView NodeView;
+        public NodeView NodeView;
 
-        public readonly BasePort Port;
+        public readonly BasePort BindPort;
 
-        public readonly CommonPortDrawer PortDrawer;
-
-        public PortView(NodeView nodeView, BasePort port, string name, Direction direction, Capacity capacity, Color color, CommonPortDrawer portDrawer)
-            : base(Orientation.Horizontal, direction, capacity, null)
+        public PortView(BasePort bindPort, string name, Direction direction, Capacity capacity, Color color) : base(Orientation.Horizontal, direction, capacity, null)
         {
-            NodeView = nodeView;
-            Port = port;
-            tooltip = port.GetConnectTip();
+            BindPort = bindPort;
+            tooltip = bindPort.GetConnectTip();
             portName = name;
             portColor = color;
-            PortDrawer = portDrawer;
             m_EdgeConnector = new EdgeConnector<Edge>(new EdgeConnectorListener());
             this.AddManipulator(m_EdgeConnector);
         }
     }
 }
+#endif

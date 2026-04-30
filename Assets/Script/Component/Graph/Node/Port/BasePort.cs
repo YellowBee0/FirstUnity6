@@ -70,9 +70,9 @@ namespace YBFramework.Component
             m_Color = color;
         }
 
-        public virtual VisualElement CreatePortContentView(SerializedProperty property, out NewPortView portView)
+        public virtual VisualElement CreatePortContentView(SerializedProperty property, out PortView portView)
         {
-            portView = new NewPortView(this, m_Name, m_Direction, m_Capacity, m_Color);
+            portView = new PortView(this, m_Name, m_Direction, m_Capacity, m_Color);
             return portView;
         }
 

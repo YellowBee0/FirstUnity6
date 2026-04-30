@@ -110,7 +110,7 @@ namespace YBFramework.Component
             base.InitPortViewInfo(fieldName, name, direction, capacity, color);
         }
 
-        public override VisualElement CreatePortContentView(SerializedProperty property, out NewPortView portView)
+        public override VisualElement CreatePortContentView(SerializedProperty property, out PortView portView)
         {
             VisualElement root = base.CreatePortContentView(property, out portView);
             SerializedProperty valueProperty = property.FindPropertyRelative(nameof(m_Value));

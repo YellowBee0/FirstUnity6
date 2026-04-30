@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -12,18 +13,28 @@ using YBFramework.MyEditor;
 namespace YBFramework.Component
 {
     [Serializable]
+#if UNITY_EDITOR
     [NodeMenu("Test/获取值", GraphType.Everything)]
+#endif
     public sealed class GetValueNode : BaseNode
     {
+        [Serializable]
+        private class ValueWrapper<T>
+        {
+            public T Value;
+        }
+
         private static readonly MethodInfo s_GetValueMethod = typeof(GetValueNode).GetMethod(nameof(GetIntValue), BindingFlags.Instance | BindingFlags.NonPublic);
 
-        [SerializeField] private MethodPort m_ValueOutput = new(s_GetValueMethod);
+        private static readonly Dictionary<Type, MethodInfo> s_GetValueMethodCache = new();
 
-        [SerializeReference] private object m_Value = new string("test");
+        [SerializeField] private MethodPort m_ValueOutput = new();
+
+        [SerializeReference] private object m_ValueWrapper;
 
         private T GetIntValue<T>()
         {
-            return (T)m_Value;
+            return ((ValueWrapper<T>)m_ValueWrapper).Value;
         }
 
         protected override BasePort PortIterator(int index)
@@ -47,31 +58,47 @@ namespace YBFramework.Component
             return node;
         }
 
+        public override void InitPortInfo()
+        {
+            if (m_ValueWrapper != null)
+            {
+                Type wrapperType = m_ValueWrapper.GetType();
+                if (!s_GetValueMethodCache.TryGetValue(wrapperType, out MethodInfo methodInfo))
+                {
+                    Type valueType = wrapperType.GetGenericArguments()[0];
+                    methodInfo = s_GetValueMethod.MakeGenericMethod(valueType);
+                    s_GetValueMethodCache.Add(wrapperType, methodInfo);
+                }
+                m_ValueOutput.SetMethodInfo(methodInfo);
+            }
+        }
 #if UNITY_EDITOR
-        [SerializeField] private string m_SelectedValueType;
-
         private PropertyField m_PropertyField;
 
         private SerializedProperty m_ValueProperty;
 
         public override void InitNodeViewInfo()
         {
+            InitPortInfo();
             m_ValueOutput.InitPortViewInfo(nameof(m_ValueOutput), "值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
         }
 
-        public override void FillNodeContentView(SerializedProperty property, NewNodeView nodeView)
+        public override void FillNodeContentView(SerializedProperty property, NodeView nodeView)
         {
-            m_ValueOutput.CreatePortContentView(null, out NewPortView portView);
+            m_ValueOutput.CreatePortContentView(null, out PortView portView);
             VisualElement container = new();
             PopupField<Type> popupField = new("选择类型", DebugNode.s_Types, typeof(object));
             popupField.styleSheets.Add(StyleSheetManager.LoadStylesheet("Label"));
             popupField.RegisterValueChangedCallback(OnSelectedTypeChanged);
             container.Add(portView);
             container.Add(popupField);
-            m_ValueProperty = property.FindPropertyRelative(nameof(m_Value));
+            m_ValueProperty = property.FindPropertyRelative(nameof(m_ValueWrapper));
             if (m_ValueProperty != null)
             {
-                m_PropertyField = new PropertyField();
+                m_PropertyField = new PropertyField
+                {
+                    label = "封装对象"
+                };
                 m_PropertyField.styleSheets.Add(StyleSheetManager.LoadStylesheet("Label"));
                 m_PropertyField.BindProperty(m_ValueProperty);
                 container.Add(m_PropertyField);
@@ -92,16 +119,10 @@ namespace YBFramework.Component
             Type newType = evt.newValue;
             if (newType != null)
             {
-                m_SelectedValueType = newType.Name;
-                object instance = newType == typeof(string) ? new string("") : Activator.CreateInstance(newType);
                 m_ValueOutput.SetMethodInfo(s_GetValueMethod.MakeGenericMethod(newType));
                 m_ValueProperty.serializedObject.Update();
-                m_ValueProperty.managedReferenceValue = instance;
+                m_ValueProperty.managedReferenceValue = Activator.CreateInstance(typeof(ValueWrapper<>).MakeGenericType(newType));
                 m_ValueProperty.serializedObject.ApplyModifiedProperties();
-            }
-            else
-            {
-                m_SelectedValueType = null;
             }
         }
 #endif

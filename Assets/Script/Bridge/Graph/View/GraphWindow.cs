@@ -9,7 +9,7 @@ namespace YBFramework.MyEditor
     {
         private static GraphWindow s_MainWindow;
 
-        //[MenuItem("Window/Graph")]
+        [MenuItem("Window/Graph")]
         public static void Open()
         {
             if (s_MainWindow == null)

@@ -5,33 +5,45 @@ using YBFramework.Component;
 
 namespace YBFramework.MyEditor
 {
-    public sealed class NewNodeView : Node
+    public sealed class NodeView : Node
     {
         public readonly NodeAsset BindNodeAsset;
 
-        private readonly NewCustomGraphView m_GraphView;
+        private readonly CustomGraphView m_GraphView;
 
-        private readonly List<NewPortView> m_PortViews = new();
+        private readonly List<PortView> m_PortViews = new();
 
-        public NewNodeView(NodeAsset bindNodeAsset, NewCustomGraphView graphView)
+        public NodeView(NodeAsset bindNodeAsset, CustomGraphView graphView)
         {
             BindNodeAsset = bindNodeAsset;
             m_GraphView = graphView;
         }
 
-        public IEnumerable<NewPortView> GetPortViews()
+        public IEnumerable<PortView> GetPortViews()
         {
             return m_PortViews;
         }
 
-        public void AddPortView(NewPortView portView)
+        public PortView GetPortView(int portID)
+        {
+            for (int i = 0; i < m_PortViews.Count; i++)
+            {
+                if (m_PortViews[i].BindPort.ID == portID)
+                {
+                    return m_PortViews[i];
+                }
+            }
+            return null;
+        }
+
+        public void AddPortView(PortView portView)
         {
             m_PortViews.Add(portView);
             portView.NodeView = this;
             m_GraphView.AddPortView(portView);
         }
 
-        public void RemovePortView(NewPortView portView)
+        public void RemovePortView(PortView portView)
         {
             if (m_PortViews.Remove(portView))
             {

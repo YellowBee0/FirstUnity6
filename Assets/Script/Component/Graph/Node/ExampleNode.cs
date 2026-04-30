@@ -12,17 +12,24 @@ namespace YBFramework.Component
     [NodeMenu("Test/Example", GraphType.Test1)]
     public sealed class ExampleNode : BaseNode
     {
-        private static readonly MethodInfo s_MethodInfo = typeof(ExampleNode).GetMethod(nameof(Add), BindingFlags.Instance | BindingFlags.NonPublic);
+        private static readonly MethodInfo s_AddMethod;
 
-        private static readonly MethodInfo s_MethodInfo1 = typeof(ExampleNode).GetMethod(nameof(GetInt), BindingFlags.Instance | BindingFlags.NonPublic);
+        private static readonly MethodInfo s_GetIntMethod;
 
         [SerializeField] private FuncPort<string> m_StringInput = new();
 
-        [SerializeField] private MethodPort m_LogicInput = new(s_MethodInfo);
+        [SerializeField] private MethodPort m_LogicInput = new();
 
-        [SerializeField] private MethodPort m_ValueOutput = new(s_MethodInfo1);
+        [SerializeField] private MethodPort m_ValueOutput = new();
 
         [SerializeField] private ActionPort m_LogicOutput = new();
+
+        static ExampleNode()
+        {
+            Type thisType = typeof(ExampleNode);
+            s_AddMethod = thisType.GetMethod(nameof(Add), BindingFlags.Instance | BindingFlags.NonPublic);
+            s_GetIntMethod = thisType.GetMethod(nameof(GetInt), BindingFlags.Instance | BindingFlags.NonPublic);
+        }
 
         private void Add()
         {
@@ -60,8 +67,8 @@ namespace YBFramework.Component
 
         public override void InitPortInfo()
         {
-            m_LogicInput.SetMethodInfo(s_MethodInfo);
-            m_ValueOutput.SetMethodInfo(s_MethodInfo1);
+            m_LogicInput.SetMethodInfo(s_AddMethod);
+            m_ValueOutput.SetMethodInfo(s_GetIntMethod);
         }
 #if UNITY_EDITOR
         public override void InitNodeViewInfo()

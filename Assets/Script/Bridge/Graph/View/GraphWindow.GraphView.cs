@@ -116,12 +116,13 @@ namespace YBFramework.MyEditor
                 nodeAsset.name = nodeName;
                 nodeAsset.SetNode(baseNode);
                 nodeAsset.SetPosition(nodePosition);
-                baseNode.ID = m_SelectedGraphView.GraphAsset.AllocateID();
+                baseNode.ID = m_SelectedGraphView.m_BindGraphAsset.AllocateID();
                 foreach (BasePort basePort in baseNode.GetPortEnumerable())
                 {
                     basePort.ID = nodeAsset.AllocateID();
                 }
-                m_SelectedGraphView.AddNodeView(new NodeView(m_SelectedGraphView, nodeAsset));
+                nodeAsset.CreateNodeView(m_SelectedGraphView);
+                m_SelectedGraphView.m_BindGraphAsset.AddNodeAsset(nodeAsset);
             }
         }
     }

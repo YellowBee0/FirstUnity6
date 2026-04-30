@@ -1,42 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1486556568950542807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
-  m_Name: "\u83B7\u53D6\u503C(Everything)"
-  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
-  m_Node:
-    rid: 3590359127740908211
-  m_Test:
-    rid: 3590359127740908212
-  m_Position: {x: 364.9811, y: 182.03772}
-  m_ID: 1
-  references:
-    version: 2
-    RefIds:
-    - rid: 3590359127740908211
-      type: {class: GetValueNode, ns: YBFramework.Component, asm: Assembly-CSharp}
-      data:
-        ID: 28
-        m_ValueOutput:
-          ID: 0
-          ConnectedCount: 0
-        m_Value:
-          rid: 3590359127740908214
-        m_SelectedValueType: Int32
-    - rid: 3590359127740908212
-      type: {class: String, ns: System, asm: mscorlib}
-      data: 
-    - rid: 3590359127740908214
-      type: {class: Int32, ns: System, asm: mscorlib}
-      data: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,10 +12,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f96255a0bd3c74caade8e1ae137902, type: 3}
   m_Name: New Graph Asset
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.GraphAsset
-  m_NodeAssets: []
+  m_NodeAssets:
+  - {fileID: 9221733806684405515}
+  - {fileID: 4621014386851866784}
+  - {fileID: 5191021815035288419}
   m_GraphType: 1
-  m_ID: 29
---- !u!114 &5506478583009022067
+  m_ID: 3
+--- !u!114 &4621014386851866784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: Example(Test1)
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 3590359127740908269
+  m_Test:
+    rid: 3590359127740908270
+  m_Position: {x: 546.11316, y: 177.50943}
+  m_ID: 4
+  references:
+    version: 2
+    RefIds:
+    - rid: 3590359127740908269
+      type: {class: ExampleNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        ID: 1
+        m_StringInput:
+          ID: 0
+          ConnectedCount: 1
+          m_ConnectedPortData:
+            NodeID: 0
+            PortID: 0
+            IsExplicitCast: 0
+          m_Value: obsolute
+        m_LogicInput:
+          ID: 1
+          ConnectedCount: 0
+        m_ValueOutput:
+          ID: 3
+          ConnectedCount: 0
+        m_LogicOutput:
+          ID: 2
+          ConnectedCount: 1
+          m_ConnectedPortData:
+          - NodeID: 2
+            PortID: 0
+            IsExplicitCast: 0
+    - rid: 3590359127740908270
+      type: {class: String, ns: System, asm: mscorlib}
+      data: 
+--- !u!114 &5191021815035288419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u6253\u5370\u65E5\u5FD7(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 3590359127740908271
+  m_Test:
+    rid: 3590359127740908272
+  m_Position: {x: 447.3962, y: 367.69812}
+  m_ID: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 3590359127740908271
+      type: {class: DebugNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        ID: 2
+        m_LogicInput:
+          ID: 0
+          ConnectedCount: 1
+        LogContextInput: []
+    - rid: 3590359127740908272
+      type: {class: String, ns: System, asm: mscorlib}
+      data: 
+--- !u!114 &9221733806684405515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,27 +112,27 @@ MonoBehaviour:
   m_Name: "\u83B7\u53D6\u503C(Everything)"
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
   m_Node:
-    rid: 3590359127740908205
+    rid: 3590359127740908266
   m_Test:
-    rid: 3590359127740908210
-  m_Position: {x: 408.4529, y: 166.64151}
+    rid: 3590359127740908267
+  m_Position: {x: 390.33963, y: 153.96228}
   m_ID: 1
   references:
     version: 2
     RefIds:
-    - rid: 3590359127740908205
+    - rid: 3590359127740908266
       type: {class: GetValueNode, ns: YBFramework.Component, asm: Assembly-CSharp}
       data:
-        ID: 27
+        ID: 0
         m_ValueOutput:
           ID: 0
-          ConnectedCount: 0
-        m_Value:
-          rid: 3590359127740908207
-        m_SelectedValueType: Int32
-    - rid: 3590359127740908207
-      type: {class: Int32, ns: System, asm: mscorlib}
-      data: 
-    - rid: 3590359127740908210
+          ConnectedCount: 1
+        m_ValueWrapper:
+          rid: 3590359127740908268
+    - rid: 3590359127740908267
       type: {class: String, ns: System, asm: mscorlib}
       data: 
+    - rid: 3590359127740908268
+      type: {class: 'GetValueNode/ValueWrapper`1[[System.String, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        Value: test

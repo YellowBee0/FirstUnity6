@@ -8,15 +8,6 @@ namespace YBFramework.Component
     {
         private MethodInfo m_MethodInfo;
 
-        public MethodPort(MethodInfo methodInfo)
-        {
-            m_MethodInfo = methodInfo;
-#if UNITY_EDITOR
-            m_ParameterInfos = methodInfo.GetParameters();
-            m_ReturnType = m_MethodInfo.ReturnType;
-#endif
-        }
-
         public override void Copy(BasePort from)
         {
             base.Copy(from);

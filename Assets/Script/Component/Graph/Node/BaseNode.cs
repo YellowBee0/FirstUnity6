@@ -147,14 +147,14 @@ namespace YBFramework.Component
 
         public abstract void InitNodeViewInfo();
 
-        public virtual void FillNodeContentView(SerializedProperty property, NewNodeView nodeView)
+        public virtual void FillNodeContentView(SerializedProperty property, NodeView nodeView)
         {
             foreach (BasePort port in GetPortEnumerable())
             {
                 SerializedProperty portProperty = property.FindPropertyRelative(port.GetFieldName());
                 if (portProperty != null)
                 {
-                    VisualElement portContentView = port.CreatePortContentView(portProperty, out NewPortView portView);
+                    VisualElement portContentView = port.CreatePortContentView(portProperty, out PortView portView);
                     nodeView.AddPortView(portView);
                     if (port.GetDirection() == Direction.Input)
                     {

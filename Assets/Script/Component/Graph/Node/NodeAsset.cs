@@ -24,9 +24,9 @@ namespace YBFramework.Component
 
         private SerializedObject m_SerializedObject;
 
-        public void CreateNodeView(NewCustomGraphView graphView)
+        public void CreateNodeView(CustomGraphView graphView)
         {
-            NewNodeView nodeView = new(this, graphView)
+            NodeView nodeView = new(this, graphView)
             {
                 title = name
             };
@@ -34,7 +34,7 @@ namespace YBFramework.Component
             m_Node.InitNodeViewInfo();
             m_SerializedObject = new SerializedObject(this);
             m_Node.FillNodeContentView(m_SerializedObject.FindProperty(nameof(m_Node)), nodeView);
-            graphView.AddElement(nodeView);
+            graphView.AddNodeView(nodeView);
         }
 
         public BaseNode GetNode()

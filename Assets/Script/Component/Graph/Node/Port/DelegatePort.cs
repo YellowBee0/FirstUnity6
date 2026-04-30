@@ -29,7 +29,7 @@ namespace YBFramework.Component
                 Debug.LogError($"port id {ID} is single connect,but connected multi count");
                 return;
             }
-            foreach (ConnectedPortData connectedPortData in ((IPortConnectionSource)this).GetConnectedPortDataEnumerator())
+            foreach (ConnectedPortData connectedPortData in ((IPortConnectionSource)this).GetConnectedPortDataEnumerable())
             {
                 for (int i = 0; i < nodes.Count; i++)
                 {
@@ -77,7 +77,7 @@ namespace YBFramework.Component
         {
             Delegate @delegate = null;
             Type delegateType = typeof(TDelegate);
-            foreach (ConnectedPortData connectedPortData in ((IPortConnectionSource)this).GetConnectedPortDataEnumerator())
+            foreach (ConnectedPortData connectedPortData in ((IPortConnectionSource)this).GetConnectedPortDataEnumerable())
             {
                 ConnectedDelegatePortData connectedDelegatePortData = (ConnectedDelegatePortData)connectedPortData;
                 for (int i = 0; i < nodes.Count; i++)

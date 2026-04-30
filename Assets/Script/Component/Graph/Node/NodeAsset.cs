@@ -1,4 +1,3 @@
-using UnityEditor.UIElements;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,16 +10,19 @@ namespace YBFramework.Component
     {
         [SerializeReference] private BaseNode m_Node;
 
-        [SerializeReference] private object m_Test="Test";
-        
         public int GetNodeID()
         {
             return m_Node.ID;
         }
+
+        private void OnEnable()
+        {
+            m_Node?.InitPortInfo();
+        }
 #if UNITY_EDITOR
         [SerializeField] private Vector2 m_Position;
 
-        [SerializeField] private int m_ID;
+        [SerializeField] private int m_RecordedID;
 
         private SerializedObject m_SerializedObject;
 
@@ -68,12 +70,7 @@ namespace YBFramework.Component
 
         public int AllocateID()
         {
-            return m_ID++;
-        }
-
-        public void SetSelfDirty()
-        {
-            EditorUtility.SetDirty(this);
+            return m_RecordedID++;
         }
 #endif
     }

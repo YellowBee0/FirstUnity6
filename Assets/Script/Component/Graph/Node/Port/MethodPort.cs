@@ -21,8 +21,11 @@ namespace YBFramework.Component
         {
             m_MethodInfo = methodInfo;
 #if UNITY_EDITOR
-            m_ParameterInfos = methodInfo.GetParameters();
-            m_ReturnType = m_MethodInfo.ReturnType;
+            if (m_MethodInfo != null)
+            {
+                m_ParameterInfos = methodInfo.GetParameters();
+                m_ReturnType = m_MethodInfo.ReturnType;
+            }
 #endif
         }
 
@@ -47,6 +50,10 @@ namespace YBFramework.Component
 
         public override string GetConnectTip()
         {
+            if (m_ParameterInfos == null)
+            {
+                return string.Empty;
+            }
             s_StrBuilder.Clear();
             if (m_ParameterInfos.Length > 0)
             {

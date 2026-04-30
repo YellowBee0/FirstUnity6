@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2760369829652471796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u52A8\u6001\u51FD\u6570\u8C03\u7528\u8282\u70B9(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 3590359127740908296
+  m_Position: {x: 683.77356, y: 389.434}
+  m_RecordedID: 5
+  references:
+    version: 2
+    RefIds:
+    - rid: 3590359127740908296
+      type: {class: DynamicMethodInvokeNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        ID: 6
+        m_InvokeMethodPort:
+          ID: 0
+          ConnectedCount: 0
+        m_LogicOutput:
+          ID: 1
+          ConnectedCount: 0
+          m_ConnectedPortData: []
+        m_ReturnValuePort:
+          ID: 2
+          ConnectedCount: 0
+        m_GetMethodInfoPort:
+          ID: 3
+          ConnectedCount: 0
+          m_ConnectedPortData:
+            NodeID: 0
+            PortID: 0
+            IsExplicitCast: 0
+        m_GetTargetPort:
+          ID: 4
+          ConnectedCount: 0
+          m_ConnectedPortData:
+            NodeID: 0
+            PortID: 0
+            IsExplicitCast: 0
+        m_ParameterPorts: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16,8 +64,38 @@ MonoBehaviour:
   - {fileID: 9221733806684405515}
   - {fileID: 4621014386851866784}
   - {fileID: 5191021815035288419}
+  - {fileID: 2911800003302816954}
+  - {fileID: -2760369829652471796}
   m_GraphType: 1
-  m_ID: 3
+  m_RecordedID: 7
+--- !u!114 &2911800003302816954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9233180015f313244a78092757f57e19, type: 3}
+  m_Name: "\u52A8\u6001\u51FD\u6570\u8282\u70B9(Everything)"
+  m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
+  m_Node:
+    rid: 3590359127740908291
+  m_Position: {x: 347.7736, y: 418.41513}
+  m_RecordedID: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 3590359127740908291
+      type: {class: DynamicMethodNode, ns: YBFramework.Component, asm: Assembly-CSharp}
+      data:
+        ID: 3
+        m_BindMethodPort:
+          ID: 0
+          ConnectedCount: 0
+        m_BindTypeName: 
+        m_BindMethodName: 
 --- !u!114 &4621014386851866784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32,10 +110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
   m_Node:
     rid: 3590359127740908269
-  m_Test:
-    rid: 3590359127740908270
   m_Position: {x: 546.11316, y: 177.50943}
-  m_ID: 4
+  m_RecordedID: 0
   references:
     version: 2
     RefIds:
@@ -45,7 +121,7 @@ MonoBehaviour:
         ID: 1
         m_StringInput:
           ID: 0
-          ConnectedCount: 1
+          ConnectedCount: 2
           m_ConnectedPortData:
             NodeID: 0
             PortID: 0
@@ -64,9 +140,6 @@ MonoBehaviour:
           - NodeID: 2
             PortID: 0
             IsExplicitCast: 0
-    - rid: 3590359127740908270
-      type: {class: String, ns: System, asm: mscorlib}
-      data: 
 --- !u!114 &5191021815035288419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,10 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
   m_Node:
     rid: 3590359127740908271
-  m_Test:
-    rid: 3590359127740908272
-  m_Position: {x: 447.3962, y: 367.69812}
-  m_ID: 1
+  m_Position: {x: 870.3395, y: 169.35849}
+  m_RecordedID: 0
   references:
     version: 2
     RefIds:
@@ -96,9 +167,6 @@ MonoBehaviour:
           ID: 0
           ConnectedCount: 1
         LogContextInput: []
-    - rid: 3590359127740908272
-      type: {class: String, ns: System, asm: mscorlib}
-      data: 
 --- !u!114 &9221733806684405515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,10 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::YBFramework.Component.NodeAsset
   m_Node:
     rid: 3590359127740908266
-  m_Test:
-    rid: 3590359127740908267
-  m_Position: {x: 390.33963, y: 153.96228}
-  m_ID: 1
+  m_Position: {x: 264.45282, y: 162.11322}
+  m_RecordedID: 0
   references:
     version: 2
     RefIds:
@@ -126,12 +192,9 @@ MonoBehaviour:
         ID: 0
         m_ValueOutput:
           ID: 0
-          ConnectedCount: 1
+          ConnectedCount: 2
         m_ValueWrapper:
           rid: 3590359127740908268
-    - rid: 3590359127740908267
-      type: {class: String, ns: System, asm: mscorlib}
-      data: 
     - rid: 3590359127740908268
       type: {class: 'GetValueNode/ValueWrapper`1[[System.String, mscorlib]]', ns: YBFramework.Component, asm: Assembly-CSharp}
       data:

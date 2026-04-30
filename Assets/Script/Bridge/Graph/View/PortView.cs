@@ -20,6 +20,7 @@ namespace YBFramework.MyEditor
                 {
                     bool isConnected = false;
                     NodeAsset nodeAsset = null;
+                    //TODO：这里的连接需要重做，在FuncPort中在Connect的时候会出现不能连接的情况，可能需要在CanConnect中加上Node的ID
                     if (input.BindPort is IPortConnectionSource inputConnectionSource && inputConnectionSource.CanConnect(output.BindPort))
                     {
                         nodeAsset = output.NodeView.BindNodeAsset;

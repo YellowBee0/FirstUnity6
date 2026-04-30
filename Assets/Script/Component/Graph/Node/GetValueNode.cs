@@ -18,21 +18,45 @@ namespace YBFramework.Component
 #endif
     public sealed class GetValueNode : BaseNode
     {
-        [Serializable]
-        private class ValueWrapper<T>
+        private interface IValueWrapper
         {
-            public T Value;
+            IValueWrapper Clone();
+
+            void ResetValue();
         }
 
-        private static readonly MethodInfo s_GetValueMethod = typeof(GetValueNode).GetMethod(nameof(GetIntValue), BindingFlags.Instance | BindingFlags.NonPublic);
+        [Serializable]
+        private class ValueWrapper<T> : IValueWrapper
+        {
+            public T Value;
+
+            private T m_OriginalValue;
+
+            public IValueWrapper Clone()
+            {
+                ValueWrapper<T> valueWrapper = new()
+                {
+                    Value = Value,
+                    m_OriginalValue = Value
+                };
+                return valueWrapper;
+            }
+
+            public void ResetValue()
+            {
+                Value = m_OriginalValue;
+            }
+        }
+
+        private static readonly MethodInfo s_GetValueMethod = typeof(GetValueNode).GetMethod(nameof(GetValue), BindingFlags.Instance | BindingFlags.NonPublic);
 
         private static readonly Dictionary<Type, MethodInfo> s_GetValueMethodCache = new();
 
         [SerializeField] private MethodPort m_ValueOutput = new();
 
-        [SerializeReference] private object m_ValueWrapper;
+        [SerializeReference] private IValueWrapper m_ValueWrapper;
 
-        private T GetIntValue<T>()
+        private T GetValue<T>()
         {
             return ((ValueWrapper<T>)m_ValueWrapper).Value;
         }
@@ -52,7 +76,8 @@ namespace YBFramework.Component
         {
             GetValueNode node = new()
             {
-                ID = ID
+                ID = ID,
+                m_ValueWrapper = m_ValueWrapper.Clone(),
             };
             CopyPort(this, node);
             return node;
@@ -79,7 +104,7 @@ namespace YBFramework.Component
 
         public override void InitNodeViewInfo()
         {
-            InitPortInfo();
+            base.InitNodeViewInfo();
             m_ValueOutput.InitPortViewInfo(nameof(m_ValueOutput), "值输出", Direction.Output, Port.Capacity.Multi, Color.blue);
         }
 
@@ -87,12 +112,13 @@ namespace YBFramework.Component
         {
             m_ValueOutput.CreatePortContentView(null, out PortView portView);
             VisualElement container = new();
-            PopupField<Type> popupField = new("选择类型", DebugNode.s_Types, typeof(object));
+            m_ValueProperty = property.FindPropertyRelative(nameof(m_ValueWrapper));
+            Type selectedValueType = m_ValueProperty.managedReferenceValue?.GetType().GetGenericArguments()[0];
+            PopupField<Type> popupField = new("选择类型", DebugNode.s_Types, selectedValueType);
             popupField.styleSheets.Add(StyleSheetManager.LoadStylesheet("Label"));
             popupField.RegisterValueChangedCallback(OnSelectedTypeChanged);
             container.Add(portView);
             container.Add(popupField);
-            m_ValueProperty = property.FindPropertyRelative(nameof(m_ValueWrapper));
             if (m_ValueProperty != null)
             {
                 m_PropertyField = new PropertyField

@@ -53,7 +53,7 @@ namespace YBFramework.Component
 
         ConnectedPortData ConnectedPortDataIterator(int index);
 
-        IEnumerable<ConnectedPortData> GetConnectedPortDataEnumerator()
+        IEnumerable<ConnectedPortData> GetConnectedPortDataEnumerable()
         {
             return new ConnectedPortDataEnumerator(this);
         }

@@ -88,7 +88,7 @@ namespace YBFramework.Component
         public virtual void InitPortInfo()
         {
         }
-        
+
         protected abstract BasePort PortIterator(int index);
 
         public abstract BaseNode Clone();
@@ -145,7 +145,10 @@ namespace YBFramework.Component
             return PortIterator(index);
         }
 
-        public abstract void InitNodeViewInfo();
+        public virtual void InitNodeViewInfo()
+        {
+            InitPortInfo();
+        }
 
         public virtual void FillNodeContentView(SerializedProperty property, NodeView nodeView)
         {

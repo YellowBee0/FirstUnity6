@@ -7,7 +7,7 @@ using YBFramework.MyEditor;
 
 namespace YBFramework.Component
 {
-    [CreateAssetMenu(fileName = "New Graph Asset", menuName = "YBFramework/Graph Asset")]
+    [CreateAssetMenu(fileName = "NewGraphAsset", menuName = "CreateGraph")]
     public sealed class GraphAsset : ScriptableObject
     {
         [SerializeField] private List<NodeAsset> m_NodeAssets = new();
@@ -24,7 +24,7 @@ namespace YBFramework.Component
 #if UNITY_EDITOR
         [SerializeField] private GraphType m_GraphType = GraphType.Test1;
 
-        [SerializeField] private int m_ID;
+        [SerializeField] private int m_RecordedID;
 
         public GraphType GetGraphType()
         {
@@ -51,7 +51,7 @@ namespace YBFramework.Component
 
         public int AllocateID()
         {
-            return m_ID++;
+            return m_RecordedID++;
         }
 #endif
     }

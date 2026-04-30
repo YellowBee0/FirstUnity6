@@ -76,6 +76,7 @@ namespace YBFramework.Component
 
         public override void InitNodeViewInfo()
         {
+            base.InitNodeViewInfo();
             m_LogicInput.InitPortViewInfo(nameof(m_LogicInput), "输入", Direction.Input, Port.Capacity.Multi, Color.red);
             for (int i = 0; i < LogContextInput.Count; i++)
             {

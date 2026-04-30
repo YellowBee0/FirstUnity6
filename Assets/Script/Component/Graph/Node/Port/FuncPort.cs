@@ -13,7 +13,7 @@ namespace YBFramework.Component
     [Serializable]
     public sealed class FuncPort<TValue> : DelegatePort<Func<TValue>>
     {
-        [SerializeField] private ConnectedDelegatePortData m_ConnectedPortData;
+        [SerializeField] private ConnectedDelegatePortData m_ConnectedPortData = ConnectedDelegatePortData.Empty;
 
         [SerializeField] private TValue m_Value;
 
@@ -43,7 +43,7 @@ namespace YBFramework.Component
 
         public override ConnectedPortData ConnectedPortDataIterator(int index)
         {
-            return index == 0 ? m_ConnectedPortData.NodeID == 0 && m_ConnectedPortData.PortID == 0 ? null : m_ConnectedPortData : null;
+            return index == 0 ? m_ConnectedPortData.NodeID == -1 && m_ConnectedPortData.PortID == -1 ? null : m_ConnectedPortData : null;
         }
 #if UNITY_EDITOR
         public TValue GetValue()
@@ -75,6 +75,17 @@ namespace YBFramework.Component
 
         public override void Connect(int nodeID, BasePort other)
         {
+            if (m_ConnectedPortData != null)
+            {
+                if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.ID)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                ConnectedCount++;
+            }
             MethodPort methodPort = (MethodPort)other;
             Type valueType = typeof(TValue);
             Type returnType = methodPort.GetReturnType();
@@ -85,7 +96,6 @@ namespace YBFramework.Component
                 PortID = other.ID,
                 IsExplicitCast = isExplicitCast
             };
-            ConnectedCount++;
             other.ConnectedCount++;
         }
 
@@ -95,7 +105,7 @@ namespace YBFramework.Component
             {
                 if (m_ConnectedPortData.NodeID == nodeID && m_ConnectedPortData.PortID == other.ID)
                 {
-                    m_ConnectedPortData = null;
+                    m_ConnectedPortData = ConnectedDelegatePortData.Empty;
                     ConnectedCount--;
                     other.ConnectedCount--;
                 }

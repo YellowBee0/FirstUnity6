@@ -43,12 +43,12 @@ namespace YBFramework.MyEditor
             for (int i = 0; i < m_NodeViews.Count; i++)
             {
                 NodeView fromNodeView = m_NodeViews[i];
-                foreach (BasePort basePort in fromNodeView.BindNodeAsset.GetNode().GetPortEnumerable())
+                foreach (BasePort port in fromNodeView.BindNodeAsset.GetNode().GetPortEnumerable())
                 {
-                    if (basePort is IPortConnectionSource portConnectionSource)
+                    if (port is IPortConnectionSource portConnectionSource)
                     {
-                        PortView fromPortView = fromNodeView.GetPortView(basePort.ID);
-                        foreach (ConnectedPortData connectedPortData in portConnectionSource.GetConnectedPortDataEnumerator())
+                        PortView fromPortView = fromNodeView.GetPortView(port.ID);
+                        foreach (ConnectedPortData connectedPortData in portConnectionSource.GetConnectedPortDataEnumerable())
                         {
                             NodeView toNodeView = GetNodeView(connectedPortData.NodeID);
                             PortView toPortView = toNodeView?.GetPortView(connectedPortData.PortID);
